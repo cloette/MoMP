@@ -9,10 +9,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
-      <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <style>
@@ -25,15 +27,22 @@
         align-items: center;
         min-height: 100vh;
         background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+        font-family: Lato, ' Arial', ' sans-serif';
     }
 
     h1,
-    p {
+    h3 {
         font-family: serif;
     }
 
     h3 {
         text-transform: uppercase;
+    }
+
+    p,
+    li {
+        font-family: Lato, ' Arial', ' sans-serif';
+        line-height: 1.5;
     }
 
     a {
@@ -55,7 +64,7 @@
     .container {
         background: #ffffff;
         color: #000000;
-        padding: 12px;
+        padding: 24px;
         margin: 0 auto;
         max-width: 800px;
         display: block;
@@ -92,9 +101,24 @@
         animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
     }
 
+    .hideondesktop {
+        display: none;
+    }
+
+    .hideonmobile {
+        display: block;
+    }
+
+
     @media screen and (max-width: 750px) {
         .star {
             animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+        }
+        .hideonmobile {
+            display: none !important;
+        }
+        .hideondesktop {
+            display: block;
         }
     }
 
@@ -220,6 +244,19 @@
             opacity: 0.6;
         }
     }
+
+    /* HTML: <div class="breadcrumb"></div> */
+    .breadcrumb {
+        --s: 20px;
+        line-height: 1.2;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-inline: calc(var(--s) + .8em);
+        clip-path: polygon(0 0, calc(100% - var(--s)) 0, 100% 50%, calc(100% - var(--s)) 100%, 0 100%, var(--s) 50%);
+        background: #676767;
+        color: #fff;
+        width: fit-content;
+    }
 </style>
 
 <body>
@@ -245,13 +282,35 @@
 
         <div class="container" style="margin-top:60px;">
             <h3>Roadmap</h3>
-            <p><em>Phase 1:</em> Construct a virtual museum that serves as a proof of concept for a real museum to be
-                created at a later date.</p>
-            <p><em>Phase 2:</em> A traveling pop-up exhibit. A small version of the in-person experience that can be
-                easily transported and presented at existing museums as a temporary exhibit.</p>
-            <p><em>Phase 3:</em> A permanent museum, providing the complete experience, including several interactive,
-                haptic, and sensory experiences, as well as complimentary souvenirs. Location is still to be determined.
-            </p>
+            <div class="hideonmobile" style="display: flex; flex-direction: row;">
+                <div class="breadcrumb" style="max-width: 160px; background: #7c6490;"><em>Phase 1:</em> <br>Construct a virtual museum that
+                    serves as a proof-of-concept
+                    for a
+                    real museum to be
+                    created at a later date.</div>
+                <div class="breadcrumb" style="max-width: 320px;"><em>Phase 2:</em> <br>A traveling pop-up exhibit. A
+                    small version of the in-person
+                    experience that can be
+                    easily transported and presented at existing museums as a temporary exhibit.</div>
+                <div class="breadcrumb" style="max-width: 320px;"><em>Phase 3:</em> <br>A permanent museum, providing
+                    the complete experience,
+                    including
+                    several interactive,
+                    haptic, and sensory experiences, as well as complimentary souvenirs.
+                </div>
+            </div>
+            <div class="hideondesktop">
+                <p><em>Phase 1:</em> Construct a virtual museum that serves as a proof-of-concept for a real museum to
+                    be
+                    created at a later date.</p>
+                <p><em>Phase 2:</em> A traveling pop-up exhibit. A small version of the in-person experience that can be
+                    easily transported and presented at existing museums as a temporary exhibit.</p>
+                <p><em>Phase 3:</em> A permanent museum, providing the complete experience, including several
+                    interactive,
+                    haptic, and sensory experiences, as well as complimentary souvenirs. Location is still to be
+                    determined.
+                </p>
+            </div>
             <br>
             <p><a class="button" href="https://forms.gle/4E79fNvAYKkPkiB88" target="_blank">Become a volunteer!</a></p>
         </div>
@@ -280,7 +339,8 @@
 
         <div class="container" style="margin-top:60px;">
             <h3>Subscribe to updates</h3>
-            <iframe data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://13q83.mjt.lu/wgt/13q83/0n61/form?c=19cf8636" width="100%" style="height: 0;"></iframe>
+            <iframe data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+                src="https://13q83.mjt.lu/wgt/13q83/0n61/form?c=19cf8636" width="100%" style="height: 0;"></iframe>
             <script type="text/javascript" src="https://app.mailjet.com/pas-nc-embedded-v2.js"></script>
         </div>
 
