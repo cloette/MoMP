@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Museum of Magical Phenomena</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+      <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
+
+<style>
+    body {
+        margin: 0px;
+        padding: 0px;
+        background: #000000;
+        color: #ffffff;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+    }
+
+    h1,
+    p {
+        font-family: serif;
+    }
+
+    h3 {
+        text-transform: uppercase;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(102, 51, 153);
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .button {
+        border: 2px solid rgb(102, 51, 153);
+        background: #ffffff;
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .container {
+        background: #ffffff;
+        color: #000000;
+        padding: 12px;
+        margin: 0 auto;
+        max-width: 800px;
+        display: block;
+        z-index: 2;
+    }
+
+    .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 120%;
+        transform: rotate(-45deg);
+        z-index: -1;
+    }
+
+    .star {
+        --star-color: var(--primary-color);
+        --star-tail-length: 6em;
+        --star-tail-height: 2px;
+        --star-width: calc(var(--star-tail-length) / 6);
+        --fall-duration: 9s;
+        --tail-fade-duration: var(--fall-duration);
+        position: absolute;
+        top: var(--top-offset);
+        left: 0;
+        width: var(--star-tail-length);
+        height: var(--star-tail-height);
+        color: var(--star-color);
+        background: linear-gradient(45deg, currentColor, transparent);
+        border-radius: 50%;
+        filter: drop-shadow(0 0 6px currentColor);
+        transform: translate3d(104em, 0, 0);
+        animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+    }
+
+    @media screen and (max-width: 750px) {
+        .star {
+            animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+        }
+    }
+
+    .star:nth-child(1) {
+        --star-tail-length: 6.2em;
+        --top-offset: 22.89vh;
+        --fall-duration: 6.622s;
+        --fall-delay: 3.309s;
+    }
+
+    .star:nth-child(2) {
+        --star-tail-length: 7.43em;
+        --top-offset: 39.65vh;
+        --fall-duration: 11.675s;
+        --fall-delay: 6.395s;
+    }
+
+    .star:nth-child(3) {
+        --star-tail-length: 6.31em;
+        --top-offset: 66.85vh;
+        --fall-duration: 9.477s;
+        --fall-delay: 1.15s;
+    }
+
+    .star:nth-child(4) {
+        --star-tail-length: 5.05em;
+        --top-offset: 92.2vh;
+        --fall-duration: 9.293s;
+        --fall-delay: 9.913s;
+    }
+
+    .star:nth-child(5) {
+        --star-tail-length: 6.86em;
+        --top-offset: 14.04vh;
+        --fall-duration: 7.157s;
+        --fall-delay: 8.553s;
+    }
+
+    .star:nth-child(6) {
+        --star-tail-length: 5.85em;
+        --top-offset: 58.89vh;
+        --fall-duration: 7.524s;
+        --fall-delay: 9.259s;
+    }
+
+    .star:nth-child(7) {
+        --star-tail-length: 5.61em;
+        --top-offset: 67.8vh;
+        --fall-duration: 10.276s;
+        --fall-delay: 3.216s;
+    }
+
+    .star:nth-child(8) {
+        --star-tail-length: 7.06em;
+        --top-offset: 72.07vh;
+        --fall-duration: 11.544s;
+        --fall-delay: 6.61s;
+    }
+
+    .star:nth-child(9) {
+        --star-tail-length: 5.78em;
+        --top-offset: 44.07vh;
+        --fall-duration: 9.667s;
+        --fall-delay: 4.227s;
+    }
+
+    .star:nth-child(10) {
+        --star-tail-length: 5.45em;
+        --top-offset: 58.67vh;
+        --fall-duration: 8.423s;
+        --fall-delay: 5.115s;
+    }
+
+    .star::before,
+    .star::after {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: calc(var(--star-width) / -2);
+        width: var(--star-width);
+        height: 100%;
+        background: linear-gradient(45deg, transparent, currentColor, transparent);
+        border-radius: inherit;
+        animation: blink 2s linear infinite;
+    }
+
+    .star::before {
+        transform: rotate(45deg);
+    }
+
+    .star::after {
+        transform: rotate(-45deg);
+    }
+
+    @keyframes fall {
+        to {
+            transform: translate3d(-30em, 0, 0);
+        }
+    }
+
+    @keyframes tail-fade {
+
+        0%,
+        50% {
+            width: var(--star-tail-length);
+            opacity: 1;
+        }
+
+        70%,
+        80% {
+            width: 0;
+            opacity: 0.4;
+        }
+
+        100% {
+            width: 0;
+            opacity: 0;
+        }
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0.6;
+        }
+    }
+</style>
+
+<body>
+
+    <div class="stars">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+    </div>
+
+    <main>
+        <div class="animate__animated animate__fadeInDown" style="text-align: center;">
+            <img src="MoMP.png" alt="The Museum of Magical Phenomena"
+                style="filter:invert(1); max-width: 600px; width:100%;" />
+        </div>
+
+        <div class="container" style="margin-top:60px;">
+            <h3>Roadmap</h3>
+            <p><em>Phase 1:</em> Construct a virtual museum that serves as a proof of concept for a real museum to be
+                created at a later date.</p>
+            <p><em>Phase 2:</em> A traveling pop-up exhibit. A small version of the in-person experience that can be
+                easily transported and presented at existing museums as a temporary exhibit.</p>
+            <p><em>Phase 3:</em> A permanent museum, providing the complete experience, including several interactive,
+                haptic, and sensory experiences, as well as complimentary souvenirs. Location is still to be determined.
+            </p>
+            <br>
+            <p><a class="button" href="https://forms.gle/4E79fNvAYKkPkiB88" target="_blank">Become a volunteer!</a></p>
+        </div>
+
+
+        <div class="container" style="margin-top:60px;">
+            <h3>About the museum</h3>
+            <p><em>What counts as magical phenomena?</em> Forces that are invisible to the naked eye are generally
+                considered to be magical, and we expand on this to include prophecy and communication with animals.</p>
+            <p><em>Planned Exhibits: </em>
+            <ul>
+                <li>Art Hall</li>
+                <li>Persistent Mysteries</li>
+                <li>Magical Phenomena in Nature</li>
+                <li>Magical Phenomena in Technology</li>
+                <li>Magic Types and Systems in Fictional Media</li>
+                <li>Occupational History: Magician, Illusionist, Hypnotist, Diviner, and more</li>
+                <li>Intersections with Religion and Folklore</li>
+                <li>Rethink the Limit: Chamber of Inspiration</li>
+                <li>Dazzling Closet: Dress-up photo op area + paper star jar craft station</li>
+            </ul>
+            </p>
+            <br>
+            <p><a class="button" href="https://forms.gle/4E79fNvAYKkPkiB88" target="_blank">Become a volunteer!</a></p>
+        </div>
+
+        <div class="container" style="margin-top:60px;">
+            <h3>Subscribe to updates</h3>
+            <iframe data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://13q83.mjt.lu/wgt/13q83/0n61/form?c=19cf8636" width="100%" style="height: 0;"></iframe>
+            <script type="text/javascript" src="https://app.mailjet.com/pas-nc-embedded-v2.js"></script>
+        </div>
+
+        <div class="container" style="margin-top:60px;">
+            <p>Copyright © 2026 The Museum of Magical Phenomena. All rights reserved.
+                This site does not use cookies.<br>
+                Falling stars effect by <a href="https://codepen.io/alphardex" target="_blank">alphardex</a>.</p>
+        </div>
+
+
+    </main>
+
+</body>
+
+</html>
