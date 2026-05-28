@@ -138,7 +138,7 @@ export default function Home() {
             <li>• Wish Room: Dress-up area + paper star station</li>
           </ul>
           <br /><br></br>
-          <p>Want to help curate the exhibits?&nbsp; &nbsp; &nbsp; 
+          <p>Want to help curate the exhibits? <br /><br />
             <a
               className={styles.button}
               href="https://forms.gle/4E79fNvAYKkPkiB88"
