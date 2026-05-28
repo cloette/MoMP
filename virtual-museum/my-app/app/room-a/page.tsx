@@ -76,7 +76,7 @@ export default function RoomAPage() {
         </div>
 
         {/* Controls hint */}
-        <div style={{
+        <div className='controls-hint' style={{
           position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
           background: 'rgba(0,0,0,0.42)',
           color: '#eee', fontSize: '11px', padding: '5px 14px',

@@ -28,3 +28,9 @@ body {
 #devtools-indicator {
   display: none !important;
 }
+
+@media (max-width: 600px) {
+  .controls-hint {
+    display: none;
+  }
+}
