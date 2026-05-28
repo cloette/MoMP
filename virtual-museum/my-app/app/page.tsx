@@ -46,7 +46,7 @@ export default function Home() {
         {/* ── Enter Museum CTA ── */}
         <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
           <Link href="/room-a" className={styles.enterButton}>
-            Enter the (WIP) virtual museum
+            ➜ Enter the (WIP) virtual museum
           </Link>
         </div>
 
