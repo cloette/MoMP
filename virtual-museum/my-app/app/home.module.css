@@ -1,0 +1,219 @@
+/* ── Page wrapper ─────────────────────────── */
+.page {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  font-family: Lato, Arial, sans-serif;
+}
+
+/* ── Typography ───────────────────────────── */
+.page h1,
+.page h3 {
+  font-family: Times New Roman, serif;
+  font-size: 1.6em;
+}
+
+.page h3 {
+  text-transform: uppercase;
+}
+
+.page p,
+.page li {
+  font-family: Lato, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.page a {
+  text-decoration: none;
+  color: rgb(102, 51, 153);
+}
+
+.page a:hover {
+  text-decoration: underline;
+}
+
+/* ── Button ───────────────────────────────── */
+.button {
+  border: 2px solid rgb(102, 51, 153);
+  background: #ffffff;
+  padding: 10px 30px;
+  border-radius: 32px;
+  font-family: Lato, Arial, sans-serif;
+}
+
+/* ── Enter Museum button ──────────────────── */
+.enterButton {
+  display: inline-block;
+  border: 2px solid rgb(155, 89, 182);
+  background: rgba(255, 255, 255, 0.95);
+  color: #d0aaee;
+  padding: 14px 36px;
+  border-radius: 32px;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.enterButton:hover {
+  background: rgba(155, 89, 182, 0.32);
+  color: #e8ccff;
+  text-decoration: none;
+}
+
+/* ── Content container ────────────────────── */
+.container {
+  background: #ffffff;
+  color: #000000;
+  padding: 24px;
+  margin: 0 auto;
+  max-width: 800px;
+  display: block;
+  z-index: 2;
+}
+
+/* ── Responsive visibility ────────────────── */
+.hideondesktop {
+  display: none;
+}
+
+.hideonmobile {
+  display: block;
+}
+
+@media screen and (max-width: 750px) {
+  .hideonmobile {
+    display: none !important;
+  }
+  .hideondesktop {
+    display: block;
+  }
+}
+
+/* ── Breadcrumb ───────────────────────────── */
+.breadcrumb {
+  --s: 20px;
+  line-height: 1.2;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-inline: calc(var(--s) + 0.8em);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--s)) 0,
+    100% 50%,
+    calc(100% - var(--s)) 100%,
+    0 100%,
+    var(--s) 50%
+  );
+  background: #676767;
+  color: #fff;
+  width: fit-content;
+}
+
+/* ── Falling stars ────────────────────────── */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  transform: rotate(-45deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.star {
+  --star-color: var(--primary-color);
+  --star-tail-length: 6em;
+  --star-tail-height: 2px;
+  --star-width: calc(var(--star-tail-length) / 6);
+  --fall-duration: 9s;
+  --tail-fade-duration: var(--fall-duration);
+  position: absolute;
+  top: var(--top-offset);
+  left: 0;
+  width: var(--star-tail-length);
+  height: var(--star-tail-height);
+  color: var(--star-color);
+  background: linear-gradient(45deg, currentColor, transparent);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px currentColor);
+  transform: translate3d(104em, 0, 0);
+  animation:
+    fall var(--fall-duration) var(--fall-delay) linear infinite,
+    tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+}
+
+@media screen and (max-width: 750px) {
+  .star {
+    animation: fall var(--fall-duration) var(--fall-delay) linear infinite;
+  }
+}
+
+.star:nth-child(1)  { --star-tail-length: 6.2em;  --top-offset: 22.89vh; --fall-duration: 6.622s;  --fall-delay: 3.309s; }
+.star:nth-child(2)  { --star-tail-length: 7.43em;  --top-offset: 39.65vh; --fall-duration: 11.675s; --fall-delay: 6.395s; }
+.star:nth-child(3)  { --star-tail-length: 6.31em;  --top-offset: 66.85vh; --fall-duration: 9.477s;  --fall-delay: 1.15s;  }
+.star:nth-child(4)  { --star-tail-length: 5.05em;  --top-offset: 92.2vh;  --fall-duration: 9.293s;  --fall-delay: 9.913s; }
+.star:nth-child(5)  { --star-tail-length: 6.86em;  --top-offset: 14.04vh; --fall-duration: 7.157s;  --fall-delay: 8.553s; }
+.star:nth-child(6)  { --star-tail-length: 5.85em;  --top-offset: 58.89vh; --fall-duration: 7.524s;  --fall-delay: 9.259s; }
+.star:nth-child(7)  { --star-tail-length: 5.61em;  --top-offset: 67.8vh;  --fall-duration: 10.276s; --fall-delay: 3.216s; }
+.star:nth-child(8)  { --star-tail-length: 7.06em;  --top-offset: 72.07vh; --fall-duration: 11.544s; --fall-delay: 6.61s;  }
+.star:nth-child(9)  { --star-tail-length: 5.78em;  --top-offset: 44.07vh; --fall-duration: 9.667s;  --fall-delay: 4.227s; }
+.star:nth-child(10) { --star-tail-length: 5.45em;  --top-offset: 58.67vh; --fall-duration: 8.423s;  --fall-delay: 5.115s; }
+
+.star::before,
+.star::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: calc(var(--star-width) / -2);
+  width: var(--star-width);
+  height: 100%;
+  background: linear-gradient(45deg, transparent, currentColor, transparent);
+  border-radius: inherit;
+  animation: blink 2s linear infinite;
+}
+
+.star::before { transform: rotate(45deg); }
+.star::after  { transform: rotate(-45deg); }
+
+@keyframes fall {
+  to { transform: translate3d(-30em, 0, 0); }
+}
+
+@keyframes tail-fade {
+  0%,  50% { width: var(--star-tail-length); opacity: 1;   }
+  70%, 80% { width: 0;                        opacity: 0.4; }
+  100%     { width: 0;                        opacity: 0;   }
+}
+
+@keyframes blink {
+  50% { opacity: 0.6; }
+}
+
+/* ── Fade-in-down animation (replaces animate.css) ── */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.fadeInDown {
+  animation: fadeInDown 0.8s ease both;
+}
+
+/* ── Main content above stars ─────────────── */
+.main {
+  position: relative;
+  z-index: 1;
+}
