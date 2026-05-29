@@ -50,6 +50,7 @@ export function Door({ label, isNear, onInteract }: DoorProps) {
             borderRadius: '3px',
             whiteSpace: 'nowrap',
             letterSpacing: '0.05em',
+            zIndex: 2,
           }}
         >
           {label}

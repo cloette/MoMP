@@ -25,6 +25,7 @@ export function InfoPanel({ position, rotation = [0, 0, 0], title, body }: InfoP
             textAlign: 'left',
             pointerEvents: 'none',
             userSelect: 'none',
+            zIndex: 1,
           }}
         >
           <div

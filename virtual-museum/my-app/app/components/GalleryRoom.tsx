@@ -139,7 +139,7 @@ export function GalleryRoom({
       <InfoPanel
         position={[-5.83, 0.85, -2.6]}
         rotation={[0, Math.PI / 2, 0]}
-        title={`Exhibit ${exhibitPrefix}1`}
+        title={`Exhibit ${exhibitPrefix}2`}
       />
 
       {/* Left wall — front frame + panel */}
@@ -147,7 +147,7 @@ export function GalleryRoom({
       <InfoPanel
         position={[-5.83, 0.85, 2.6]}
         rotation={[0, Math.PI / 2, 0]}
-        title={`Exhibit ${exhibitPrefix}2`}
+        title={`Exhibit ${exhibitPrefix}1`}
       />
 
       {/* Right wall — back frame + panel */}

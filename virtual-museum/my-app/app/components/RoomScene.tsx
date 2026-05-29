@@ -2,11 +2,10 @@
 import { Canvas } from '@react-three/fiber'
 import { GalleryRoom } from './GalleryRoom'
 import { RailCamera } from './RailCamera'
+import type { PauseZone } from './RailCamera'
 
-// Rail: camera starts at z=5.5 (front), moves toward z=-4.5 (near door)
-const RAIL_MAX = 5.5
-const RAIL_MIN = -4.5
-const DOOR_THRESHOLD = -3.2   // z position at which "near door" activates
+// Path progress at which "near door" activates (must be past all 4 pause zones)
+const DOOR_T_PARAM = 0.93
 
 interface RoomSceneProps {
   doorLabel: string
@@ -16,6 +15,11 @@ interface RoomSceneProps {
   pedestalColor?: string
   pedestalEmissive?: string
   exhibitPrefix?: string
+  path: readonly [number, number][]
+  autoWalk?: boolean
+  autoWalkPaused?: boolean
+  zones?: PauseZone[]
+  onEnterZone?: (index: number) => void
 }
 
 export default function RoomScene({
@@ -26,11 +30,16 @@ export default function RoomScene({
   pedestalColor,
   pedestalEmissive,
   exhibitPrefix,
+  path,
+  autoWalk,
+  autoWalkPaused,
+  zones,
+  onEnterZone,
 }: RoomSceneProps) {
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [0, 1.6, RAIL_MAX], fov: 68, near: 0.1, far: 50 }}
+      camera={{ position: [path[0][0], 1.6, path[0][1]], fov: 68, near: 0.1, far: 50 }}
       style={{ width: '100%', height: '100%', background: '#f0ede8' }}
     >
       <GalleryRoom
@@ -42,11 +51,13 @@ export default function RoomScene({
         exhibitPrefix={exhibitPrefix}
       />
       <RailCamera
-        railMin={RAIL_MIN}
-        railMax={RAIL_MAX}
-        startZ={RAIL_MAX}
-        doorThreshold={DOOR_THRESHOLD}
+        path={path}
+        doorTParam={DOOR_T_PARAM}
         onNearDoor={onNearDoor}
+        autoWalk={autoWalk}
+        autoWalkPaused={autoWalkPaused}
+        zones={zones}
+        onEnterZone={onEnterZone}
       />
     </Canvas>
   )

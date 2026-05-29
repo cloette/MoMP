@@ -120,7 +120,7 @@ export default function Home() {
           <h3>About the museum</h3>
           <p>
             <em>What counts as magical phenomena?</em> Forces that are invisible to the naked eye
-            are generally considered to be magical, and we expand on this to include prophecy and
+            are generally considered to be magical, and we expand on this to include accurate prediction of the future and
             communication with animals.
           </p><br></br>
           <p>
