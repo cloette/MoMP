@@ -60,6 +60,7 @@ interface RailCameraProps {
   path: readonly [number, number][]
   doorTParam: number
   onNearDoor: (near: boolean) => void
+  startT?: number
   autoWalk?: boolean
   autoWalkPaused?: boolean
   zones?: PauseZone[]
@@ -68,12 +69,13 @@ interface RailCameraProps {
 
 export function RailCamera({
   path, doorTParam, onNearDoor,
+  startT = 0,
   autoWalk = false, autoWalkPaused = false,
   zones, onEnterZone,
 }: RailCameraProps) {
   const { camera } = useThree()
   const keys = useControlKeys()
-  const pathT = useRef(0)
+  const pathT = useRef(startT)
   const pd = useRef(buildPathData(path))
   const panAngle = useRef(0)
   const wasNear = useRef(false)
@@ -87,11 +89,12 @@ export function RailCamera({
   useEffect(() => { onEnterZoneRef.current = onEnterZone }, [onEnterZone])
 
   useEffect(() => {
-    const start = path[0]
-    camera.position.set(start[0], 1.6, start[1])
-    const next = path.length > 1 ? path[1] : [start[0], start[1] - 1] as [number, number]
-    camera.lookAt(next[0], 1.6, next[1])
-  }, [camera, path])
+    const dist = startT * pd.current.totalLength
+    const pos = posAtDist(dist, path, pd.current)
+    camera.position.set(pos.x, 1.6, pos.z)
+    const ahead = posAtDist(dist + LOOK_AHEAD, path, pd.current)
+    camera.lookAt(ahead.x, 1.6, ahead.z)
+  }, [camera, path, startT])
 
   useFrame((_, delta) => {
     const k = keys.current
