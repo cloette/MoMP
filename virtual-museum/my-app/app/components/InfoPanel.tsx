@@ -14,9 +14,9 @@ export function InfoPanel({ position, rotation = [0, 0, 0], title, body }: InfoP
       {/* Backing plate */}
       <mesh>
         <boxGeometry args={[1.55, 0.75, 0.015]} />
-        <meshStandardMaterial color="#f2ede4" roughness={0.8} />
+        <meshStandardMaterial color="#f5ffbc" roughness={0.8} />
       </mesh>
-      <Html center distanceFactor={6}>
+      <Html center transform occlude distanceFactor={6}>
         <div
           style={{
             width: '210px',
@@ -25,13 +25,14 @@ export function InfoPanel({ position, rotation = [0, 0, 0], title, body }: InfoP
             textAlign: 'left',
             pointerEvents: 'none',
             userSelect: 'none',
+            maxWidth: '120px',
             zIndex: 1,
           }}
         >
           <div
             style={{
               fontWeight: 'bold',
-              fontSize: '14px',
+              fontSize: '10px',
               marginBottom: '5px',
               color: '#2a2a2a',
               letterSpacing: '0.04em',
@@ -40,8 +41,8 @@ export function InfoPanel({ position, rotation = [0, 0, 0], title, body }: InfoP
           >
             {title}
           </div>
-          <div style={{ fontSize: '12px', color: '#555', lineHeight: 1.5 }}>
-            {body ?? 'Placeholder exhibit description. Content coming soon.'}
+          <div style={{ fontSize: '8px', color: '#555', lineHeight: 1.5 }}>
+            {body ?? 'Placeholder description. Content coming soon.'}
           </div>
         </div>
       </Html>

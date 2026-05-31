@@ -39,14 +39,14 @@ export function Door({ label, isNear, onInteract }: DoorProps) {
 
       {/* ── INTERACTIVE FEATURES ── */}
       {/* Room label sign above door */}
-      <Html position={[0, 2.75, 0.12]} center>
+      <Html position={[0, 2.75, 0.12]} transform occlude center>
         <div
           style={{
             background: 'rgba(90, 62, 20, 0.92)',
             color: '#f5e6c0',
-            padding: '4px 14px',
+            padding: '3px 8px',
             fontFamily: 'Georgia, serif',
-            fontSize: '13px',
+            fontSize: '8px',
             borderRadius: '3px',
             whiteSpace: 'nowrap',
             letterSpacing: '0.05em',
