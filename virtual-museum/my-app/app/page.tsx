@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className={`${styles.page} ${lato.className}`}>
 
-      {/* ── Falling stars background ── */}
+      {/* Falling stars background */}
       <div className={styles.stars}>
         <div className={styles.star} />
         <div className={styles.star} />
@@ -43,16 +43,7 @@ export default function Home() {
           />
         </div>
 
-        {/* ── Enter Museum CTA ── */}
-        <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
-          <Link href="/room-a" className={styles.enterButton}>
-            ➜ Enter the (WIP) virtual museum
-          </Link>
-        </div>
-
-        
-
-        {/* ── Roadmap ── */}
+        {/* Roadmap */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
           <h3>Roadmap</h3>
 
@@ -115,7 +106,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* ── About the museum ── */}
+        {/* About the museum */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
           <h3>About the museum</h3>
           <p>
@@ -150,7 +141,15 @@ export default function Home() {
           </p>
         </div>
 
-        {/* ── Subscribe ── */}
+        
+        {/* Enter Museum */}
+        <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
+          <Link href="/room-a" className={styles.enterButton}>
+            ➜ Enter the POC virtual museum
+          </Link>
+        </div>
+
+        {/* Subscribe */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
           <h3>Subscribe to updates</h3>
           <iframe
@@ -169,7 +168,7 @@ export default function Home() {
           />
         </div>
 
-        {/* ── Footer ── */}
+        {/* Footer */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
           <p>
             Copyright © 2026 The Museum of Magical Phenomena. All rights reserved.
