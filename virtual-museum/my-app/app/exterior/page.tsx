@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { WelcomePopup } from '../components/WelcomePopup'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const ExteriorScene = dynamic(() => import('./ExteriorScene'), { ssr: false })
 
@@ -39,6 +41,7 @@ const hudBtnBase: React.CSSProperties = {
 
 export default function ExteriorPage() {
   const router = useRouter()
+  const { t } = useLanguage()
   const [nearDoor, setNearDoor] = useState(false)
   const [autoWalk, setAutoWalk] = useState(false)
   const autoWalkRef = useRef(false)
@@ -176,7 +179,7 @@ export default function ExteriorPage() {
             <button
               type="button"
               onClick={handleToggleMute}
-              title={audioMuted ? 'Unmute audio' : 'Mute audio'}
+              title={audioMuted ? t('hud.unmuteAudio') : t('hud.muteAudio')}
               style={hudBtnBase}
             >
               {audioMuted ? '🔇' : '🔊'}
@@ -185,7 +188,7 @@ export default function ExteriorPage() {
             <button
               type="button"
               onClick={handleToggleAutoWalk}
-              title={autoWalk ? 'Stop auto-walk' : 'Start auto-walk'}
+              title={autoWalk ? t('hud.stopAutoWalk') : t('hud.startAutoWalk')}
               style={{
                 ...hudBtnBase,
                 background: autoWalk ? 'rgba(108,52,131,0.85)' : 'rgba(231,152,255,0.82)',
@@ -195,6 +198,8 @@ export default function ExteriorPage() {
             >
               {autoWalk ? '⏸' : '▶'}
             </button>
+
+            <LanguageSwitcher />
 
             <a
               href="/"
@@ -209,7 +214,7 @@ export default function ExteriorPage() {
                 textDecoration: 'none',
               }}
             >
-              ← Exit
+              {t('hud.exit')}
             </a>
           </div>
         </div>
@@ -222,7 +227,7 @@ export default function ExteriorPage() {
           borderRadius: '20px', fontFamily: 'sans-serif',
           pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
         }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
+          {t('hud.controlsHint')}
         </div>
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />

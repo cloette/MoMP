@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "The Museum of Magical Phenomena",
@@ -25,7 +26,9 @@ export default function RootLayout({
       <meta name="robots" content="index, follow"></meta>
       <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

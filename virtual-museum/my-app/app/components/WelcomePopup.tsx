@@ -1,10 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const STORAGE_KEY = 'momp_welcome_seen'
 
 export function WelcomePopup() {
   const [visible, setVisible] = useState(false)
+  const { t } = useLanguage()
 
   useEffect(() => {
     if (!localStorage.getItem(STORAGE_KEY)) {
@@ -52,7 +54,7 @@ export function WelcomePopup() {
           letterSpacing: '0.02em',
           lineHeight: '1.3',
         }}>
-          Welcome to the Museum of Magical Phenomena
+          {t('welcome.title')}
         </h2>
         <p style={{
           margin: '0 0 24px',
@@ -61,25 +63,13 @@ export function WelcomePopup() {
           fontFamily: 'sans-serif',
           fontStyle: 'italic',
         }}>
-          This is a simplified proof-of-concept virtual museum built with React and Three.js. It helps demonstrate what is possible. It can be accessed in the browser or in a VR headset.
+          {t('welcome.subtitle')}
         </p>
 
         <div style={{ borderTop: '1px solid #eee', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          <FeatureRow
-            icon="🔇"
-            title="Museum Audio"
-            desc="Sound is off by default. Tap 🔇 in the top-right, or press / on your keyboard, to unmute. A welcome message plays once; exhibit audio triggers at each stop."
-          />
-          <FeatureRow
-            icon="👣"
-            title="Auto-Walk"
-            desc="Tap ▶ in the top-right, or press Space, to let the camera guide you through the room. It pauses at each exhibit automatically. Press Space or ▶ again to stop."
-          />
-          <FeatureRow
-            icon="📷"
-            title="Camera Direction"
-            desc="Use the left and right arrows to look around. The < and > keys have the same function."
-          />
+          <FeatureRow icon="🔇" title={t('welcome.audioTitle')} desc={t('welcome.audioDesc')} />
+          <FeatureRow icon="👣" title={t('welcome.autoWalkTitle')} desc={t('welcome.autoWalkDesc')} />
+          <FeatureRow icon="📷" title={t('welcome.cameraTitle')} desc={t('welcome.cameraDesc')} />
         </div>
 
         <button
@@ -99,10 +89,10 @@ export function WelcomePopup() {
             letterSpacing: '0.04em',
           }}
         >
-          Begin Your Visit
+          {t('welcome.beginButton')}
         </button>
         <p style={{ margin: '10px 0 0', textAlign: 'center', fontSize: '12px', color: '#aaa', fontFamily: 'sans-serif' }}>
-          Press Enter to continue
+          {t('welcome.pressEnter')}
         </p>
       </div>
     </div>

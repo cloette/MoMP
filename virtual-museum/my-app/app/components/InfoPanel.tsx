@@ -1,5 +1,6 @@
 'use client'
 import { Html } from '@react-three/drei'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface InfoPanelProps {
   position: [number, number, number]
@@ -9,6 +10,7 @@ interface InfoPanelProps {
 }
 
 export function InfoPanel({ position, rotation = [0, 0, 0], title, body }: InfoPanelProps) {
+  const { t } = useLanguage()
   return (
     <group position={position} rotation={rotation}>
       {/* Backing plate */}
@@ -42,7 +44,7 @@ export function InfoPanel({ position, rotation = [0, 0, 0], title, body }: InfoP
             {title}
           </div>
           <div style={{ fontSize: '8px', color: '#555', lineHeight: 1.5 }}>
-            {body ?? 'Placeholder description. Content coming soon.'}
+            {body ?? t('infoPanel.placeholder')}
           </div>
         </div>
       </Html>

@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { WelcomePopup } from '../components/WelcomePopup'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
+import { useLanguage } from '../contexts/LanguageContext'
 import type { PauseZone } from '../components/RailCamera'
 
 const RoomScene = dynamic(() => import('../components/RoomScene'), { ssr: false })
@@ -48,6 +50,7 @@ const hudBtnBase: React.CSSProperties = {
 
 export default function RoomAPage() {
   const router = useRouter()
+  const { t } = useLanguage()
   const [nearDoor, setNearDoor] = useState(false)
   const [autoWalk, setAutoWalk] = useState(false)
   const autoWalkRef = useRef(false)
@@ -170,7 +173,7 @@ export default function RoomAPage() {
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
         <RoomScene
-          doorLabel="Gallery Room B →"
+          doorLabel={t('room.doorToB')}
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
           onDoorInteract={handleInteract}
@@ -201,7 +204,7 @@ export default function RoomAPage() {
             color: '#333',
             letterSpacing: '0.04em',
           }}>
-            Gallery Room A
+            {t('room.galleryRoomA')}
           </div>
 
           {/* Right-side controls */}
@@ -209,7 +212,7 @@ export default function RoomAPage() {
             <button
               type="button"
               onClick={handleToggleMute}
-              title={audioMuted ? 'Unmute audio' : 'Mute audio'}
+              title={audioMuted ? t('hud.unmuteAudio') : t('hud.muteAudio')}
               style={hudBtnBase}
             >
               {audioMuted ? '🔇' : '🔊'}
@@ -218,7 +221,7 @@ export default function RoomAPage() {
             <button
               type="button"
               onClick={handleToggleAutoWalk}
-              title={autoWalk ? 'Stop auto-walk' : 'Start auto-walk'}
+              title={autoWalk ? t('hud.stopAutoWalk') : t('hud.startAutoWalk')}
               style={{
                 ...hudBtnBase,
                 background: autoWalk ? 'rgba(108,52,131,0.85)' : 'rgba(231, 152, 255, 0.82)',
@@ -228,6 +231,8 @@ export default function RoomAPage() {
             >
               {autoWalk ? '⏸' : '▶'}
             </button>
+
+            <LanguageSwitcher />
 
             <a
               href="/"
@@ -242,7 +247,7 @@ export default function RoomAPage() {
                 textDecoration: 'none',
               }}
             >
-              ← Exit Museum
+              {t('hud.exitMuseum')}
             </a>
           </div>
         </div>
@@ -255,7 +260,7 @@ export default function RoomAPage() {
           borderRadius: '20px', fontFamily: 'sans-serif',
           pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
         }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
+          {t('hud.controlsHint')}
         </div>
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />

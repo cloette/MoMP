@@ -1,5 +1,6 @@
 'use client'
 import { useControlKeys } from './ControlsContext'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface MobileControlsProps {
   nearDoor: boolean
@@ -40,6 +41,7 @@ function VBtn({ label, keyName }: { label: string; keyName: string }) {
 }
 
 export function MobileControls({ nearDoor, onInteract }: MobileControlsProps) {
+  const { t } = useLanguage()
   return (
     // ── INTERACTIVE FEATURES ── on-screen controls overlay
     <div
@@ -85,7 +87,7 @@ export function MobileControls({ nearDoor, onInteract }: MobileControlsProps) {
             }}
             onClick={onInteract}
           >
-            Enter
+            {t('mobile.enterDoor')}
           </div>
         </div>
       )}

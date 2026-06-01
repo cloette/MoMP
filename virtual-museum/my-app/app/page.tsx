@@ -1,8 +1,11 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
 import { Lato } from 'next/font/google'
 import styles from './home.module.css'
+import { useLanguage } from './contexts/LanguageContext'
+import { LanguageSwitcher } from './components/LanguageSwitcher'
 
 const lato = Lato({
   subsets: ['latin'],
@@ -12,6 +15,8 @@ const lato = Lato({
 })
 
 export default function Home() {
+  const { t } = useLanguage()
+
   return (
     <div className={`${styles.page} ${lato.className}`}>
 
@@ -31,8 +36,11 @@ export default function Home() {
 
       <main className={styles.main}>
 
-        {/* Logo */}
-        <div className={styles.fadeInDown} style={{ textAlign: 'center', paddingTop: '40px' }}>
+        {/* Logo + language switcher */}
+        <div className={styles.fadeInDown} style={{ textAlign: 'center', paddingTop: '40px', position: 'relative' }}>
+          <div style={{ position: 'absolute', top: 0, right: 0 }}>
+            <LanguageSwitcher />
+          </div>
           <Image
             src="/MoMP.png"
             alt="The Museum of Magical Phenomena"
@@ -45,7 +53,7 @@ export default function Home() {
 
         {/* Roadmap */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
-          <h3>Roadmap</h3>
+          <h3>{t('home.roadmapTitle')}</h3>
 
           {/* Desktop breadcrumb row */}
           <div
@@ -56,40 +64,32 @@ export default function Home() {
               className={styles.breadcrumb}
               style={{ maxWidth: '200px', background: '#7c6490' }}
             >
-              <em>Phase 1:</em>
+              <em>{t('home.phase1Label')}</em>
               <br />
-              Construct a virtual museum that serves as a proof-of-concept for a real museum to be
-              created at a later date.
+              {t('home.phase1Desc')}
             </div>
             <div className={styles.breadcrumb} style={{ maxWidth: '300px' }}>
-              <em>Phase 2:</em>
+              <em>{t('home.phase2Label')}</em>
               <br />
-              A traveling pop-up exhibit. A small version of the in-person experience that can be
-              easily transported and presented at existing museums as a temporary exhibit.
+              {t('home.phase2Desc')}
             </div>
             <div className={styles.breadcrumb} style={{ maxWidth: '300px' }}>
-              <em>Phase 3:</em>
+              <em>{t('home.phase3Label')}</em>
               <br />
-              A permanent museum, providing the complete experience, including several interactive,
-              haptic, and sensory experiences, as well as complimentary souvenirs.
+              {t('home.phase3DescDesktop')}
             </div>
           </div>
 
           {/* Mobile roadmap text */}
           <div className={styles.hideondesktop}>
             <p>
-              <em>Phase 1:</em> Construct a virtual museum that serves as a proof-of-concept for a
-              real museum to be created at a later date.
+              <em>{t('home.phase1Label')}</em> {t('home.phase1Desc')}
             </p>
             <p>
-              <em>Phase 2:</em> A traveling pop-up exhibit. A small version of the in-person
-              experience that can be easily transported and presented at existing museums as a
-              temporary exhibit.
+              <em>{t('home.phase2Label')}</em> {t('home.phase2Desc')}
             </p>
             <p>
-              <em>Phase 3:</em> A permanent museum, providing the complete experience, including
-              several interactive, haptic, and sensory experiences, as well as complimentary
-              souvenirs. Location is still to be determined.
+              <em>{t('home.phase3Label')}</em> {t('home.phase3DescMobile')}
             </p>
           </div>
 
@@ -101,57 +101,54 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Become a volunteer!
+              {t('home.becomeVolunteer')}
             </a>
           </p>
         </div>
 
         {/* About the museum */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
-          <h3>About the museum</h3>
+          <h3>{t('home.aboutTitle')}</h3>
           <p>
-            <em>What counts as magical phenomena?</em> Forces that are invisible to the naked eye
-            are generally considered to be magical, and we expand on this to include accurate prediction of the future and
-            communication with animals.
-          </p><br></br>
+            <em>{t('home.whatCountsLabel')}</em> {t('home.whatCountsDesc')}
+          </p><br />
           <p>
-            <em>Planned Exhibits:</em>
+            <em>{t('home.plannedExhibitsLabel')}</em>
           </p>
           <ul>
-            <li>• Art Hall</li>
-            <li>• Persistent Mysteries</li>
-            <li>• Magical Phenomena in Nature</li>
-            <li>• Magical Phenomena in Technology</li>
-            <li>• Magic Types and Systems in Fictional Media</li>
-            <li>• Occupational History</li>
-            <li>• Intersections with Religion and Folklore</li>
-            <li>• Rethink the Limit: Chamber of Inspiration</li>
-            <li>• Wish Room: Dress-up area + paper star station</li>
+            <li>• {t('home.exhibitArtHall')}</li>
+            <li>• {t('home.exhibitPersistentMysteries')}</li>
+            <li>• {t('home.exhibitNature')}</li>
+            <li>• {t('home.exhibitTechnology')}</li>
+            <li>• {t('home.exhibitFictionalMedia')}</li>
+            <li>• {t('home.exhibitOccupationalHistory')}</li>
+            <li>• {t('home.exhibitReligionFolklore')}</li>
+            <li>• {t('home.exhibitChamberOfInspiration')}</li>
+            <li>• {t('home.exhibitWishRoom')}</li>
           </ul>
-          <br /><br></br>
-          <p>Want to help curate the exhibits? <br /><br />
+          <br /><br />
+          <p>{t('home.wantToHelp')} <br /><br />
             <a
               className={styles.button}
               href="https://forms.gle/4E79fNvAYKkPkiB88"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Become a volunteer!
+              {t('home.becomeVolunteer')}
             </a>
           </p>
         </div>
 
-        
         {/* Enter Museum */}
         <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
           <Link href="/room-a" className={styles.enterButton}>
-            ➜ Enter the POC virtual museum
+            {t('home.enterMuseum')}
           </Link>
         </div>
 
         {/* Subscribe */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
-          <h3>Subscribe to updates</h3>
+          <h3>{t('home.subscribeTitle')}</h3>
           <iframe
             data-w-type="embedded"
             frameBorder={0}
@@ -171,11 +168,11 @@ export default function Home() {
         {/* Footer */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
           <p>
-            Copyright © 2026 The Museum of Magical Phenomena. All rights reserved.
+            {t('home.copyright')}
             <br />
-            This site does not use cookies.
+            {t('home.noCookies')}
             <br />
-            Falling stars effect by{' '}
+            {t('home.fallingStarsCredit')}{' '}
             <a href="https://codepen.io/alphardex" target="_blank" rel="noopener noreferrer">
               alphardex
             </a>

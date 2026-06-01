@@ -1,5 +1,6 @@
 'use client'
 import { Html } from '@react-three/drei'
+import { useLanguage } from '../contexts/LanguageContext'
 
 interface DoorProps {
   label: string
@@ -8,6 +9,7 @@ interface DoorProps {
 }
 
 export function Door({ label, isNear, onInteract }: DoorProps) {
+  const { t } = useLanguage()
   return (
     // ── IN-ROOM OBJECTS ── door (positioned by parent group)
     <group>
@@ -71,7 +73,7 @@ export function Door({ label, isNear, onInteract }: DoorProps) {
               fontFamily: 'sans-serif',
             }}
           >
-            Click door or press <kbd style={{ background: '#444', padding: '1px 5px', borderRadius: '3px' }}>Space</kbd>
+            {t('hud.doorHintPrefix')} <kbd style={{ background: '#444', padding: '1px 5px', borderRadius: '3px' }}>Space</kbd>
           </div>
         </Html>
       )}

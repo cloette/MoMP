@@ -1,4 +1,5 @@
 'use client'
+import { useLanguage } from '../contexts/LanguageContext'
 import { Frame } from './Frame'
 import { InfoPanel } from './InfoPanel'
 import { Pedestal } from './Pedestal'
@@ -26,6 +27,7 @@ export function GalleryRoom({
   pedestalEmissive = '#6c3483',
   exhibitPrefix = 'A',
 }: GalleryRoomProps) {
+  const { t } = useLanguage()
   return (
     <group>
       {/* ── BACKGROUND ──────────────────────────────────────────── */}
@@ -139,7 +141,7 @@ export function GalleryRoom({
       <InfoPanel
         position={[-5.83, 0.85, -2.6]}
         rotation={[0, Math.PI / 2, 0]}
-        title={`Exhibit ${exhibitPrefix}2`}
+        title={`${t('infoPanel.exhibitLabel')} ${exhibitPrefix}2`}
       />
 
       {/* Left wall — front frame + panel */}
@@ -147,7 +149,7 @@ export function GalleryRoom({
       <InfoPanel
         position={[-5.83, 0.85, 2.6]}
         rotation={[0, Math.PI / 2, 0]}
-        title={`Exhibit ${exhibitPrefix}1`}
+        title={`${t('infoPanel.exhibitLabel')} ${exhibitPrefix}1`}
       />
 
       {/* Right wall — back frame + panel */}
@@ -155,7 +157,7 @@ export function GalleryRoom({
       <InfoPanel
         position={[5.83, 0.85, -2.6]}
         rotation={[0, -Math.PI / 2, 0]}
-        title={`Exhibit ${exhibitPrefix}3`}
+        title={`${t('infoPanel.exhibitLabel')} ${exhibitPrefix}3`}
       />
 
       {/* Right wall — front frame + panel */}
@@ -163,7 +165,7 @@ export function GalleryRoom({
       <InfoPanel
         position={[5.83, 0.85, 2.6]}
         rotation={[0, -Math.PI / 2, 0]}
-        title={`Exhibit ${exhibitPrefix}4`}
+        title={`${t('infoPanel.exhibitLabel')} ${exhibitPrefix}4`}
       />
 
       {/* Door in back wall */}

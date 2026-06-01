@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "stop": "npx kill-port 3000"
+    "stop": "npx kill-port 3000",
+    "translate": "DEEPL_API_KEY=$DEEPL_API_KEY ts-node --project tsconfig.json scripts/translate.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
