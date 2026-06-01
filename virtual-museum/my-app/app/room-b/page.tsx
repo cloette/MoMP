@@ -7,7 +7,7 @@ import { MobileControls } from '../components/MobileControls'
 import { WelcomePopup } from '../components/WelcomePopup'
 import type { PauseZone } from '../components/RailCamera'
 
-const RoomScene = dynamic(() => import('../components/RoomScene'), { ssr: false })
+const RoomSceneB = dynamic(() => import('./RoomSceneB'), { ssr: false })
 
 // Mirrored-S path for Room B (starts right, crosses to left).
 // Same room geometry as A; x coordinates are sign-flipped.
@@ -169,14 +169,13 @@ export default function RoomBPage() {
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        <RoomScene
+        <RoomSceneB
           doorLabel="← Gallery Room A"
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
           onDoorInteract={handleInteract}
           pedestalColor="#2ecc71"
           pedestalEmissive="#1a7a42"
-          exhibitPrefix="B"
           path={PATH_B}
           autoWalk={autoWalk}
           autoWalkPaused={autoWalkPaused}
