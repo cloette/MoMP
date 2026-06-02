@@ -4,20 +4,23 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
-import { WelcomePopup } from '../components/WelcomePopup'
+import { PauseZone } from '../components/RailCamera'
 
-const ExteriorScene = dynamic(() => import('./ExteriorScene'), { ssr: false })
+const LobbyScene = dynamic(() => import('./LobbyScene'), { ssr: false })
 
-// Straight path: garden (z=+20) → camera start (z=0) → pedestal/door (z=-18)
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
-  [0,  20],  // garden end  (t = 0)
+  [0,  20],  
   [0,   0],  // camera start
-  [0, -18],  // forward limit (t = 1)
+  [0, -18],  
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = 20 / 38
 const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
+
+const PAUSE_ZONES: PauseZone[] = [
+  { t: 0.90, audioSrc: '/MoMPwelcome.m4a' },
+]
 
 const hudBtnBase: React.CSSProperties = {
   background: 'rgba(255,255,255,0.82)',
@@ -37,10 +40,11 @@ const hudBtnBase: React.CSSProperties = {
   flexShrink: 0,
 }
 
-export default function ExteriorPage() {
+export default function LobbyPage() {
   const router = useRouter()
   const [nearDoor, setNearDoor] = useState(false)
   const [autoWalk, setAutoWalk] = useState(false)
+  const [autoWalkPaused, setAutoWalkPaused] = useState(false)
   const autoWalkRef = useRef(false)
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
@@ -57,7 +61,7 @@ export default function ExteriorPage() {
     audioMutedRef.current = !unmuted
 
     if (unmuted) {
-      const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
+      const ambient = new Audio('/exhibitobjects/lobby/lobby-sound.mp3')
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
@@ -96,17 +100,6 @@ export default function ExteriorPage() {
       } else {
         ambientAudioRef.current.play().catch(() => {})
       }
-
-      // Welcome narration once per session
-      if (!sessionStorage.getItem('momp_welcome_played')) {
-        sessionStorage.setItem('momp_welcome_played', '1')
-        const audio = new Audio('/MoMPwelcome.m4a')
-        currentAudioRef.current = audio
-        audio.play().catch(() => {})
-        audio.onended = () => {
-          if (currentAudioRef.current === audio) currentAudioRef.current = null
-        }
-      }
     } else {
       currentAudioRef.current?.pause()
       currentAudioRef.current = null
@@ -121,12 +114,28 @@ export default function ExteriorPage() {
     setAutoWalk(v => !v)
   }, [])
 
-  const handleInteract = useCallback(() => {
+  const handleEnterZone = useCallback((index: number) => {
+    const zone = PAUSE_ZONES[index]
+    if (!zone || audioMutedRef.current) return
+
+    setAutoWalkPaused(true)
+    currentAudioRef.current?.pause()
+    const audio = new Audio(zone.audioSrc)
+    currentAudioRef.current = audio
+    audio.play().catch(() => { setAutoWalkPaused(false) })
+    audio.addEventListener('ended', () => { setAutoWalkPaused(false) }, { once: true })
+  }, [])
+
+  // Generic navigate: cleans up audio, persists auto-walk flag, then pushes route
+  const handleNavigate = useCallback((route: string) => {
     currentAudioRef.current?.pause()
     currentAudioRef.current = null
     if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
-    router.push('/lobby')
+    router.push(route)
   }, [router])
+
+  // Default action for keyboard Enter / auto-walk / mobile = far-left door
+  const handleInteract = useCallback(() => handleNavigate('/wish-room'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
@@ -144,23 +153,33 @@ export default function ExteriorPage() {
     return () => window.removeEventListener('keydown', onKey)
   }, [handleToggleAutoWalk, handleToggleMute, handleInteract])
 
-  // Auto-navigate when auto-walk reaches the door
+  // Pause camera when auto-walk reaches the door, then navigate after brief delay
   useEffect(() => {
-    if (!autoWalk || !nearDoor) return
-    const t = setTimeout(handleInteract, 800)
-    return () => clearTimeout(t)
+    if (!autoWalk || !nearDoor) {
+      setAutoWalkPaused(false)
+      return
+    }
+    setAutoWalkPaused(true)
+    const t = setTimeout(handleInteract, 1500)
+    return () => {
+      clearTimeout(t)
+      setAutoWalkPaused(false)
+    }
   }, [autoWalk, nearDoor, handleInteract])
 
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        <ExteriorScene
+        <LobbyScene
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
-          onDoorInteract={handleInteract}
+          onNavigate={handleNavigate}
           path={PATH_EXT}
           startT={START_T}
           autoWalk={autoWalk}
+          autoWalkPaused={autoWalkPaused}
+          zones={PAUSE_ZONES}
+          onEnterZone={handleEnterZone}
         />
 
         {/* HUD overlay */}
@@ -170,7 +189,6 @@ export default function ExteriorPage() {
           padding: '16px 20px',
           pointerEvents: 'none', zIndex: 10,
         }}>
-          
           <div style={{
             background: 'rgba(255, 255, 255, 0)',
             backdropFilter: 'blur(6px)',
@@ -235,7 +253,6 @@ export default function ExteriorPage() {
         </div>
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
-        <WelcomePopup />
       </div>
     </ControlsProvider>
   )
