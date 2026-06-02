@@ -39,6 +39,7 @@ export default function LobbyPage() {
   const router = useRouter()
   const [nearDoor, setNearDoor] = useState(false)
   const [autoWalk, setAutoWalk] = useState(false)
+  const [autoWalkPaused, setAutoWalkPaused] = useState(false)
   const autoWalkRef = useRef(false)
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
@@ -108,12 +109,16 @@ export default function LobbyPage() {
     setAutoWalk(v => !v)
   }, [])
 
-  const handleInteract = useCallback(() => {
+  // Generic navigate: cleans up audio, persists auto-walk flag, then pushes route
+  const handleNavigate = useCallback((route: string) => {
     currentAudioRef.current?.pause()
     currentAudioRef.current = null
     if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
-    router.push('/room-a')
+    router.push(route)
   }, [router])
+
+  // Default action for keyboard Enter / auto-walk / mobile = far-left door
+  const handleInteract = useCallback(() => handleNavigate('/wish-room'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
@@ -131,11 +136,18 @@ export default function LobbyPage() {
     return () => window.removeEventListener('keydown', onKey)
   }, [handleToggleAutoWalk, handleToggleMute, handleInteract])
 
-  // Auto-navigate when auto-walk reaches the door
+  // Pause camera when auto-walk reaches the door, then navigate after brief delay
   useEffect(() => {
-    if (!autoWalk || !nearDoor) return
-    const t = setTimeout(handleInteract, 800)
-    return () => clearTimeout(t)
+    if (!autoWalk || !nearDoor) {
+      setAutoWalkPaused(false)
+      return
+    }
+    setAutoWalkPaused(true)
+    const t = setTimeout(handleInteract, 1500)
+    return () => {
+      clearTimeout(t)
+      setAutoWalkPaused(false)
+    }
   }, [autoWalk, nearDoor, handleInteract])
 
   return (
@@ -144,10 +156,11 @@ export default function LobbyPage() {
         <LobbyScene
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
-          onDoorInteract={handleInteract}
+          onNavigate={handleNavigate}
           path={PATH_EXT}
           startT={START_T}
           autoWalk={autoWalk}
+          autoWalkPaused={autoWalkPaused}
         />
 
         {/* HUD overlay */}
@@ -157,6 +170,14 @@ export default function LobbyPage() {
           padding: '16px 20px',
           pointerEvents: 'none', zIndex: 10,
         }}>
+          <div style={{
+            background: 'rgba(255, 255, 255, 0)',
+            backdropFilter: 'blur(6px)',
+            fontSize: '15px',
+            color: '#33333300',
+            letterSpacing: '0.04em'
+          }}>
+          </div>
 
           {/* Right-side controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', pointerEvents: 'all' }}>

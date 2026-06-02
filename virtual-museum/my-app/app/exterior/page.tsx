@@ -125,7 +125,7 @@ export default function ExteriorPage() {
     currentAudioRef.current?.pause()
     currentAudioRef.current = null
     if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
-    router.push('/room-a')
+    router.push('/lobby')
   }, [router])
 
   const nearDoorRef = useRef(false)
@@ -170,6 +170,15 @@ export default function ExteriorPage() {
           padding: '16px 20px',
           pointerEvents: 'none', zIndex: 10,
         }}>
+          
+          <div style={{
+            background: 'rgba(255, 255, 255, 0)',
+            backdropFilter: 'blur(6px)',
+            fontSize: '15px',
+            color: '#33333300',
+            letterSpacing: '0.04em'
+          }}>
+          </div>
 
           {/* Right-side controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', pointerEvents: 'all' }}>

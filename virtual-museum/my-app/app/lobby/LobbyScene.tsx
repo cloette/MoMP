@@ -4,12 +4,13 @@ import { LobbyRoom } from './LobbyRoom'
 import { RailCamera } from '../components/RailCamera'
 import type { PauseZone } from '../components/RailCamera'
 
-const DOOR_T_PARAM = 0.93
+// 3 units before the front doors at z=-18: dist=35 of 38 total
+const DOOR_T_PARAM = 35 / 38
 
 interface LobbySceneProps {
   nearDoor: boolean
   onNearDoor: (near: boolean) => void
-  onDoorInteract: () => void
+  onNavigate: (route: string) => void
   startT?: number
   path: readonly [number, number][]
   autoWalk?: boolean
@@ -21,8 +22,9 @@ interface LobbySceneProps {
 export default function LobbyScene({
   nearDoor,
   onNearDoor,
-  onDoorInteract,
+  onNavigate,
   path,
+  startT = 0,
   autoWalk,
   autoWalkPaused,
   zones,
@@ -31,15 +33,16 @@ export default function LobbyScene({
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [path[0][0], 1.4, path[0][1]], fov: 68, near: 0.1, far: 50 }}
-      style={{ width: '100%', height: '100%', background: '#f0ede8' }}
+      camera={{ position: [0, 1.6, 0], fov: 68, near: 0.1, far: 200 }}
+      style={{ width: '100%', height: '100%', background: '#000000' }}
     >
       <LobbyRoom
         nearDoor={nearDoor}
-        onDoorInteract={onDoorInteract}
+        onNavigate={onNavigate}
       />
       <RailCamera
         path={path}
+        startT={startT}
         doorTParam={DOOR_T_PARAM}
         onNearDoor={onNearDoor}
         autoWalk={autoWalk}
