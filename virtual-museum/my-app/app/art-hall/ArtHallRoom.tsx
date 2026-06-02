@@ -4,23 +4,19 @@ import { Html, useGLTF, useTexture } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 
-const FAR_Z = -18         // far end: four front doors / T crossbar
+const FAR_Z = -18         // far end: one front doors
 const BACK_Z = 20         // back end: one rear door
 const PATH_CENTER_Z = 1   // midpoint of 20 + (−18)
 const PATH_LENGTH = 38
 
-// T crossbar runs left/right at FAR_Z connecting the four doors
-const CROSSBAR_X_EXTENT = 22  // ±8 from center
+const CROSSBAR_X_EXTENT = 22 
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-  { x:  -6, label: 'Art Hall',  route: '/art-hall'  },
-  { x:  -2, label: 'Exhibits', route: '/room-a'    },
-  { x: 2, label: 'Library',   route: '/library'   },
-  { x: 6, label: 'Wish Room', route: '/wish-room' },
+  { x:  0, label: 'Exhibits', route: '/room-a'    },
 ]
 
 function SpaceBackdrop() {
-  const texture = useTexture('/exhibitobjects/lobby/spacebgtaller.jpg')
+  const texture = useTexture('/exhibitobjects/arthall/backgroundAH.jpg')
   const { scene } = useThree()
   useEffect(() => {
     texture.mapping = THREE.EquirectangularReflectionMapping
@@ -35,7 +31,7 @@ function RevealedText({ position, isNear }: { position: [number, number, number]
 
   const textStyle: React.CSSProperties = {
     opacity: 0,
-    animation: 'revealText 4s ease-in-out 5s both',
+    animation: 'revealText 8s ease-in-out 4s both',
     fontFamily: 'sans-serif',
     textShadow: '0 0 5px #000, 0 0 10px #000, 0 0 20px #000, 0 0 30px #000, 0 0 40px #000, 0 0 55px #000, 0 0 75px #000',
     whiteSpace: 'nowrap',
@@ -53,15 +49,18 @@ function RevealedText({ position, isNear }: { position: [number, number, number]
         }
       `}</style>
       <div style={{ ...textStyle, color: '#f9f9f9', padding: '4px 12px', fontSize: '20px' }}>
-        There is a secret room in this museum.
+        This is the Art Hall.
       </div>
       <div style={{ ...textStyle, color: '#ffffff', padding: '4px 2px 4px 12px', fontSize: '34px' }}>
-        Can you find it?
+        Right now it&lsquo;s just a big empty space, <br />
+        but soon it will be filled with colorful, <br />
+        interactive art installations.
       </div>
     </Html>
   )
 }
 
+// Door portal 
 function DoorPortal({
   position,
   rotationY = 0,
@@ -161,12 +160,12 @@ function PathLayer({
   )
 }
 
-interface LobbyProps {
+interface ArtHallProps {
   nearDoor: boolean
   onNavigate: (route: string) => void
 }
 
-export function LobbyRoom({ nearDoor, onNavigate }: LobbyProps) {
+export function ArtHallRoom({ nearDoor, onNavigate }: ArtHallProps) {
   return (
     <group>
       {/* ── BACKDROP ────────────────────────────────────────────── */}
@@ -185,24 +184,13 @@ export function LobbyRoom({ nearDoor, onNavigate }: LobbyProps) {
       </mesh>
 
       {/* ── PATH STEM (along Z) ──────────────────────────────────── */}
-      <PathLayer y={0.01} xSize={5}   zSize={PATH_LENGTH + 14} centerZ={PATH_CENTER_Z}
-        color="#0022aa" emissive="#0044ff" emissiveIntensity={2} />
       <PathLayer y={0.02} xSize={3.5} zSize={PATH_LENGTH + 12} centerZ={PATH_CENTER_Z}
-        color="#003300" emissive="#00cc44" emissiveIntensity={2.5} />
+        color="#003300" emissive="#fe06b6" emissiveIntensity={2.5} />
       <PathLayer y={0.03} xSize={2.5} zSize={PATH_LENGTH + 10} centerZ={PATH_CENTER_Z}
-        color="#000000" />
-
-      {/* ── PATH CROSSBAR (along X at far end — forms the T) ────── */}
-      <PathLayer y={0.01} xSize={CROSSBAR_X_EXTENT}     zSize={10}   centerZ={FAR_Z-3}
-        color="#0022aa" emissive="#0044ff" emissiveIntensity={2} />
-      <PathLayer y={0.02} xSize={CROSSBAR_X_EXTENT - 2} zSize={9} centerZ={FAR_Z-3}
-        color="#003300" emissive="#00cc44" emissiveIntensity={2.5} />
-      <PathLayer y={0.03} xSize={CROSSBAR_X_EXTENT - 4} zSize={8} centerZ={FAR_Z-3}
         color="#000000" />
 
       {/* ── DOORS ───────────────────────────────────────────────── */}
       <Suspense fallback={null}>
-        {/* Four front doors at FAR_Z, facing +Z toward the approaching camera */}
         {FRONT_DOORS.map(({ x, label, route }, i) => (
           <DoorPortal
             key={i}
@@ -214,15 +202,14 @@ export function LobbyRoom({ nearDoor, onNavigate }: LobbyProps) {
           />
         ))}
 
-        <RevealedText position={[0, 2.5, PATH_CENTER_Z - 20]} isNear={true} />
+        <RevealedText position={[0, 3, PATH_CENTER_Z - 20]} isNear={true} />
 
-        {/* Rear door behind starting point → exterior */}
         <DoorPortal
           position={[0, 0, BACK_Z -2.1]}
           rotationY={Math.PI}
-          label=""
+          label="Lobby"
           isNear={nearDoor}
-          onInteract={() => onNavigate('/exterior')}
+          onInteract={() => onNavigate('/lobby')}
         />
       </Suspense>
     </group>

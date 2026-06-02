@@ -6,7 +6,7 @@ import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { PauseZone } from '../components/RailCamera'
 
-const LobbyScene = dynamic(() => import('./LobbyScene'), { ssr: false })
+const ArtHallScene = dynamic(() => import('./ArtHallScene'), { ssr: false })
 
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
@@ -135,7 +135,7 @@ export default function LobbyPage() {
   }, [router])
 
   // Default action for keyboard Enter / auto-walk / mobile = far-left door
-  const handleInteract = useCallback(() => handleNavigate('/art-hall'), [handleNavigate])
+  const handleInteract = useCallback(() => handleNavigate('/room-a'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
@@ -170,7 +170,7 @@ export default function LobbyPage() {
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        <LobbyScene
+        <ArtHallScene
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
           onNavigate={handleNavigate}
