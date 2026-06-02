@@ -24,7 +24,7 @@ const FRONT_DOORS: { x: number; label: string; route: string }[] = [
 // ── Space backdrop ──────────────────────────────────────────────────────────
 // Sets the three.js scene.background to the space webp so it fills the skybox.
 function SpaceBackdrop() {
-  const texture = useTexture('/exhibitobjects/lobby/spacebg.webp')
+  const texture = useTexture('/exhibitobjects/lobby/spacebgtaller.jpg')
   const { scene } = useThree()
   useEffect(() => {
     texture.mapping = THREE.EquirectangularReflectionMapping
@@ -34,13 +34,40 @@ function SpaceBackdrop() {
   return null
 }
 
-// ── Door portal ─────────────────────────────────────────────────────────────
-// The GLB loads upright by default (no tilt needed).
-// rotationY=0   → model faces +Z  (use for front doors; camera approaches from +Z)
-// rotationY=π   → model faces −Z  (use for back door; camera sees it by looking +Z)
-//
-// Html labels use screenspace positioning (no `transform` prop) so they are
-// never mirrored/flipped by the parent group's rotationY.
+function RevealedText({ position, isNear }: { position: [number, number, number], isNear: boolean }) {
+  if (!isNear) return null
+
+  // 3s delay → 1s fade in → 3s visible → 1s fade out
+  const textStyle: React.CSSProperties = {
+    opacity: 0,
+    animation: 'revealText 4s ease-in-out 5s both',
+    fontFamily: 'sans-serif',
+    textShadow: '0 0 5px #000, 0 0 10px #000, 0 0 20px #000, 0 0 30px #000, 0 0 40px #000, 0 0 55px #000, 0 0 75px #000',
+    whiteSpace: 'nowrap',
+    pointerEvents: 'none',
+  }
+
+  return (
+    <Html position={position} center zIndexRange={[10, 20]}>
+      <style>{`
+        @keyframes revealText {
+          0%   { opacity: 0; }
+          20%  { opacity: 1; }
+          80%  { opacity: 1; }
+          100% { opacity: 0; }
+        }
+      `}</style>
+      <div style={{ ...textStyle, color: '#f9f9f9', padding: '4px 12px', fontSize: '20px' }}>
+        There is a secret room in this museum.
+      </div>
+      <div style={{ ...textStyle, color: '#ffffff', padding: '4px 2px 4px 12px', fontSize: '34px' }}>
+        Can you find it?
+      </div>
+    </Html>
+  )
+}
+
+// ── Door portal 
 function DoorPortal({
   position,
   rotationY = 0,
@@ -197,6 +224,8 @@ export function LobbyRoom({ nearDoor, onNavigate }: LobbyProps) {
             onInteract={() => onNavigate(route)}
           />
         ))}
+
+        <RevealedText position={[0, 2.5, PATH_CENTER_Z - 20]} isNear={true} />
 
         {/* Rear door behind starting point → exterior */}
         <DoorPortal

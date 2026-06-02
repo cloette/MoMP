@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
+import { PauseZone } from '../components/RailCamera'
 
 const LobbyScene = dynamic(() => import('./LobbyScene'), { ssr: false })
 
@@ -16,6 +17,10 @@ const PATH_EXT: readonly [number, number][] = [
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = 20 / 38
 const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
+
+const PAUSE_ZONES: PauseZone[] = [
+  { t: 0.90, audioSrc: '/MoMPwelcome.m4a' },
+]
 
 const hudBtnBase: React.CSSProperties = {
   background: 'rgba(255,255,255,0.82)',
@@ -109,6 +114,18 @@ export default function LobbyPage() {
     setAutoWalk(v => !v)
   }, [])
 
+  const handleEnterZone = useCallback((index: number) => {
+    const zone = PAUSE_ZONES[index]
+    if (!zone || audioMutedRef.current) return
+
+    setAutoWalkPaused(true)
+    currentAudioRef.current?.pause()
+    const audio = new Audio(zone.audioSrc)
+    currentAudioRef.current = audio
+    audio.play().catch(() => { setAutoWalkPaused(false) })
+    audio.addEventListener('ended', () => { setAutoWalkPaused(false) }, { once: true })
+  }, [])
+
   // Generic navigate: cleans up audio, persists auto-walk flag, then pushes route
   const handleNavigate = useCallback((route: string) => {
     currentAudioRef.current?.pause()
@@ -161,6 +178,8 @@ export default function LobbyPage() {
           startT={START_T}
           autoWalk={autoWalk}
           autoWalkPaused={autoWalkPaused}
+          zones={PAUSE_ZONES}
+          onEnterZone={handleEnterZone}
         />
 
         {/* HUD overlay */}
