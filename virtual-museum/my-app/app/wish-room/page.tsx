@@ -157,7 +157,21 @@ export default function WishRoomPage() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
-              Credits coming soon.
+              Origami Lucky Star Tutorial by <a href="https://www.youtube.com/@EasyPaperOrigami" target="_blank">Easy Paper Origami</a>
+              <br />"Computer Desk" (https://skfb.ly/6BRuF) by felixawani is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Paper Stack" (https://skfb.ly/oI98E) by Vivify Productions is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"ORIGAMI Dragon" (https://skfb.ly/oTYnL) by Jac.obj is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Low poly animated Cartoon Whale" (https://skfb.ly/oFMAq) by Blue Colossus Studio is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Torti - Stylized Turtle" (https://skfb.ly/oyIWN) by Bato Balvanera is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Snake" (https://skfb.ly/UpVV) by Anette Rana is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Cute Little Bunny pet" (https://skfb.ly/oZrnA) by james.dales is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Magician Top Hat" (https://skfb.ly/o7XQQ) by Janice Emmons 1990-present is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Luffy's Straw Hat" (https://skfb.ly/owNED) by Mzati Chikoko is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Witch Hat Halooween" (https://skfb.ly/oquJJ) by Sarath K is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Red Bowtie" (https://skfb.ly/ooDUU) by assetfactory is licensed under the free standard license.
+              <br />"Sapphire Pendant with Inner Fracture" (https://skfb.ly/pzJFV) by Valentine_crut is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Rune Pendant" (https://skfb.ly/6RyVv) by powers28 is licensed under the free standard license.
+              <br />"Staff" (https://skfb.ly/6QVBQ) by ndotson904 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
             </p>
           </CreditsPanel>
         )}
