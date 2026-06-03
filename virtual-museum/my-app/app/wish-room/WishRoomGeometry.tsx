@@ -1,31 +1,37 @@
 'use client'
+import { useMemo, Suspense, useEffect } from 'react'
 import { Html } from '@react-three/drei'
 import { Door } from '../components/Door'
+import { GlassJar } from './GlassJar'
+import { DeskWithPaper } from './Desk'
+import { Mirror } from './Mirror'
+import { DressingShelf } from './DressingShelf'
 
 // Room: W=12 (x: -6..+6), D=14 (z: -7..+7), H=3.6
 const W = 12, D = 14, H = 3.6
-const WALL  = '#111111'
+const WALL = '#0a113d'
 const FLOOR = '#888888'
-const CEIL  = '#444444'
-const RAIL  = '#666666'
+const CEIL = '#000000'
+const RAIL = '#005a74'
 const RAIL_H = 0.12
 const RAIL_D = 0.08
 
 interface Props {
   nearDoor: boolean
   onDoorInteract: () => void
+  lobbyDoorInteract: () => void
   onOpenDressUp: () => void
   onOpenStarStation: () => void
 }
 
-export function WishRoomGeometry({ nearDoor, onDoorInteract, onOpenDressUp, onOpenStarStation }: Props) {
+export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, onOpenDressUp, onOpenStarStation }: Props) {
   return (
     <group>
       {/* ── LIGHTING ── */}
-      <ambientLight intensity={0.45} />
-      <pointLight position={[0, H - 0.3, 0]}  intensity={0.7} color="#ffffff" />
-      <pointLight position={[-4, 2.5, -1]} intensity={0.6} color="#ffccff" />
-      <pointLight position={[ 4, 2.5, -1]} intensity={0.6} color="#cce0ff" />
+      <ambientLight intensity={0.65} />
+      <pointLight position={[0, H - 0.3, 0]} intensity={0.7} color="#ffffff" />
+      <pointLight position={[-4, 2.5, -1]} intensity={2} color="#ff00ff" />
+      <pointLight position={[4, 2.5, -1]} intensity={3} color="#4a93ff" />
 
       {/* ── FLOOR ── */}
       <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -80,25 +86,39 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, onOpenDressUp, onOp
       {/* ── DOORS ── */}
       {/* Lobby door: back wall, decorative only (camera enters from this side) */}
       <group position={[0, 0, D / 2]} rotation={[0, Math.PI, 0]}>
-        <Door label="← Lobby" isNear={false} onInteract={() => {}} />
+        <Door label="← Lobby" isNear={false} onInteract={lobbyDoorInteract} />
       </group>
       {/* Exterior door: front wall, interactive exit */}
       <group position={[0, 0, -D / 2]}>
         <Door label="Exterior →" isNear={nearDoor} onInteract={onDoorInteract} />
       </group>
 
-      {/* ── ZONE FLOOR CIRCLES ── */}
-      <mesh position={[-3.5, 0.005, -1.5]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.8, 32]} />
-        <meshStandardMaterial color="#2a0a3a" roughness={1} />
-      </mesh>
-      <mesh position={[3.5, 0.005, -1.5]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.8, 32]} />
-        <meshStandardMaterial color="#0a1a2a" roughness={1} />
-      </mesh>
+      <Suspense fallback={null}>
+        <group position={[2.5, 0, -4]}>
+          <GlassJar />
+        </group>
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <group position={[4.9, 0, -2]} rotation={[0, 30, 0]}>
+          <DeskWithPaper />
+        </group>
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <group position={[-2.5, 0, -2]} rotation={[0, 19.5, 0]}>
+          <Mirror />
+        </group>
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <group position={[-5.3, 0.9,-6]} rotation={[0, 80, 0]}>
+          <DressingShelf />
+        </group>
+      </Suspense>
 
       {/* ── ZONE LABELS (floating HTML buttons) ── */}
-      <Html position={[-3.5, 2.4, -1.5]} center>
+      <Html position={[-3.5, 3.4, -1.5]} center>
         <button
           type="button"
           onClick={onOpenDressUp}
@@ -121,7 +141,7 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, onOpenDressUp, onOp
         </button>
       </Html>
 
-      <Html position={[3.5, 2.4, -1.5]} center>
+      <Html position={[3.5, 3.4, -1.5]} center>
         <button
           type="button"
           onClick={onOpenStarStation}
@@ -143,27 +163,6 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, onOpenDressUp, onOp
           ⭐ Paper Star Station
         </button>
       </Html>
-
-      {/* ── PLACEHOLDER PROPS (swapped for real GLTFs later) ── */}
-      {/* Dress-up area: mirror stand */}
-      <mesh position={[-4.8, 1.6, -2.5]}>
-        <boxGeometry args={[0.08, 2.2, 0.08]} />
-        <meshStandardMaterial color="#888" metalness={0.6} roughness={0.3} />
-      </mesh>
-      <mesh position={[-4.8, 2.5, -2.5]}>
-        <boxGeometry args={[0.9, 1.4, 0.04]} />
-        <meshStandardMaterial color="#b0c0cc" metalness={0.9} roughness={0.05} />
-      </mesh>
-
-      {/* Star station: small table */}
-      <mesh position={[4.0, 0.75, -2.5]}>
-        <boxGeometry args={[1.4, 0.06, 0.9]} />
-        <meshStandardMaterial color="#555" roughness={0.7} />
-      </mesh>
-      <mesh position={[4.0, 0.375, -2.5]}>
-        <boxGeometry args={[0.06, 0.75, 0.06]} />
-        <meshStandardMaterial color="#444" roughness={0.8} />
-      </mesh>
     </group>
   )
 }

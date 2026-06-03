@@ -10,6 +10,7 @@ interface WishRoomSceneProps {
   nearDoor: boolean
   onNearDoor: (near: boolean) => void
   onDoorInteract: () => void
+  onLobbyDoorInteract: () => void
   path: readonly [number, number][]
   autoWalk?: boolean
   onOpenDressUp: () => void
@@ -20,6 +21,7 @@ export default function WishRoomScene({
   nearDoor,
   onNearDoor,
   onDoorInteract,
+  onLobbyDoorInteract,
   path,
   autoWalk,
   onOpenDressUp,
@@ -34,6 +36,7 @@ export default function WishRoomScene({
       <WishRoomGeometry
         nearDoor={nearDoor}
         onDoorInteract={onDoorInteract}
+        lobbyDoorInteract={onLobbyDoorInteract}
         onOpenDressUp={onOpenDressUp}
         onOpenStarStation={onOpenStarStation}
       />

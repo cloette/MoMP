@@ -42,24 +42,76 @@ export default function WishRoomPage() {
   const [showCredits, setShowCredits] = useState(false)
   const [showDressUp, setShowDressUp] = useState(false)
   const [showStarStation, setShowStarStation] = useState(false)
+  const [audioMuted, setAudioMuted] = useState(true)
+  const audioMutedRef = useRef(true)
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null)
+  const ambientAudioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
+  useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
 
   useEffect(() => {
     if (sessionStorage.getItem('momp_autowalk') === '1') {
       sessionStorage.removeItem('momp_autowalk')
       setAutoWalk(true)
     }
+    const unmuted = sessionStorage.getItem('momp_audio_unmuted') === '1'
+    setAudioMuted(!unmuted)
+    audioMutedRef.current = !unmuted
+    if (unmuted) {
+      const ambient = new Audio('/generic-fantasy-ambiance.mp3')
+      ambient.loop = true
+      ambient.volume = 0.4
+      ambientAudioRef.current = ambient
+      ambient.play().catch(() => {})
+    }
+    return () => {
+      currentAudioRef.current?.pause()
+      currentAudioRef.current = null
+      ambientAudioRef.current?.pause()
+      ambientAudioRef.current = null
+    }
   }, [])
 
   const handleToggleAutoWalk = useCallback(() => setAutoWalk(v => !v), [])
+
+  const handleToggleAudio = useCallback(() => {
+    if (audioMutedRef.current) {
+      setAudioMuted(false)
+      audioMutedRef.current = false
+      sessionStorage.setItem('momp_audio_unmuted', '1')
+      if (!ambientAudioRef.current) {
+        const ambient = new Audio('/generic-fantasy-ambiance.mp3')
+        ambient.loop = true
+        ambient.volume = 0.4
+        ambientAudioRef.current = ambient
+      }
+      ambientAudioRef.current.play().catch(() => {})
+    } else {
+      currentAudioRef.current?.pause()
+      currentAudioRef.current = null
+      ambientAudioRef.current?.pause()
+      setAudioMuted(true)
+      audioMutedRef.current = true
+      sessionStorage.setItem('momp_audio_unmuted', '0')
+    }
+  }, [])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
 
   const handleInteract = useCallback(() => {
+    currentAudioRef.current?.pause()
+    currentAudioRef.current = null
     if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
     router.push('/exterior')
+  }, [router])
+
+  const handleLobbyInteract = useCallback(() => {
+    currentAudioRef.current?.pause()
+    currentAudioRef.current = null
+    if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
+    router.push('/lobby')
   }, [router])
 
   useEffect(() => {
@@ -67,11 +119,12 @@ export default function WishRoomPage() {
       const t = e.target as HTMLElement
       if (t.tagName === 'BUTTON' || t.tagName === 'A' || t.tagName === 'INPUT' || t.tagName === 'TEXTAREA') return
       if (e.key === ' ')     { e.preventDefault(); handleToggleAutoWalk() }
+      if (e.key === '/')     { e.preventDefault(); handleToggleAudio() }
       if (e.key === 'Enter' && nearDoorRef.current) handleInteract()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [handleToggleAutoWalk, handleInteract])
+  }, [handleToggleAutoWalk, handleInteract, handleToggleAudio])
 
   useEffect(() => {
     if (!autoWalk || !nearDoor) return
@@ -86,6 +139,7 @@ export default function WishRoomPage() {
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
           onDoorInteract={handleInteract}
+          onLobbyDoorInteract={handleLobbyInteract}
           path={PATH}
           autoWalk={autoWalk}
           onOpenDressUp={() => setShowDressUp(true)}
@@ -125,6 +179,15 @@ export default function WishRoomPage() {
               }}
             >
               {autoWalk ? '⏸' : '▶'}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleToggleAudio}
+              title={audioMuted ? 'Unmute audio' : 'Mute audio'}
+              style={hudBtnBase}
+            >
+              {audioMuted ? '🔇' : '🔊'}
             </button>
 
             <button
@@ -172,6 +235,10 @@ export default function WishRoomPage() {
               <br />"Sapphire Pendant with Inner Fracture" (https://skfb.ly/pzJFV) by Valentine_crut is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Rune Pendant" (https://skfb.ly/6RyVv) by powers28 is licensed under the free standard license.
               <br />"Staff" (https://skfb.ly/6QVBQ) by ndotson904 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Stand mirror" (https://skfb.ly/oCuDJ) by Jones Studio is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Dressing matrimonial" (https://skfb.ly/6RMnO) by Naidar - InoxArt is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Glass Jar With Wooden Cover" (https://skfb.ly/oyBHu) by Navjot is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />
             </p>
           </CreditsPanel>
         )}
@@ -183,7 +250,7 @@ export default function WishRoomPage() {
           borderRadius: '20px', fontFamily: 'sans-serif',
           pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
         }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk
+          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
         </div>
 
         {showDressUp     && <DressUpModal     onClose={() => setShowDressUp(false)} />}

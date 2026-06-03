@@ -6,14 +6,10 @@ import { Html, OrbitControls, useTexture } from '@react-three/drei'
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const ANIMALS = [
-  { id: 'cat',     name: 'Cat',     color: '#f5a623', headColor: '#f5a623' },
-  { id: 'dog',     name: 'Dog',     color: '#a07850', headColor: '#a07850' },
-  { id: 'rabbit',  name: 'Rabbit',  color: '#ddd8cc', headColor: '#ddd8cc' },
-  { id: 'bear',    name: 'Bear',    color: '#5d4037', headColor: '#5d4037' },
-  { id: 'fox',     name: 'Fox',     color: '#d84315', headColor: '#e8834a' },
-  { id: 'penguin', name: 'Penguin', color: '#263238', headColor: '#eceff1' },
-  { id: 'panda',   name: 'Panda',   color: '#f5f5f5', headColor: '#f5f5f5' },
-  { id: 'lion',    name: 'Lion',    color: '#f9a825', headColor: '#f9a825' },
+  { id: 'turtle',   name: 'Turtle',   color: '#015e04', headColor: '#3aa325' },
+  { id: 'rabbit',  name: 'Rabbit',  color: '#edcae8', headColor: '#ddd8cc' },
+  { id: 'whale',     name: 'Whale',     color: '#15bed8', headColor: '#4ab1e8' },
+  { id: 'snake',    name: 'Snake',    color: '#008802', headColor: '#25f941' },
 ]
 
 interface Acc {
@@ -26,12 +22,13 @@ interface Acc {
 }
 
 const ACCESSORIES: Acc[] = [
-  { id: 'hat',     name: 'Top Hat',  emoji: '🎩', color: '#1a1a1a', offset: [0,  1.5,  0   ], size: [0.4,  0.28, 0.4 ] },
-  { id: 'scarf',   name: 'Scarf',    emoji: '🧣', color: '#e53935', offset: [0,  0.58, 0.3 ], size: [0.56, 0.14, 0.1 ] },
+  { id: 'tophat',     name: 'Top Hat',  emoji: '🎩', color: '#1a1a1a', offset: [0,  1.5,  0   ], size: [0.4,  0.28, 0.4 ] },
+  { id: 'strawhat',   name: 'Straw Hat',    emoji: '🧣', color: '#e5e235', offset: [0,  0.58, 0.3 ], size: [0.56, 0.14, 0.1 ] },
+  { id: 'witchhat',   name: 'Witch Hat',    emoji: '🧣', color: '#e53935', offset: [0,  0.58, 0.3 ], size: [0.56, 0.14, 0.1 ] },
   { id: 'bow',     name: 'Bow Tie',  emoji: '🎀', color: '#e91e63', offset: [0,  0.72, 0.3 ], size: [0.34, 0.16, 0.06] },
-  { id: 'glasses', name: 'Glasses',  emoji: '🕶️', color: '#37474f', offset: [0,  1.06, 0.38], size: [0.52, 0.12, 0.06] },
-  { id: 'cape',    name: 'Cape',     emoji: '🦸', color: '#7b1fa2', offset: [0,  0.3, -0.32], size: [0.78, 0.85, 0.06] },
-  { id: 'bag',     name: 'Bag',      emoji: '👜', color: '#795548', offset: [0.62, 0.2, 0  ], size: [0.22, 0.28, 0.16] },
+  { id: 'pendant', name: 'Pendant',  emoji: '🕶️', color: '#44374f', offset: [0,  1.06, 0.38], size: [0.52, 0.12, 0.06] },
+  { id: 'rune',    name: 'Rune',     emoji: '🎀', color: '#1f72a2', offset: [0,  0.3, -0.32], size: [0.78, 0.85, 0.06] },
+  { id: 'staff',     name: 'Staff',      emoji: '', color: '#795548', offset: [0.62, 0.2, 0  ], size: [0.22, 0.28, 0.16] },
 ]
 
 // ── Sub-components (must live inside Canvas) ──────────────────────────────────
@@ -93,13 +90,13 @@ function ClosetOrganizer({ worn, onToggle }: { worn: Set<string>; onToggle: (id:
       {/* Backing */}
       <mesh position={[0, 1.25, -0.08]}>
         <boxGeometry args={[1.2, 2.7, 0.07]} />
-        <meshStandardMaterial color="#4a2e10" roughness={0.8} />
+        <meshStandardMaterial color="#7b7b7b" roughness={0.8} />
       </mesh>
       {/* Three shelves */}
       {[0.3, 1.15, 2.0].map((y, i) => (
         <mesh key={i} position={[0, y, 0]}>
           <boxGeometry args={[1.1, 0.05, 0.28]} />
-          <meshStandardMaterial color="#6b3f1a" roughness={0.7} />
+          <meshStandardMaterial color="#a4a4a4" roughness={0.7} />
         </mesh>
       ))}
       {/* Item slots: 3 rows × 2 cols */}
