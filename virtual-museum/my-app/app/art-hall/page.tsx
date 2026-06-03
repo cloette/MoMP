@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
+import { CreditsPanel } from '../components/CreditsPanel'
 import { PauseZone } from '../components/RailCamera'
 
 const ArtHallScene = dynamic(() => import('./ArtHallScene'), { ssr: false })
@@ -50,6 +51,7 @@ export default function LobbyPage() {
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null)
+  const [showCredits, setShowCredits] = useState(false)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
   useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
@@ -223,6 +225,15 @@ export default function LobbyPage() {
               {autoWalk ? '⏸' : '▶'}
             </button>
 
+            <button
+              type="button"
+              onClick={() => setShowCredits(v => !v)}
+              title="Room credits"
+              style={hudBtnBase}
+            >
+              📜
+            </button>
+
             <a
               href="/"
               style={{
@@ -240,6 +251,15 @@ export default function LobbyPage() {
             </a>
           </div>
         </div>
+
+        {showCredits && (
+          <CreditsPanel onClose={() => setShowCredits(false)}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+              [No credits for this room yet.]
+              <br />Rotating Seasonal Artists and featured partnerships can appear in this room.
+            </p>
+          </CreditsPanel>
+        )}
 
         {/* Controls hint */}
         <div className="controls-hint" style={{

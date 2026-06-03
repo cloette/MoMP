@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
+import { CreditsPanel } from '../components/CreditsPanel'
 
 const ChamberScene = dynamic(() => import('./ChamberScene'), { ssr: false })
 
@@ -36,6 +37,7 @@ export default function ChamberPage() {
   const router = useRouter()
   const [autoWalk, setAutoWalk] = useState(false)
   const [nearDoor, setNearDoor] = useState(false)
+  const [showCredits, setShowCredits] = useState(false)
 
   const handleLobby  = useCallback(() => router.push('/lobby'), [router])
   const handleBack   = useCallback(() => router.back(),         [router])
@@ -82,6 +84,15 @@ export default function ChamberPage() {
             {autoWalk ? '⏸' : '▶'}
           </button>
 
+          <button
+            type="button"
+            onClick={() => setShowCredits(v => !v)}
+            title="Room credits"
+            style={{ ...hudBtn, pointerEvents: 'all' }}
+          >
+            📜
+          </button>
+
           <a
             href="/"
             style={{
@@ -98,6 +109,14 @@ export default function ChamberPage() {
             ← Exit
           </a>
         </div>
+
+        {showCredits && (
+          <CreditsPanel onClose={() => setShowCredits(false)}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+              Credits will be added as assets are added to this room.
+            </p>
+          </CreditsPanel>
+        )}
 
         {/* Controls hint */}
         <div style={{

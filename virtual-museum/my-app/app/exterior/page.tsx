@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
-import { WelcomePopup } from '../components/WelcomePopup'
+import { CreditsPanel } from '../components/CreditsPanel'
 
 const ExteriorScene = dynamic(() => import('./ExteriorScene'), { ssr: false })
 
@@ -46,6 +46,7 @@ export default function ExteriorPage() {
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null)
+  const [showCredits, setShowCredits] = useState(false)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
   useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
@@ -205,6 +206,15 @@ export default function ExteriorPage() {
               {autoWalk ? '⏸' : '▶'}
             </button>
 
+            <button
+              type="button"
+              onClick={() => setShowCredits(v => !v)}
+              title="Room credits"
+              style={hudBtnBase}
+            >
+              📜
+            </button>
+
             <a
               href="/"
               style={{
@@ -223,6 +233,16 @@ export default function ExteriorPage() {
           </div>
         </div>
 
+        {showCredits && (
+          <CreditsPanel onClose={() => setShowCredits(false)}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              "Harlequin Orb" (https://skfb.ly/oDPZZ) by Tycho Magnetic Anomaly is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Door" (https://skfb.ly/6ZWw8) by Maria Stashko is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />All music is copyright-free from Pixabay (human-created tracks only).
+            </p>
+          </CreditsPanel>
+        )}
+
         {/* Controls hint */}
         <div className="controls-hint" style={{
           position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
@@ -235,7 +255,6 @@ export default function ExteriorPage() {
         </div>
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
-        <WelcomePopup />
       </div>
     </ControlsProvider>
   )

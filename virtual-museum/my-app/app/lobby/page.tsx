@@ -4,15 +4,17 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
+import { CreditsPanel } from '../components/CreditsPanel'
 import { PauseZone } from '../components/RailCamera'
+import { WelcomePopup } from '../components/WelcomePopup'
 
 const LobbyScene = dynamic(() => import('./LobbyScene'), { ssr: false })
 
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
-  [0,  20],  
-  [0,   0],  // camera start
-  [0, -18],  
+  [0, 20],
+  [0, 0],  // camera start
+  [0, -18],
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = 20 / 38
@@ -50,6 +52,7 @@ export default function LobbyPage() {
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
   const ambientAudioRef = useRef<HTMLAudioElement | null>(null)
+  const [showCredits, setShowCredits] = useState(false)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
   useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
@@ -65,7 +68,7 @@ export default function LobbyPage() {
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
-      ambient.play().catch(() => {})
+      ambient.play().catch(() => { })
     }
 
     if (sessionStorage.getItem('momp_autowalk') === '1') {
@@ -96,9 +99,9 @@ export default function LobbyPage() {
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
-        ambient.play().catch(() => {})
+        ambient.play().catch(() => { })
       } else {
-        ambientAudioRef.current.play().catch(() => {})
+        ambientAudioRef.current.play().catch(() => { })
       }
     } else {
       currentAudioRef.current?.pause()
@@ -145,8 +148,8 @@ export default function LobbyPage() {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === 'BUTTON' || target.tagName === 'A') return
-      if (e.key === ' ')     { e.preventDefault(); handleToggleAutoWalk() }
-      if (e.key === '/')     { e.preventDefault(); handleToggleMute() }
+      if (e.key === ' ') { e.preventDefault(); handleToggleAutoWalk() }
+      if (e.key === '/') { e.preventDefault(); handleToggleMute() }
       if (e.key === 'Enter' && nearDoorRef.current) handleInteract()
     }
     window.addEventListener('keydown', onKey)
@@ -223,6 +226,15 @@ export default function LobbyPage() {
               {autoWalk ? '⏸' : '▶'}
             </button>
 
+            <button
+              type="button"
+              onClick={() => setShowCredits(v => !v)}
+              title="Room credits"
+              style={hudBtnBase}
+            >
+              📜
+            </button>
+
             <a
               href="/"
               style={{
@@ -241,6 +253,17 @@ export default function LobbyPage() {
           </div>
         </div>
 
+        {showCredits && (
+          <CreditsPanel onClose={() => setShowCredits(false)}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              Portal door - Fensterelement Stiftskirche (https://skfb.ly/oEFOM) by ADE_fatuk is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />Backdrop of space is an amalgamation of public domain images from NASA. Does not reflect actual geospatial configuration.
+              <br />All music is copyright-free from Pixabay (human-created tracks only). 
+              <br />Narration by <a href="https://charoitemusic.com" target="_blank" rel="noopener noreferrer" >Charoite</a>.
+            </p>
+          </CreditsPanel>
+        )}
+
         {/* Controls hint */}
         <div className="controls-hint" style={{
           position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
@@ -251,6 +274,8 @@ export default function LobbyPage() {
         }}>
           ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
         </div>
+        
+        <WelcomePopup />
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
       </div>

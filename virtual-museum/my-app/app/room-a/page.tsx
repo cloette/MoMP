@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { WelcomePopup } from '../components/WelcomePopup'
+import { CreditsPanel } from '../components/CreditsPanel'
 import type { PauseZone } from '../components/RailCamera'
 
 const RoomScene = dynamic(() => import('../components/RoomScene'), { ssr: false })
@@ -55,6 +56,7 @@ export default function RoomAPage() {
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
+  const [showCredits, setShowCredits] = useState(false)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
   useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
@@ -229,6 +231,15 @@ export default function RoomAPage() {
               {autoWalk ? '⏸' : '▶'}
             </button>
 
+            <button
+              type="button"
+              onClick={() => setShowCredits(v => !v)}
+              title="Room credits"
+              style={hudBtnBase}
+            >
+              📜
+            </button>
+
             <a
               href="/"
               style={{
@@ -246,6 +257,16 @@ export default function RoomAPage() {
             </a>
           </div>
         </div>
+
+        {showCredits && (
+          <CreditsPanel onClose={() => setShowCredits(false)}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              Narration by <a href="https://charoitemusic.com" target="_blank" rel="noopener noreferrer" >Charoite</a>.
+              <br /> All music is copyright-free from Pixabay. 
+              <br /> [Other credits will be added in this panel as exhibits are finalized. Each room has it&apos;s own credits.]
+            </p>
+          </CreditsPanel>
+        )}
 
         {/* Controls hint */}
         <div className='controls-hint' style={{
