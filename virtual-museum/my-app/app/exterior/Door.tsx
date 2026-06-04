@@ -15,8 +15,8 @@ export function Door({ isNear, onInteract }: DoorProps) {
 
   return (
     <group>
-      <group position={[.5,.5,2.6]} rotation={[0, 7.9, 0]}>
-        <primitive object={customDoor} scale={.055} rotateZ={90} />
+      <group position={[.5,.7,2.6]} rotation={[0, 7.9, 0]}>
+        <primitive object={customDoor} scale={.05} rotateZ={90} />
       </group>
 
       {/* Interact hint when near */}
