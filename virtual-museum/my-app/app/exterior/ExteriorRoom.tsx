@@ -2,6 +2,10 @@
 import { useMemo, Suspense } from 'react'
 import { Environment, useGLTF } from '@react-three/drei'
 import { Door } from './Door'
+import { Cave } from './Cave'
+import { TreeGreen } from './TreePine'
+import { TreePink } from './TreeSakura'
+import { TreePurple } from './TreeJakaranda'
 
 // Orb: two half-globes combined into a full sphere
 // Adjust ORB_SCALE if the GLB's native radius differs from 1 unit
@@ -29,6 +33,7 @@ function HarlequinOrb() {
 }
 
 useGLTF.preload('/exhibitobjects/exterior/harlequin_orb.glb')
+useGLTF.preload('exhibitobjects/exterior/grass_claster__downoad__like_please.glb')
 
 interface ExteriorRoomProps {
   nearDoor: boolean
@@ -40,8 +45,8 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
     <group>
 
       {/* ── BACKDROP ────────────────────────────────────────────── */}
-      <Suspense fallback={null}>
-        <Environment
+      <Suspense fallback={null} >
+          <Environment 
           files="/exhibitobjects/exterior/backdropcropped.jpg"
           background
         />
@@ -63,7 +68,7 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
       {/* ── GROUND ──────────────────────────────────────────────── */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[200, 200]} />
-        <meshStandardMaterial color="#729637" roughness={1} />
+        <meshStandardMaterial color="#97b665" roughness={1} />
       </mesh>
 
       {/* ── PEDESTAL + ORB + DOOR ───────────────────────────────── */}
@@ -95,19 +100,68 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
         </group>
       </Suspense>
 
+      <Suspense fallback={null}>
+        <Cave />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <group position={[6, 0, 28]}>
+          <TreePink />
+        </group>
+        <group position={[-6, 0, 28]}>
+          <TreePink />
+        </group>
+      </Suspense>
+
+      {/* Change these to purple */}
+      <Suspense fallback={null}>
+        <group position={[6, 0, -2]}>
+          <TreePink />
+        </group>
+        <group position={[-6, 0, -2]}>
+          <TreePink />
+        </group>
+      </Suspense>
+
+      {/* Change these to purple */}
+      <Suspense fallback={null}>
+        <group position={[7, 0, 7]}>
+          <TreePurple />
+        </group>
+        <group position={[-7, 0, 7]}>
+          <TreePurple />
+        </group>
+      </Suspense>
+
+      {/* Change these to green */}
+      <Suspense fallback={null}>
+        <group position={[7, 0, 48]}>
+          <TreeGreen />
+        </group>
+        <group position={[-7, 0, 48]}>
+          <TreeGreen />
+        </group>
+        <group position={[17, 0, 48]}>
+          <TreeGreen />
+        </group>
+        <group position={[-17, 0, 48]}>
+          <TreeGreen />
+        </group>
+      </Suspense>
+
       {/* ── GARDEN (behind camera start, positive Z) ────────────── */}
 
       {/* Stone path strip from z≈1 to z≈19 */}
-      {Array.from({ length: 15 }, (_, i) => (
+      {Array.from({ length: 35 }, (_, i) => (
         <mesh
           key={i}
-          position={[0, 0.015, -11.5 + i * 2.0]}
+          position={[0, 0.05, -11.5 + i * 2.0]}
           rotation={[-Math.PI / 2, 0, 0]}
           receiveShadow
         >
-          <planeGeometry args={[2.0, 1.8]} />
+          <planeGeometry args={[1.6, 1.8]} />
           <meshStandardMaterial
-            color={i % 2 === 0 ? '#b0a898' : '#a09888'}
+            color={i % 2 === 0 ? '#b0a898' : '#b0a898'}
             roughness={0.97}
           />
         </mesh>
