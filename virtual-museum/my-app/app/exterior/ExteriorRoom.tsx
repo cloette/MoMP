@@ -68,7 +68,7 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
       {/* ── GROUND ──────────────────────────────────────────────── */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[30, 120]} />
-        <meshStandardMaterial color="#688539" roughness={1} />
+        <meshStandardMaterial color="#868a1a" roughness={0.9} />
       </mesh>
 
       {/* ── GRASS PERIMETER ─────────────────────────────────────── */}
