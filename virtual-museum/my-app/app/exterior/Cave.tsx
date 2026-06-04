@@ -10,8 +10,8 @@ export function Cave() {
 
   return (
     <group>
-      <group position={[0, 0, 48]} rotation={[0, 3.4, 0]}>
-        <primitive object={cave} scale={16} />
+      <group position={[0, 0, 64]} rotation={[0, 3.4, 0]}>
+        <primitive object={cave} scale={28} />
       </group>
     </group>
   )

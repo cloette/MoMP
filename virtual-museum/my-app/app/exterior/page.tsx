@@ -11,8 +11,8 @@ const ExteriorScene = dynamic(() => import('./ExteriorScene'), { ssr: false })
 // Straight path: garden (z=+20) → camera start (z=0) → pedestal/door (z=-18)
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
-  [0,  20],  // garden end  (t = 0)
-  [0,   0],  // camera start
+  [0, 20],  // garden end  (t = 0)
+  [0, 0],  // camera start
   [0, -18],  // forward limit (t = 1)
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
@@ -62,7 +62,7 @@ export default function ExteriorPage() {
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
-      ambient.play().catch(() => {})
+      ambient.play().catch(() => { })
     }
 
     if (sessionStorage.getItem('momp_autowalk') === '1') {
@@ -93,9 +93,9 @@ export default function ExteriorPage() {
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
-        ambient.play().catch(() => {})
+        ambient.play().catch(() => { })
       } else {
-        ambientAudioRef.current.play().catch(() => {})
+        ambientAudioRef.current.play().catch(() => { })
       }
 
       // Welcome narration once per session
@@ -103,7 +103,7 @@ export default function ExteriorPage() {
         sessionStorage.setItem('momp_welcome_played', '1')
         const audio = new Audio('/MoMPwelcome.m4a')
         currentAudioRef.current = audio
-        audio.play().catch(() => {})
+        audio.play().catch(() => { })
         audio.onended = () => {
           if (currentAudioRef.current === audio) currentAudioRef.current = null
         }
@@ -137,8 +137,8 @@ export default function ExteriorPage() {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === 'BUTTON' || target.tagName === 'A') return
-      if (e.key === ' ')     { e.preventDefault(); handleToggleAutoWalk() }
-      if (e.key === '/')     { e.preventDefault(); handleToggleMute() }
+      if (e.key === ' ') { e.preventDefault(); handleToggleAutoWalk() }
+      if (e.key === '/') { e.preventDefault(); handleToggleMute() }
       if (e.key === 'Enter' && nearDoorRef.current) handleInteract()
     }
     window.addEventListener('keydown', onKey)
@@ -171,7 +171,7 @@ export default function ExteriorPage() {
           padding: '16px 20px',
           pointerEvents: 'none', zIndex: 10,
         }}>
-          
+
           <div style={{
             background: 'rgba(255, 255, 255, 0)',
             backdropFilter: 'blur(6px)',
@@ -238,6 +238,12 @@ export default function ExteriorPage() {
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               "Harlequin Orb" (https://skfb.ly/oDPZZ) by Tycho Magnetic Anomaly is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Door" (https://skfb.ly/6ZWw8) by Maria Stashko is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Rock Mountain with cave (realistic version)" (https://skfb.ly/pK9UN) by Jungle Jim is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Grass claster | Downoad = Like please" (https://skfb.ly/oRIP6) by VRA is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Coastal redwood from Grove of Old Trees" (https://skfb.ly/oxL6p) by kungphil is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Sakura Tree 01 - Low Poly Model" (https://skfb.ly/oPyPz) by Jogoss is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Pine Tree [Game-ready]" (https://skfb.ly/ow7yN) by Wenedi (^-^)/ is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Realistic HD Blue jacaranda (9/40)" (https://skfb.ly/oDCJF) by PlantCatalog is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>

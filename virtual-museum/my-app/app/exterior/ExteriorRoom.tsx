@@ -6,6 +6,7 @@ import { Cave } from './Cave'
 import { TreeGreen } from './TreePine'
 import { TreePink } from './TreeSakura'
 import { TreePurple } from './TreeJakaranda'
+import { GrassCluster } from './GrassCluster'
 
 // Orb: two half-globes combined into a full sphere
 // Adjust ORB_SCALE if the GLB's native radius differs from 1 unit
@@ -33,7 +34,6 @@ function HarlequinOrb() {
 }
 
 useGLTF.preload('/exhibitobjects/exterior/harlequin_orb.glb')
-useGLTF.preload('exhibitobjects/exterior/grass_claster__downoad__like_please.glb')
 
 interface ExteriorRoomProps {
   nearDoor: boolean
@@ -47,7 +47,7 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
       {/* ── BACKDROP ────────────────────────────────────────────── */}
       <Suspense fallback={null} >
           <Environment 
-          files="/exhibitobjects/exterior/backdropcropped.jpg"
+          files="/exhibitobjects/exterior/brighterbg2.jpg"
           background
         />
       </Suspense>
@@ -67,16 +67,87 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
 
       {/* ── GROUND ──────────────────────────────────────────────── */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-        <planeGeometry args={[200, 200]} />
-        <meshStandardMaterial color="#97b665" roughness={1} />
+        <planeGeometry args={[30, 120]} />
+        <meshStandardMaterial color="#688539" roughness={1} />
       </mesh>
 
+      {/* ── GRASS PERIMETER ─────────────────────────────────────── */}
+      <Suspense fallback={null}>
+        <group position={[-8, -.15, 38]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, -.15, 38]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-8, -.15, 30]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, -.15, 30]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-7.5, -.15, 20]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[1.8, -.15, 20]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-7.5, -.15, 15]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[1.8, -.15, 15]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-8, -.15, 68]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, -.15, 68]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-8, -.15, 58]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, -.15, 58]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-8, 0, 55]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, 0, 55]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-12, 0, 55]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[6, 0, 55]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-12, 0, 65]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[6, 0, 65]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-16, 0, 55]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[10, 0, 55]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-8, -.15, 49]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, -.15, 49]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[-8, -.15, 43]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+        <group position={[2, -.15, 43]} rotation={[0, 0, 0]}>
+          <GrassCluster />
+        </group>
+      </Suspense>
+
       {/* ── PEDESTAL + ORB + DOOR ───────────────────────────────── */}
-      {/*
-        Pedestal: 6 wide × 3.5 tall × 4 deep, centred at z=-16
-        Front face sits at z=-14 (ORB_Z + 2)
-        Door is placed flush against the front face
-      */}
       <mesh position={[0, 0, ORB_Z]} castShadow receiveShadow>
         <boxGeometry args={[9, 5.5, 4]} />
         <meshStandardMaterial color="#c4bfb0" roughness={0.95} />
@@ -105,25 +176,23 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
       </Suspense>
 
       <Suspense fallback={null}>
-        <group position={[6, 0, 28]}>
-          <TreePink />
+        <group position={[6, -1, 28]}>
+          <TreeGreen />
         </group>
-        <group position={[-6, 0, 28]}>
-          <TreePink />
+        <group position={[-6, -1, 28]}>
+          <TreeGreen />
         </group>
       </Suspense>
-
-      {/* Change these to purple */}
+      
       <Suspense fallback={null}>
-        <group position={[6, 0, -2]}>
+        <group position={[6.5, 0, 0]}>
           <TreePink />
         </group>
-        <group position={[-6, 0, -2]}>
+        <group position={[-6.5, 0, 0]}>
           <TreePink />
         </group>
       </Suspense>
 
-      {/* Change these to purple */}
       <Suspense fallback={null}>
         <group position={[7, 0, 7]}>
           <TreePurple />
@@ -133,7 +202,6 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
         </group>
       </Suspense>
 
-      {/* Change these to green */}
       <Suspense fallback={null}>
         <group position={[7, 0, 48]}>
           <TreeGreen />
@@ -141,10 +209,22 @@ export function ExteriorRoom({ nearDoor, onDoorInteract }: ExteriorRoomProps) {
         <group position={[-7, 0, 48]}>
           <TreeGreen />
         </group>
-        <group position={[17, 0, 48]}>
+        <group position={[17, -.2, 48]}>
           <TreeGreen />
         </group>
-        <group position={[-17, 0, 48]}>
+        <group position={[-17, -.2, 48]}>
+          <TreeGreen />
+        </group>
+        <group position={[11.5, 0, 30]}>
+          <TreeGreen />
+        </group>
+        <group position={[-11.5, 0, 30]}>
+          <TreeGreen />
+        </group>
+        <group position={[7.5, 0, 20]}>
+          <TreeGreen />
+        </group>
+        <group position={[-7.5, 0, 20]}>
           <TreeGreen />
         </group>
       </Suspense>
