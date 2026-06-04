@@ -26,7 +26,7 @@ export default function ExteriorScene({
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [0, 1.6, 0], fov: 68, near: 0.1, far: 1000 }}
+      camera={{ position: [0, 1.4, 0], fov: 68, near: 0.1, far: 1000 }}
       style={{ width: '100%', height: '100%', background: '#b8e4f8' }}
     >
       <ExteriorRoom

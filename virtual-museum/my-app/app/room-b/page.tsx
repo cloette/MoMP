@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { WelcomePopup } from '../components/WelcomePopup'
+import { CreditsPanel } from '../components/CreditsPanel'
 import type { PauseZone } from '../components/RailCamera'
 
-const RoomScene = dynamic(() => import('../components/RoomScene'), { ssr: false })
+const RoomSceneB = dynamic(() => import('./RoomSceneB'), { ssr: false })
 
 // Mirrored-S path for Room B (starts right, crosses to left).
 // Same room geometry as A; x coordinates are sign-flipped.
@@ -55,6 +56,7 @@ export default function RoomBPage() {
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
+  const [showCredits, setShowCredits] = useState(false)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
   useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
@@ -169,14 +171,13 @@ export default function RoomBPage() {
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        <RoomScene
+        <RoomSceneB
           doorLabel="← Gallery Room A"
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
           onDoorInteract={handleInteract}
           pedestalColor="#2ecc71"
           pedestalEmissive="#1a7a42"
-          exhibitPrefix="B"
           path={PATH_B}
           autoWalk={autoWalk}
           autoWalkPaused={autoWalkPaused}
@@ -229,6 +230,15 @@ export default function RoomBPage() {
               {autoWalk ? '⏸' : '▶'}
             </button>
 
+            <button
+              type="button"
+              onClick={() => setShowCredits(v => !v)}
+              title="Room credits"
+              style={hudBtnBase}
+            >
+              📜
+            </button>
+
             <a
               href="/"
               style={{
@@ -246,6 +256,14 @@ export default function RoomBPage() {
             </a>
           </div>
         </div>
+
+        {showCredits && (
+          <CreditsPanel onClose={() => setShowCredits(false)}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              Narration by <a href="https://charoitemusic.com" target="_blank" rel="noopener noreferrer" >Charoite</a>.<br />
+            </p>
+          </CreditsPanel>
+        )}
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
         <WelcomePopup />
