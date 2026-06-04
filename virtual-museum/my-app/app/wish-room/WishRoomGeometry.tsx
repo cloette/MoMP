@@ -66,6 +66,7 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, 
       </mesh>
 
       {/* ── GREY RAILS (baseboards) ── */}
+      <group position={[0, 3.5, 0]}>
       <mesh position={[-W / 2 + RAIL_D / 2, RAIL_H / 2, 0]}>
         <boxGeometry args={[RAIL_D, RAIL_H, D]} />
         <meshStandardMaterial color={RAIL} roughness={0.7} />
@@ -82,15 +83,16 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, 
         <boxGeometry args={[W, RAIL_H, RAIL_D]} />
         <meshStandardMaterial color={RAIL} roughness={0.7} />
       </mesh>
+      </group>
 
       {/* ── DOORS ── */}
       {/* Lobby door: back wall, decorative only (camera enters from this side) */}
       <group position={[0, 0, D / 2]} rotation={[0, Math.PI, 0]}>
-        <Door label="← Lobby" isNear={false} onInteract={lobbyDoorInteract} />
+        <Door isNear={false} onInteract={lobbyDoorInteract} />
       </group>
       {/* Exterior door: front wall, interactive exit */}
       <group position={[0, 0, -D / 2]}>
-        <Door label="Exterior →" isNear={nearDoor} onInteract={onDoorInteract} />
+        <Door isNear={nearDoor} onInteract={onDoorInteract} />
       </group>
 
       <Suspense fallback={null}>

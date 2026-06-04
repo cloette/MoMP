@@ -23,6 +23,7 @@ interface Ani {
   id: string
   name: string
   color: string
+  colorOverride?: string
   position?: [number, number, number]
   rotation?: [number, number, number]
   glb: string
@@ -30,10 +31,10 @@ interface Ani {
 }
 
 const ANIMALS: Ani[] = [
-  { id: 'turtle', name: 'Turtle', color: '#015e04', position: [0, .5, 0], rotation: [0, .5, 0], glb: `${BASE}/torti_-_stylized_turtle.glb`, scale: 2.5 },
-  { id: 'rabbit', name: 'Rabbit', color: '#edcae8', position: [.2, 1, 0], rotation: [0, .5, 0], glb: `${BASE}/cute_little_bunny_pet.glb`, scale: .9 },
-  { id: 'whale',  name: 'Whale',  color: '#15bed8', position: [0, 0, .3], rotation: [0, 4, 0],  glb: `${BASE}/Low_poly_animated_cartoon_whale.glb`, scale: .03 },
-  { id: 'snake',  name: 'Snake',  color: '#008802', position: [-1.5, 0, 1.6], rotation: [0, 2.5, 0], glb: `${BASE}/snake.glb`, scale: .15 },
+  { id: 'turtle', name: 'Turtle', color: '#015e04',                       position: [0, .5, 0],      rotation: [0, .5, 0],  glb: `${BASE}/torti_-_stylized_turtle.glb`,          scale: 2.5  },
+  { id: 'rabbit', name: 'Rabbit', color: '#edcae8',                       position: [.2, .8, .2],    rotation: [0, .5, 0],  glb: `${BASE}/cute_little_bunny_pet.glb`,            scale: .9   },
+  { id: 'whale',  name: 'Whale',  color: '#15bed8',                       position: [0, .38, .3],    rotation: [0, 4, 0],   glb: `${BASE}/Low_poly_animated_cartoon_whale.glb`,  scale: .025 },
+  { id: 'snake',  name: 'Snake',  color: '#9acd32', colorOverride: '#f2ff37', position: [-1.4, 0, 1.6], rotation: [0, 2.5, 0], glb: `${BASE}/snake.glb`,                        scale: .15  },
 ]
 
 interface Acc {
@@ -42,18 +43,23 @@ interface Acc {
   emoji: string
   color: string
   offset: [number, number, number]
+  rotation?: [number, number, number]
   glb: string
   scale?: number
+  // Per-item overrides for display inside the closet shelf slots
+  shelfOffset?: [number, number, number]
+  shelfRotation?: [number, number, number]
+  shelfScale?: number
 }
 
 const ACCESSORIES: Acc[] = [
-  { id: 'tophat',   name: 'Top Hat',   emoji: '🎩', color: '#1a1a1a', offset: [.4,    1.2,  1   ], glb: `${BASE}/magician_top_hat.glb`, scale: .15 },
-  { id: 'strawhat', name: 'Straw Hat', emoji: '🧢', color: '#e5e235', offset: [0,    0, 0.3 ], glb: `${BASE}/luffys_straw_hat.glb` },
-  { id: 'witchhat', name: 'Witch Hat', emoji: '🧙', color: '#220033', offset: [0,    0, 0.3 ], glb: `${BASE}/witch_hat_halooween.glb`, scale: 0.6 },
-  { id: 'bow',      name: 'Bow Tie',   emoji: '🎀', color: '#e91e63', offset: [0,    0, 0.3 ], glb: `${BASE}/red_bowtie.glb`, scale: 0.0005 },
-  { id: 'pendant',  name: 'Pendant',   emoji: '💎', color: '#44374f', offset: [0,    0, 0.38], glb: `${BASE}/sapphire_pendant_with_inner_fracture.glb`, scale: .1 },
-  { id: 'rune',     name: 'Rune',      emoji: '🪬', color: '#1f72a2', offset: [0,    0, -0.32], glb: `${BASE}/rune_pendant.glb`, scale: 0.005 },
-  { id: 'staff',    name: 'Staff',     emoji: '🪄', color: '#795548', offset: [0,    0,  0   ], glb: `${BASE}/staff.glb`, scale: 1 },
+  { id: 'witchhat', name: 'Witch Hat', emoji: '🧙', color: '#220033', shelfOffset: [-.2, -1.4, .5], shelfRotation:[0, 3, 0], offset: [.4,  -.1,   0.78], rotation: [0,3,0],   glb: `${BASE}/witch_hat_halooween.glb`,                  scale: 0.6 },
+  { id: 'bow',      name: 'Bow Tie',   emoji: '🎀', color: '#e91e63', shelfOffset: [0, 0, .2], offset: [.3,  .67,   1.28],    glb: `${BASE}/red_bowtie.glb`,                           scale: 0.0005},
+  { id: 'tophat',   name: 'Top Hat',   emoji: '🎩', color: '#1a1a1a', shelfOffset: [0, 0, 0], offset: [.4, 1.16, .78],     glb: `${BASE}/magician_top_hat.glb`,                    scale: .15},
+  { id: 'strawhat', name: 'Straw Hat', emoji: '🧢', color: '#e5e235', shelfOffset: [0, 0, 0], offset: [.4, 1.22, .78],    glb: `${BASE}/luffys_straw_hat.glb`,                   },
+  { id: 'staff',    name: '',     emoji: '🪄', color: '#795548', shelfOffset: [-5, -.6, .5], shelfRotation:[0,3,0], offset: [-.5,  1,   .5],  rotation:[7,65,0],    glb: `${BASE}/staff.glb`,                                scale: 1     },
+  { id: 'rune',     name: 'Rune',      emoji: '🪬', color: '#1f72a2', shelfOffset: [-.1, 0, .2], shelfScale: .002, offset: [.3,  .67,   .74], rotation:[12.2, 0, 0],  glb: `${BASE}/rune_pendant.glb`,                         scale: 0.005},
+  { id: 'pendant',  name: 'Pendant',   emoji: '💎', color: '#44374f', shelfOffset: [-.1, 0, .2], shelfRotation:[30, 0, 0], shelfScale: .12, offset: [.3,  .67,   1.28], rotation: [20, 0, 0],  glb: `${BASE}/sapphire_pendant_with_inner_fracture.glb`, scale: .1},
 ]
 
 // ── Sub-components (must live inside Canvas) ──────────────────────────────────
@@ -96,22 +102,25 @@ function AnimalAndAccessories({
   animal,
   worn,
   accColors,
+  accOffsets,
 }: {
   animal: typeof ANIMALS[0]
   worn: Set<string>
   accColors: Record<string, string>
+  accOffsets: Record<string, [number, number, number]>
 }) {
   return (
     <group position={[0, 0, 0]}>
       <Suspense fallback={null}>
-        <GlbModel path={animal.glb} scale={animal.scale ?? 0.1} position={animal.position ?? [0, 0, 0]} rotation={animal.rotation ?? [0, 0, 0]}/>
+        <GlbModel path={animal.glb} scale={animal.scale ?? 0.1} position={animal.position ?? [0, 0, 0]} rotation={animal.rotation ?? [0, 0, 0]} colorOverride={animal.colorOverride} />
       </Suspense>
       {ACCESSORIES.filter(a => worn.has(a.id)).map(acc => (
         <Suspense key={acc.id} fallback={null}>
           <GlbModel
             path={acc.glb}
             scale={acc.scale ?? 0.05}
-            position={acc.offset}
+            position={accOffsets[acc.id] ?? acc.offset}
+            rotation={acc.rotation}
             colorOverride={accColors[acc.id]}
           />
         </Suspense>
@@ -180,8 +189,9 @@ function ClosetOrganizer({
             <Suspense fallback={null}>
               <GlbModel
                 path={acc.glb}
-                scale={acc.scale ?? 0.05}
-                position={[0, 0, 0.05]}
+                scale={acc.shelfScale ?? acc.scale ?? 0.05}
+                position={acc.shelfOffset ?? [0, 0, 0.05]}
+                rotation={acc.shelfRotation}
                 colorOverride={accColors[acc.id]}
               />
             </Suspense>
@@ -192,7 +202,7 @@ function ClosetOrganizer({
                 pointerEvents: 'none',
                 textShadow: '0 1px 3px rgba(0,0,0,0.9)',
               }}>
-                {acc.emoji} {acc.name}
+                {acc.name}
               </div>
             </Html>
           </group>
@@ -211,7 +221,7 @@ function Mirror() {
       </mesh>
       <mesh position={[0, 1.65, 0.05]}>
         <boxGeometry args={[0.85, 1.9, 0.02]} />
-        <meshStandardMaterial color="#b8c8d0" metalness={1.0} roughness={0.04} />
+        <meshStandardMaterial color="#ffffff" metalness={.2} roughness={0.04} />
       </mesh>
     </group>
   )
@@ -223,12 +233,21 @@ function SceneCapture({ captureRef }: { captureRef: React.MutableRefObject<(() =
   return null
 }
 
-function BannerTexture() {
-  const tex = useTexture('/MoMP.png')
+function BannerTexture({ inverted }: { inverted: boolean }) {
+  const [texNormal, texWhite] = useTexture(['/MoMP.png', '/MOMPblack.png'])
   return (
     <mesh position={[0, 2.6, -0.95]}>
       <planeGeometry args={[3.6, 1.1]} />
-      <meshStandardMaterial map={tex} transparent />
+      <meshStandardMaterial map={inverted ? texWhite : texNormal} transparent />
+    </mesh>
+  )
+}
+
+function BackingPanel({ inverted }: { inverted: boolean }) {
+  return (
+    <mesh position={[0, 0.8, -0.98]}>
+      <planeGeometry args={[3.6, 5.1]} />
+      <meshStandardMaterial color={inverted ? '#120820' : '#ffffff'} />
     </mesh>
   )
 }
@@ -243,7 +262,22 @@ export default function DressUpModal({ onClose }: Props) {
   const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null)
   const [selectedAccId, setSelectedAccId] = useState<string | null>(null)
   const [accColors, setAccColors]         = useState<Record<string, string>>({})
+  const [accOffsets, setAccOffsets]       = useState<Record<string, [number, number, number]>>({})
+  const [logoInverted, setLogoInverted]   = useState(false)
   const captureRef = useRef<(() => string) | null>(null)
+
+  const setOffsetAxis = useCallback((id: string, axis: 0 | 1 | 2, value: number) => {
+    setAccOffsets(prev => {
+      const base = prev[id] ?? ACCESSORIES.find(a => a.id === id)!.offset
+      const next: [number, number, number] = [base[0], base[1], base[2]]
+      next[axis] = value
+      return { ...prev, [id]: next }
+    })
+  }, [])
+
+  const resetOffset = useCallback((id: string) => {
+    setAccOffsets(prev => { const n = { ...prev }; delete n[id]; return n })
+  }, [])
 
   const selectedAcc = ACCESSORIES.find(a => a.id === selectedAccId) ?? null
 
@@ -321,12 +355,30 @@ export default function DressUpModal({ onClose }: Props) {
             </button>
           ))}
 
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '12px 0 10px' }} />
+          <div style={{ color: '#888', fontSize: '10px', letterSpacing: '0.1em', marginBottom: '8px' }}>DISPLAY</div>
+          <button
+            type="button"
+            onClick={() => setLogoInverted(v => !v)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              width: '100%', textAlign: 'left',
+              background: logoInverted ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.04)',
+              border: logoInverted ? '1px solid rgba(255,255,255,0.4)' : '1px solid rgba(255,255,255,0.1)',
+              borderRadius: '6px', padding: '6px 10px', marginBottom: '5px',
+              color: '#ccc', fontSize: '12px', cursor: 'pointer', fontFamily: 'Georgia, serif',
+            }}
+          >
+            <span style={{ fontSize: '14px' }}>◑</span>
+            Invert Logo
+          </button>
+
           {selectedAcc && (
             <>
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '12px 0 10px' }} />
               <div style={{ color: '#888', fontSize: '10px', letterSpacing: '0.1em', marginBottom: '8px' }}>ACCESSORY COLOR</div>
               <div style={{ color: '#ccc', fontSize: '12px', fontFamily: 'sans-serif', marginBottom: '8px' }}>
-                {selectedAcc.emoji} {selectedAcc.name}
+                {selectedAcc.name}
               </div>
               <input
                 type="color"
@@ -343,6 +395,46 @@ export default function DressUpModal({ onClose }: Props) {
                 onClick={() => setAccColors(prev => { const n = { ...prev }; delete n[selectedAcc.id]; return n })}
                 style={{
                   marginTop: '6px', width: '100%', background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '5px',
+                  color: '#888', fontSize: '11px', cursor: 'pointer', padding: '4px',
+                  fontFamily: 'sans-serif',
+                }}
+              >
+                Reset
+              </button>
+              
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '12px 0 8px' }} />
+              <div style={{ color: '#888', fontSize: '10px', letterSpacing: '0.1em', marginBottom: '8px' }}>POSITION</div>
+              {([['X', 0], ['Y', 1], ['Z', 2]] as [string, 0|1|2][]).map(([label, axis]) => {
+                const cur = accOffsets[selectedAcc.id] ?? selectedAcc.offset
+                return (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '5px' }}>
+                    <span style={{ color: '#888', fontSize: '10px', fontFamily: 'monospace', width: '10px', flexShrink: 0 }}>{label}</span>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={cur[axis]}
+                      onChange={e => {
+                        const v = e.target.valueAsNumber
+                        if (!isNaN(v)) setOffsetAxis(selectedAcc.id, axis, v)
+                      }}
+                      style={{
+                        flex: 1, minWidth: 0,
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1px solid rgba(255,255,255,0.15)',
+                        borderRadius: '4px', color: '#ccc',
+                        fontSize: '11px', padding: '3px 5px',
+                        fontFamily: 'monospace',
+                      }}
+                    />
+                  </div>
+                )
+              })}
+              <button
+                type="button"
+                onClick={() => resetOffset(selectedAcc.id)}
+                style={{
+                  marginTop: '2px', width: '100%', background: 'rgba(255,255,255,0.06)',
                   border: '1px solid rgba(255,255,255,0.1)', borderRadius: '5px',
                   color: '#888', fontSize: '11px', cursor: 'pointer', padding: '4px',
                   fontFamily: 'sans-serif',
@@ -377,15 +469,12 @@ export default function DressUpModal({ onClose }: Props) {
             <Suspense fallback={
               <mesh position={[0, 1.8, -0.95]}>
                 <planeGeometry args={[3.6, 1.1]} />
-                <meshStandardMaterial color="#fdfdfd" />
+                <meshStandardMaterial color="#ffffff" />
               </mesh>
             }>
-              <BannerTexture />
+              <BannerTexture inverted={logoInverted} />
             </Suspense>
-            <mesh position={[0, 0.8, -0.98]}>
-              <planeGeometry args={[3.6, 5.1]} />
-              <meshStandardMaterial color="#ffffff" />
-            </mesh>
+            <BackingPanel inverted={logoInverted} />
 
             {/* Floor */}
             <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -393,7 +482,7 @@ export default function DressUpModal({ onClose }: Props) {
               <meshStandardMaterial color="#1e1030" roughness={0.9} />
             </mesh>
 
-            <AnimalAndAccessories animal={animal} worn={worn} accColors={accColors} />
+            <AnimalAndAccessories animal={animal} worn={worn} accColors={accColors} accOffsets={accOffsets} />
             <ClosetOrganizer
               worn={worn} onToggle={toggleAcc}
               selectedAccId={selectedAccId} onSelect={setSelectedAccId}

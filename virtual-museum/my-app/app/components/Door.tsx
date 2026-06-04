@@ -2,7 +2,7 @@
 import { Html } from '@react-three/drei'
 
 interface DoorProps {
-  label: string
+  label?: string
   isNear: boolean
   onInteract: () => void
 }
@@ -37,25 +37,26 @@ export function Door({ label, isNear, onInteract }: DoorProps) {
         <meshStandardMaterial color="#d4af37" metalness={0.85} roughness={0.15} />
       </mesh>
 
-      {/* ── INTERACTIVE FEATURES ── */}
       {/* Room label sign above door */}
-      <Html position={[0, 2.75, 0.12]} transform occlude center>
-        <div
-          style={{
-            background: 'rgba(90, 62, 20, 0.92)',
-            color: '#f5e6c0',
-            padding: '3px 8px',
-            fontFamily: 'Georgia, serif',
-            fontSize: '8px',
-            borderRadius: '3px',
-            whiteSpace: 'nowrap',
-            letterSpacing: '0.05em',
-            zIndex: 2,
-          }}
-        >
-          {label}
-        </div>
-      </Html>
+      {label && (
+        <Html position={[0, 2.75, 0.12]} transform occlude center>
+          <div
+            style={{
+              background: 'rgba(90, 62, 20, 0.92)',
+              color: '#f5e6c0',
+              padding: '3px 8px',
+              fontFamily: 'Georgia, serif',
+              fontSize: '8px',
+              borderRadius: '3px',
+              whiteSpace: 'nowrap',
+              letterSpacing: '0.05em',
+              zIndex: 2,
+            }}
+          >
+            {label}
+          </div>
+        </Html>
+      )}
 
       {/* Interact hint when near */}
       {isNear && (
