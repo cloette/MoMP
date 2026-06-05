@@ -39,7 +39,7 @@ export default function RoomScene({
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [path[0][0], 1.6, path[0][1]], fov: 68, near: 0.1, far: 50 }}
+      camera={{ position: [path[0][0], 1.4, path[0][1]], fov: 68, near: 0.1, far: 50 }}
       style={{ width: '100%', height: '100%', background: '#f0ede8' }}
     >
       <GalleryRoom

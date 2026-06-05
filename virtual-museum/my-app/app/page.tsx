@@ -43,6 +43,100 @@ export default function Home() {
           />
         </div>
 
+        <div className={styles.container} style={{ marginTop: '60px' }}>
+          <h3>About the museum</h3>
+          <h2>The planet we inhabit and the universe we live in is much more &quot;magical&quot; than we might think.</h2>
+
+          <p>
+            <br></br>This museum aims to:
+            </p>
+            <ul>
+              <li>• Renew a sense of wonder across all ages</li>
+              <li>• Protect important historical media</li>
+              <li>• Inspire new ways of thinking about persistent mysteries in science</li>
+              <li>• Build familiarity with how the technology we use today actually works</li>
+              <li>• Highlight coincidences across religions and local cultures</li>
+            </ul>
+<p>
+            <br></br>
+            <em>What counts as magical phenomena?</em> Forces that are invisible to the naked eye. The list below is not exhaustive, but covers many of the phenomena we plan to explore in the museum. <br />
+            <br></br>
+            </p>
+            <table className={styles.table}>
+              <tbody>
+                <tr>
+                  <td>Telekinesis</td>
+                  <td>Healing</td>
+                  <td>Illusion</td>
+                  <td>Invisibility</td>
+                </tr>
+                <tr>
+                  <td>Telepathy</td>
+                  <td>Revival</td>
+                  <td>Hypnotism</td>
+                  <td>Shapeshifting</td>
+                </tr>
+                <tr>
+                  <td>Teleportation</td>
+                  <td>Growth</td>
+                  <td>Time manipulation</td>
+                  <td>Flight</td>
+                </tr>
+                <tr>
+                  <td>Search</td>
+                  <td>Summoning</td>
+                  <td>Purification</td>
+                  <td>Prophecy</td>
+                </tr>
+                <tr>
+                  <td>Underwater breathing</td>
+                  <td>Mind reading</td>
+                  <td>Puppetry / golems</td>
+                  <td>Energy transer</td>
+                </tr>
+                <tr>
+                  <td>Harden / Barrier / Strengthening </td>
+                  <td>Gigantify / Minify</td>
+                  <td>Reveal (enhanced vision)</td>
+                  <td>Alchemy / Transmutation </td>
+                </tr>
+                <tr>
+                  <td>Memory storage / transfer / display / manipulation</td>
+                  <td>Movement of elements (earth / fire / water / ice / air / lightning / metal / plants)</td>
+                  <td>Communication with animals (at a complex level)</td>
+                  <td>Induce paralysis / blind / bind / sleep</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+          <br></br>
+          <p>
+            <em>Planned Exhibits:</em>
+          </p>
+          <ul>
+            <li>• Art Hall</li>
+            <li>• Persistent Mysteries</li>
+            <li>• Magical Phenomena in Nature</li>
+            <li>• Magical Phenomena in Technology</li>
+            <li>• Magic Types and Systems in Fictional Media</li>
+            <li>• Occupational History</li>
+            <li>• Intersections with Religion and Folklore</li>
+            <li>• Rethink the Limit: Chamber of Inspiration</li>
+            <li>• Wish Room: Dress-up area + paper star station</li>
+          </ul>
+          <br /><br></br>
+          <p>Want to help curate the exhibits? <br /><br />
+            <a
+              className={styles.button}
+              href="https://forms.gle/4E79fNvAYKkPkiB88"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Become a volunteer!
+            </a>
+          </p>
+        </div>
+
         {/* Roadmap */}
         <div className={styles.container} style={{ marginTop: '60px' }}>
           <h3>Roadmap</h3>
@@ -106,45 +200,9 @@ export default function Home() {
           </p>
         </div>
 
-        {/* About the museum */}
-        <div className={styles.container} style={{ marginTop: '60px' }}>
-          <h3>About the museum</h3>
-          <p>
-            <em>What counts as magical phenomena?</em> Forces that are invisible to the naked eye
-            are generally considered to be magical, and we expand on this to include accurate prediction of the future and
-            communication with animals.
-          </p><br></br>
-          <p>
-            <em>Planned Exhibits:</em>
-          </p>
-          <ul>
-            <li>• Art Hall</li>
-            <li>• Persistent Mysteries</li>
-            <li>• Magical Phenomena in Nature</li>
-            <li>• Magical Phenomena in Technology</li>
-            <li>• Magic Types and Systems in Fictional Media</li>
-            <li>• Occupational History</li>
-            <li>• Intersections with Religion and Folklore</li>
-            <li>• Rethink the Limit: Chamber of Inspiration</li>
-            <li>• Wish Room: Dress-up area + paper star station</li>
-          </ul>
-          <br /><br></br>
-          <p>Want to help curate the exhibits? <br /><br />
-            <a
-              className={styles.button}
-              href="https://forms.gle/4E79fNvAYKkPkiB88"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Become a volunteer!
-            </a>
-          </p>
-        </div>
-
-        
         {/* Enter Museum */}
         <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
-          <Link href="/room-a" className={styles.enterButton}>
+          <Link href="/lobby" className={styles.enterButton}>
             ➜ Enter the POC virtual museum
           </Link>
         </div>
@@ -173,7 +231,7 @@ export default function Home() {
           <p>
             Copyright © 2026 The Museum of Magical Phenomena. All rights reserved.
             <br />
-            This site does not use cookies.
+            This site does not use cookies. In the virtual museum, we do use local storage to save your progress, but this data is stored only on your device and is not shared with any third parties.
             <br />
             Falling stars effect by{' '}
             <a href="https://codepen.io/alphardex" target="_blank" rel="noopener noreferrer">
