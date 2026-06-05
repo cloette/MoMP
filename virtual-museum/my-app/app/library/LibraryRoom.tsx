@@ -4,7 +4,7 @@ import { Door } from '../components/Door'
 import type { CategoryName } from './CategoryModal'
 
 const W = 12
-const D = 14
+const D = 18
 const H = 5.6
 
 const LEFT_CATEGORIES: { label: CategoryName; z: number }[] = [
@@ -41,12 +41,12 @@ function CategoryPlaque({
     <group position={position} rotation={rotation}>
       {/* Outer wooden frame */}
       <mesh>
-        <boxGeometry args={[1.6, 0.55, 0.07]} />
+        <boxGeometry args={[2.6, 0.55, 0.07]} />
         <meshStandardMaterial color="#3d1f0a" roughness={0.6} metalness={0.1} />
       </mesh>
       {/* Parchment inner panel */}
       <mesh position={[0, 0, 0.036]}>
-        <boxGeometry args={[1.38, 0.38, 0.02]} />
+        <boxGeometry args={[2.38, 0.38, 0.02]} />
         <meshStandardMaterial color="#f2e4c4" roughness={0.9} />
       </mesh>
       {/* Invisible click surface */}
@@ -56,7 +56,7 @@ function CategoryPlaque({
         onPointerOver={() => { document.body.style.cursor = 'pointer' }}
         onPointerOut={() => { document.body.style.cursor = 'auto' }}
       >
-        <boxGeometry args={[1.6, 0.55, 0.05]} />
+        <boxGeometry args={[2.6, 0.55, 0.05]} />
         <meshStandardMaterial transparent opacity={0} />
       </mesh>
       {/* Text label */}
@@ -102,17 +102,13 @@ export function LibraryRoom({
       {/* ── LIGHTING ──────────────────────────────────────────── */}
       <ambientLight intensity={0.45} color="#ffddcc" />
       <directionalLight position={[0, H - 0.3, 0]} intensity={0.5} color="#ffe8d0" />
-      <pointLight position={[-3, H - 0.4, -3.5]} intensity={1.2} color="#ff9955" distance={9} decay={2} />
-      <pointLight position={[ 3, H - 0.4,  3.5]} intensity={1.2} color="#ff9955" distance={9} decay={2} />
-      <pointLight position={[-3, H - 0.4,  3.5]} intensity={0.9} color="#ffaa77" distance={9} decay={2} />
-      <pointLight position={[ 3, H - 0.4, -3.5]} intensity={0.9} color="#ffaa77" distance={9} decay={2} />
 
       {/* ── CATEGORY PLAQUES — LEFT WALL (Books, Comics/Manga, Video) ── */}
       {LEFT_CATEGORIES.map(({ label, z }) => (
         <CategoryPlaque
           key={label}
           label={label}
-          position={[-W / 2 + 0.05, 1.5, z]}
+          position={[-W / 2 + 0.05, 3.5, z -2.5]}
           rotation={[0, Math.PI / 2, 0]}
           onClick={() => onOpenCategory(label)}
         />
@@ -123,7 +119,7 @@ export function LibraryRoom({
         <CategoryPlaque
           key={label}
           label={label}
-          position={[W / 2 - 0.05, 1.5, z]}
+          position={[W / 2 - 0.05, 3.5, z -2.5]}
           rotation={[0, -Math.PI / 2, 0]}
           onClick={() => onOpenCategory(label)}
         />
@@ -135,7 +131,7 @@ export function LibraryRoom({
       </group>
 
       {/* ── LOBBY DOOR (front wall, center — faces interior) ──── */}
-      <group position={[0, 0, D / 2 - 0.06]} rotation={[0, Math.PI, 0]}>
+      <group position={[0, 0, D / 2 + 0.06]} rotation={[0, Math.PI, 0]}>
         <Door label="Lobby" isNear={false} onInteract={onLobbyDoorInteract} />
       </group>
 
