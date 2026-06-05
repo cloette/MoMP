@@ -126,13 +126,62 @@ function VideoMedia({ src }: { src: string }) {
   )
 }
 
+// YouTube iframe is only mounted after a click so it doesn't allocate a WebGL
+// context on load — YouTube's player uses WebGL, which can push the browser over
+// its context limit and cause the Three.js canvas to lose its own context.
 function YouTubeMedia({ youtubeId, title = 'YouTube video' }: { youtubeId: string; title?: string }) {
+  const [active, setActive] = useState(false)
+  const thumb = `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`
+
+  if (!active) {
+    return (
+      <div
+        onClick={() => setActive(true)}
+        style={{
+          width: PX_W,
+          height: PX_H,
+          background: '#000',
+          position: 'relative',
+          cursor: 'pointer',
+          overflow: 'hidden',
+        }}
+      >
+        <img
+          src={thumb}
+          alt={title}
+          draggable={false}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+        {/* Play button overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <div style={{
+            width: 44,
+            height: 44,
+            borderRadius: '50%',
+            background: 'rgba(255,0,0,0.85)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <span style={{ color: '#fff', fontSize: 18, marginLeft: 3 }}>▶</span>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div style={{ width: PX_W, height: PX_H, background: '#000' }}>
       <iframe
         width={PX_W}
         height={PX_H}
-        src={`https://www.youtube.com/embed/${youtubeId}?modestbranding=1&rel=0`}
+        src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`}
         title={title}
         frameBorder={0}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
