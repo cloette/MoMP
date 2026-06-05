@@ -115,6 +115,8 @@ export function RailCamera({
 
     if (k.has(',')) panAngle.current = Math.max(-MAX_PAN, panAngle.current - PAN_SPEED * delta)
     if (k.has('.')) panAngle.current = Math.min(MAX_PAN, panAngle.current + PAN_SPEED * delta)
+    if (k.has('ArrowLeft')) panAngle.current = Math.max(-MAX_PAN, panAngle.current - PAN_SPEED * delta)
+    if (k.has('ArrowRight')) panAngle.current = Math.min(MAX_PAN, panAngle.current + PAN_SPEED * delta)
 
     const dist = pathT.current * totalLen
     const pos = posAtDist(dist, path, pd.current)

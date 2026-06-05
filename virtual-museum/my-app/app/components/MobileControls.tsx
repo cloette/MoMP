@@ -60,9 +60,9 @@ export function MobileControls({ nearDoor, onInteract }: MobileControlsProps) {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', pointerEvents: 'all' }}>
         <VBtn label="▲" keyName="ArrowUp" />
         <div style={{ display: 'flex', gap: '6px' }}>
-          <VBtn label="◁" keyName="," />
+          <VBtn label="◁" keyName={"ArrowLeft"} />
           <VBtn label="▼" keyName="ArrowDown" />
-          <VBtn label="▷" keyName="." />
+          <VBtn label="▷" keyName={"ArrowRight"} />
         </div>
       </div>
 
