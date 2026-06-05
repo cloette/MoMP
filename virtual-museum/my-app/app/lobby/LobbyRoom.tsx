@@ -14,7 +14,7 @@ const CROSSBAR_X_EXTENT = 22  // ±8 from center
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
   { x:  -6, label: 'Art Hall',  route: '/art-hall'  },
-  { x:  -2, label: 'Exhibits', route: '/room-a'    },
+  { x:  -2, label: 'Exhibits', route: '/mysteries'    },
   { x: 2, label: 'Library',   route: '/library'   },
   { x: 6, label: 'Wish Room', route: '/wish-room' },
 ]

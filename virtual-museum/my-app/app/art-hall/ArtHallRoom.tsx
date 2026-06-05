@@ -12,7 +12,7 @@ const PATH_LENGTH = 38
 const CROSSBAR_X_EXTENT = 22 
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-  { x:  0, label: 'Exhibits', route: '/room-a'    },
+  { x:  0, label: 'Exhibits', route: '/mysteries'    },
 ]
 
 function SpaceBackdrop() {

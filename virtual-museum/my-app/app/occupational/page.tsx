@@ -137,7 +137,7 @@ export default function Page() {
   }, [router])
 
   // Default action for keyboard Enter / auto-walk / mobile = far-left door
-  const handleInteract = useCallback(() => handleNavigate('nature'), [handleNavigate])
+  const handleInteract = useCallback(() => handleNavigate('/religion-and-folklore'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])

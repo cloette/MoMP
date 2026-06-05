@@ -16,7 +16,7 @@ const D = 38
 const H = 5.6
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-    { x: 0, label: 'Library', route: '/library' },
+    { x: 0, label: 'Religion and Folklore', route: '/religion-and-folklore' },
 ]
 
 interface RoomProps {
@@ -31,33 +31,33 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#ddeb91" roughness={0.9} />
+        <meshStandardMaterial color="#ffc773" roughness={0.9} />
       </mesh>
 
       {/* Ceiling */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H, 0]}>
         <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#ddeb91" />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
       {/* Back wall */}
       <mesh position={[0, H / 2, -D / 2]}>
         <planeGeometry args={[W, H]} />
-        <meshStandardMaterial color="#f7f5f2" />
+        <meshStandardMaterial color="#ffc773" />
       </mesh>
       {/* Front wall */}
       <mesh rotation={[0, Math.PI, 0]} position={[0, H / 2, D / 2]}>
         <planeGeometry args={[W, H]} />
-        <meshStandardMaterial color="#f7f5f2" />
+        <meshStandardMaterial color="#ffc773" />
       </mesh>
       {/* Left wall */}
       <mesh rotation={[0, Math.PI / 2, 0]} position={[-W / 2, H / 2, 0]}>
         <planeGeometry args={[D, H]} />
-        <meshStandardMaterial color="#f4f1ed" />
+        <meshStandardMaterial color="#ffc773" />
       </mesh>
       {/* Right wall */}
       <mesh rotation={[0, -Math.PI / 2, 0]} position={[W / 2, H / 2, 0]}>
         <planeGeometry args={[D, H]} />
-        <meshStandardMaterial color="#f4f1ed" />
+        <meshStandardMaterial color="#ffc773" />
       </mesh>
 
       {/* ── LIGHTING ────────────────────────────────────────────── */}
@@ -74,9 +74,9 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                 <group
                     position={[0, 0, FAR_Z -.95]}>
                     <Door
-                        label={"Library"}
+                        label={"Religion and Folklore"}
                         isNear={nearDoor}
-                        onInteract={() => onNavigate('/library')}
+                        onInteract={() => onNavigate('/religion-and-folklore')}
                     />
                 </group>
                 <group

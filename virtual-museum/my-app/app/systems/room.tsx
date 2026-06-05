@@ -16,7 +16,7 @@ const D = 38
 const H = 5.6
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-    { x: 0, label: 'Exhibits', route: '/room-a' },
+    { x: 0, label: 'Occupational', route: '/occupational' },
 ]
 
 interface RoomProps {
@@ -74,9 +74,9 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                 <group
                     position={[0, 0, FAR_Z -.95]}>
                     <Door
-                        label={"Lobby"}
+                        label={"Occupational"}
                         isNear={nearDoor}
-                        onInteract={() => onNavigate('/lobby')}
+                        onInteract={() => onNavigate('/occupational')}
                     />
                 </group>
                 <group
