@@ -9,10 +9,10 @@ const BACK_Z = 20         // back end: one rear door
 const PATH_CENTER_Z = 1   // midpoint of 20 + (−18)
 const PATH_LENGTH = 38
 
-const CROSSBAR_X_EXTENT = 22 
+const CROSSBAR_X_EXTENT = 22
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-  { x:  0, label: 'Exhibits', route: '/mysteries'    },
+  { x: 0, label: 'Exhibits', route: '/mysteries' },
 ]
 
 function SpaceBackdrop() {
@@ -83,24 +83,24 @@ function DoorPortal({
         <primitive object={cloned} scale={.14} />
       </group>
 
-      { label && (
-      <Html position={[0, 2.5, -2]} center zIndexRange={[10, 20]}>
-        <div
-          style={{
-            background: '#000000',
-            color: '#ffffff',
-            padding: '4px 12px',
-            fontFamily: 'sans-serif',
-            fontSize: '11px',
-            whiteSpace: 'nowrap',
-            border: '1px solid #444',
-            borderRadius: '2px',
-            pointerEvents: 'none',
-          }}
-        >
-          {label}
-        </div>
-      </Html>
+      {label && (
+        <Html position={[0, 2.5, -2]} center zIndexRange={[10, 20]}>
+          <div
+            style={{
+              background: '#000000',
+              color: '#ffffff',
+              padding: '4px 12px',
+              fontFamily: 'sans-serif',
+              fontSize: '11px',
+              whiteSpace: 'nowrap',
+              border: '1px solid #444',
+              borderRadius: '2px',
+              pointerEvents: 'none',
+            }}
+          >
+            {label}
+          </div>
+        </Html>
       )}
 
       {/* Interaction hint when near */}
@@ -205,7 +205,7 @@ export function ArtHallRoom({ nearDoor, onNavigate }: ArtHallProps) {
         <RevealedText position={[0, 3, PATH_CENTER_Z - 20]} isNear={true} />
 
         <DoorPortal
-          position={[0, 0, BACK_Z -2.1]}
+          position={[0, 0, BACK_Z - 2.1]}
           rotationY={Math.PI}
           label="Lobby"
           isNear={nearDoor}

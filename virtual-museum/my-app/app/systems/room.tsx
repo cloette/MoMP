@@ -1,5 +1,5 @@
 'use client'
-import { useMemo, Suspense, useEffect } from 'react'
+import { useMemo, Suspense, useEffect, useRef } from 'react'
 import { Html, useGLTF, useTexture } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
@@ -25,6 +25,9 @@ interface RoomProps {
 }
 
 export function Room({ nearDoor, onNavigate }: RoomProps) {
+    const cubeRef2 = useRef<THREE.Mesh>(null)
+    const cubeRef = useRef<THREE.Mesh>(null)
+    
     return (
         <group>
             
@@ -68,6 +71,62 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       <spotLight position={[-2.5, H - 0.15,  2.5]} target-position={[-6, 1.8,  2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
       <spotLight position={[ 2.5, H - 0.15, -2.5]} target-position={[ 6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
       <spotLight position={[ 2.5, H - 0.15,  2.5]} target-position={[ 6, 1.8,  2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
+
+
+      <mesh ref={cubeRef2} position={[-6, 2.7, 8]}>
+        <boxGeometry args={[6, .5, .5]} />
+        <meshStandardMaterial
+          color={"#360057"}
+          roughness={0}
+          metalness={0.25}
+        />
+      </mesh>
+
+      <mesh ref={cubeRef} position={[-6, 0, 8]}>
+        <boxGeometry args={[6, 5, .5]} />
+        <meshStandardMaterial
+          color={"#fff"}
+          roughness={0}
+          metalness={0.25}
+        />
+        <group position={[1.9, 1.5, 0]} rotation={[0, 0, 0]}>
+          <mesh>
+            <boxGeometry args={[1.55, 0.75, 0.015]} />
+            <meshStandardMaterial color="#360057" roughness={0.8} />
+          </mesh>
+          <Html center transform occlude distanceFactor={5}>
+            <div
+              style={{
+                width: '510px',
+                padding: '10px 14px',
+                fontFamily: 'Times New Roman, serif',
+                textAlign: 'left',
+                pointerEvents: 'none',
+                userSelect: 'none',
+                maxWidth: '520px',
+                zIndex: 1,
+              }}
+            >
+              <div style={{ fontSize: '20px', color: '#360057', lineHeight: .5 }}>
+                {'Magic Systems in '}
+              </div>
+              <div
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '60px',
+                  marginBottom: '5px',
+                  color: '#0c0c0c',
+                  letterSpacing: '0em',
+                  fontStyle: 'italic',
+                  marginLeft: '20px',
+                }}
+              >
+                {'Fiction'}
+              </div>
+            </div>
+          </Html>
+        </group>
+      </mesh>
 
             {/* ── DOORS ───────────────────────────────────────────────── */}
             <Suspense fallback={null}>

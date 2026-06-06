@@ -63,7 +63,7 @@ export default function Page() {
     audioMutedRef.current = !unmuted
 
     if (unmuted) {
-      const ambient = new Audio('/exhibitobjects/lobby/lobby-sound.mp3')
+      const ambient = new Audio('/exhibitobjects/mysteries/zec53-inspiring-adventure-epic-cinematic-orchestral-trailer-315359.mp3')
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
@@ -91,16 +91,15 @@ export default function Page() {
       setAudioMuted(false)
       audioMutedRef.current = false
       sessionStorage.setItem('momp_audio_unmuted', '1')
-
-      // Start looping ambient
+       // Start looping ambient
       if (!ambientAudioRef.current) {
-        const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
+        const  ambient = new Audio('/exhibitobjects/mysteries/zec53-inspiring-adventure-epic-cinematic-orchestral-trailer-315359.mp3')
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
-        ambient.play().catch(() => {})
+        ambient.play().catch(() => { })
       } else {
-        ambientAudioRef.current.play().catch(() => {})
+        ambientAudioRef.current.play().catch(() => { })
       }
     } else {
       currentAudioRef.current?.pause()
@@ -255,8 +254,12 @@ export default function Page() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
-              [No credits for this room yet.]
-              <br />Rotating Seasonal Artists and featured partnerships can appear in this room.
+              <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
+              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              <br></br>
+              <em>Credits:</em>
+              <br />Music - "Inspiring Adventure epic cinematic orchestral trailer" by zec53 on Pixabay. Copyright-free.
             </p>
           </CreditsPanel>
         )}
