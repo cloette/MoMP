@@ -236,6 +236,11 @@ export default function ExteriorPage() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it. 
+              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              <br></br>
+              <em>Credits:</em><br></br>
               "Harlequin Orb" (https://skfb.ly/oDPZZ) by Tycho Magnetic Anomaly is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Door" (https://skfb.ly/6ZWw8) by Maria Stashko is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Rock Mountain with cave (realistic version)" (https://skfb.ly/pK9UN) by Jungle Jim is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).

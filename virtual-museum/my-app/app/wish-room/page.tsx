@@ -220,6 +220,7 @@ export default function WishRoomPage() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+              <em>Credits:</em><br></br>
               Origami Lucky Star Tutorial by <a href="https://www.youtube.com/@EasyPaperOrigami" target="_blank">Easy Paper Origami</a>
               <br />"Computer Desk" (https://skfb.ly/6BRuF) by felixawani is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Paper Stack" (https://skfb.ly/oI98E) by Vivify Productions is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
@@ -238,7 +239,7 @@ export default function WishRoomPage() {
               <br />"Stand mirror" (https://skfb.ly/oCuDJ) by Jones Studio is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Dressing matrimonial" (https://skfb.ly/6RMnO) by Naidar - InoxArt is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />"Glass Jar With Wooden Cover" (https://skfb.ly/oyBHu) by Navjot is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-              <br />
+              <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>
         )}

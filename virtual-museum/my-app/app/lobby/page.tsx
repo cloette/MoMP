@@ -256,6 +256,11 @@ export default function LobbyPage() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
+              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              <br></br>
+              <em>Credits:</em><br></br>
               Portal door - Fensterelement Stiftskirche (https://skfb.ly/oEFOM) by ADE_fatuk is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />Backdrop of space is an amalgamation of public domain images from NASA. Does not reflect actual geospatial configuration.
               <br />All music is copyright-free from Pixabay (human-created tracks only). 

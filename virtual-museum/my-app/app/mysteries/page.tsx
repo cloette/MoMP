@@ -255,8 +255,12 @@ export default function Page() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
-              [No credits for this room yet.]
-              <br />Rotating Seasonal Artists and featured partnerships can appear in this room.
+              <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
+              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              <br></br>
+              <em>Credits:</em><br></br>
+              <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>
         )}

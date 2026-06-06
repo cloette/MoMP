@@ -10,9 +10,9 @@ import { PauseZone } from '../components/RailCamera'
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
 const PATH_EXT: readonly [number, number][] = [
-  [0,  18],  
-  [0,   0],
-  [0, -18],  
+  [0, 18],
+  [0, 0],
+  [0, -18],
 ]
 
 const START_T = .05
@@ -66,7 +66,7 @@ export default function Page() {
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
-      ambient.play().catch(() => {})
+      ambient.play().catch(() => { })
     }
 
     if (sessionStorage.getItem('momp_autowalk') === '1') {
@@ -97,9 +97,9 @@ export default function Page() {
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
-        ambient.play().catch(() => {})
+        ambient.play().catch(() => { })
       } else {
-        ambientAudioRef.current.play().catch(() => {})
+        ambientAudioRef.current.play().catch(() => { })
       }
     } else {
       currentAudioRef.current?.pause()
@@ -146,8 +146,8 @@ export default function Page() {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === 'BUTTON' || target.tagName === 'A') return
-      if (e.key === ' ')     { e.preventDefault(); handleToggleAutoWalk() }
-      if (e.key === '/')     { e.preventDefault(); handleToggleMute() }
+      if (e.key === ' ') { e.preventDefault(); handleToggleAutoWalk() }
+      if (e.key === '/') { e.preventDefault(); handleToggleMute() }
       if (e.key === 'Enter' && nearDoorRef.current) handleInteract()
     }
     window.addEventListener('keydown', onKey)
@@ -254,8 +254,15 @@ export default function Page() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
-              [No credits for this room yet.]
-              <br />Rotating Seasonal Artists and featured partnerships can appear in this room.
+              <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
+              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              <br></br>
+              <em>Credits:</em><br></br>
+              "Potted Plant –  Poly Foliage (Game Ready)" (https://skfb.ly/pG7pn) by I am warrior is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Stylized Tree" (https://skfb.ly/on9up) by Maksim Batyrev is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Terrarium (basil, rosemary and coriander)" (https://skfb.ly/66uKp) by edouard.angebault is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>
         )}
