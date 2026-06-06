@@ -1,30 +1,30 @@
 'use client'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { Html } from '@react-three/drei'
 import { Door } from '../components/Door'
 
-const W = 14, D = 12, H = 4
+const W = 14, D = 22, H = 4
 const HW = W / 2, HD = D / 2
 
 const COL = {
-  floor:   '#0b1830',
-  ceiling: '#070e1f',
-  walls:   '#0e1c38',
-  farWall: '#122042',
-  trim:    '#1a3060',
-  rail:    '#1e3a78',
+  floor: '#1d0b30',
+  ceiling: '#15071f',
+  walls: '#240e38',
+  farWall: '#2c1242',
+  trim: '#3e1a60',
+  rail: '#541e78',
 }
 
 export const PLAYLIST: { title: string; src: string }[] = [
-  { title: 'Introduction',         src: '/videos/inspiration-01.mp4' },
+  { title: 'Introduction', src: '/videos/inspiration-01.mp4' },
   { title: 'The Creative Process', src: '/videos/inspiration-02.mp4' },
-  { title: 'Finding Your Voice',   src: '/videos/inspiration-03.mp4' },
-  { title: 'Beyond the Canvas',    src: '/videos/inspiration-04.mp4' },
+  { title: 'Finding Your Voice', src: '/videos/inspiration-03.mp4' },
+  { title: 'Beyond the Canvas', src: '/videos/inspiration-04.mp4' },
 ]
 
 interface ChamberRoomProps {
   onLobby: () => void
-  onBack:  () => void
+  onBack: () => void
 }
 
 export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
@@ -33,12 +33,12 @@ export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
   return (
     <group>
       {/* ── LIGHTING ──────────────────────────────────────────────── */}
-      <ambientLight intensity={0.4} color="#2244aa" />
-      <directionalLight position={[0, H, 0]} intensity={0.5} color="#4466bb" />
-      <pointLight position={[-HW + 2, H - 0.4, HD - 2]} intensity={1.0} color="#1a3388" distance={20} />
-      <pointLight position={[ HW - 2, H - 0.4, HD - 2]} intensity={1.0} color="#1a3388" distance={20} />
+      <ambientLight intensity={.6} color="#7422aa" />
+      <directionalLight position={[0, H, 0]} intensity={0.5} color="#8f44bb" />
+      <pointLight position={[-HW + 2, H - 0.4, HD - 2]} intensity={1.0} color="#601a88" distance={20} />
+      <pointLight position={[HW - 2, H - 0.4, HD - 2]} intensity={1.0} color="#601a88" distance={20} />
       {/* Screen glow */}
-      <pointLight position={[0, 2.1, -HD + 1]} intensity={0.6} color="#2255cc" distance={8} />
+      <pointLight position={[0, 2.1, -HD + 1]} intensity={0.9} color="#ffffff" distance={8} />
 
       {/* ── FLOOR ─────────────────────────────────────────────────── */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
@@ -115,10 +115,10 @@ export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
         <div style={{
           display: 'flex',
           background: 'rgba(4, 10, 30, 0.96)',
-          border: '1px solid #1e3a70',
+          border: '1px solid #551e70',
           borderRadius: '6px',
           overflow: 'hidden',
-          boxShadow: '0 0 30px rgba(30, 60, 180, 0.4)',
+          boxShadow: '0 0 30px rgba(115, 30, 180, 0.4)',
           userSelect: 'none',
         }}>
           {/* Video player */}
@@ -140,7 +140,7 @@ export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
             width: '160px',
             padding: '10px 8px',
             background: 'rgba(6, 14, 38, 0.98)',
-            borderLeft: '1px solid #1a3060',
+            borderLeft: '1px solid #421a60',
             display: 'flex',
             flexDirection: 'column',
             gap: '0px',
@@ -167,9 +167,9 @@ export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
                   marginBottom: '3px',
                   borderRadius: '4px',
                   cursor: 'pointer',
-                  background: selected === i ? '#152d60' : 'transparent',
-                  border: `1px solid ${selected === i ? '#2a4d8a' : 'transparent'}`,
-                  color: selected === i ? '#ddeeff' : '#5578aa',
+                  background: selected === i ? '#3d1560' : 'transparent',
+                  border: `1px solid ${selected === i ? '#622a8a' : 'transparent'}`,
+                  color: selected === i ? '#ddeeff' : '#8155aa',
                   fontSize: '11px',
                   lineHeight: 1.3,
                   transition: 'background 0.15s, color 0.15s',
@@ -182,7 +182,7 @@ export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
                 }}
               >
                 <span style={{
-                  color: selected === i ? '#4477ff' : '#223355',
+                  color: selected === i ? '#9b44ff' : '#3d2255',
                   fontSize: '9px', flexShrink: 0, fontVariantNumeric: 'tabular-nums',
                 }}>
                   {String(i + 1).padStart(2, '0')}

@@ -261,7 +261,9 @@ export default function LibraryPage() {
 
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
-            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>Credits</p>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
+              "Library" (https://skfb.ly/pAux6) by Pasha is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+            </p>
           </CreditsPanel>
         )}
 

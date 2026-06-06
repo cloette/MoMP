@@ -9,13 +9,12 @@ import { PauseZone } from '../components/RailCamera'
 
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
-// Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
   [0,  18],  
-  [0,   0],  // camera start
+  [0,   0],
   [0, -18],  
 ]
-// Place camera at the midpoint of segment 1 (z ≈ 0)
+
 const START_T = .05
 const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
 

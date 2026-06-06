@@ -1,20 +1,23 @@
 'use client'
-import { Html } from '@react-three/drei'
+import { Environment, Html } from '@react-three/drei'
 import { Door } from '../components/Door'
 import type { CategoryName } from './CategoryModal'
+import { Suspense } from 'react'
+import { Setting } from './settingobject'
+import { FancyDoor } from './Door'
 
-const W = 12
+const W = 14
 const D = 18
 const H = 5.6
 
 const LEFT_CATEGORIES: { label: CategoryName; z: number }[] = [
-  { label: 'Books',        z:  3.5 },
-  { label: 'Comics/Manga', z:  0   },
-  { label: 'Video',        z: -3.5 },
+  { label: 'Books', z: 3.5 },
+  { label: 'Comics/Manga', z: 0 },
+  { label: 'Video', z: -3.5 },
 ]
 
 const RIGHT_CATEGORIES: { label: CategoryName; z: number }[] = [
-  { label: 'Games', z:  2 },
+  { label: 'Games', z: 2 },
   { label: 'Other', z: -2 },
 ]
 
@@ -87,17 +90,25 @@ export function LibraryRoom({
 }: LibraryRoomProps) {
   return (
     <group>
-      {/* ── FLOOR ─────────────────────────────────────────────── */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-        <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#5a3218" roughness={0.9} />
-      </mesh>
+      {/* ── BACKDROP ────────────────────────────────────────────── */}
 
-      {/* ── CEILING ───────────────────────────────────────────── */}
-      <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H, 0]}>
-        <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#4a2812" roughness={0.95} />
-      </mesh>
+      {/* Sky-ground fill */}
+      <hemisphereLight args={['#ffffff', '#ffffff', 0.5]} />
+      {/* Sun — position matches Sky sunPosition */}
+      <directionalLight
+        position={[80, 30, 100]}
+        intensity={5.2}
+        color="#fffcee"
+        castShadow
+      />
+
+      {/* ── LIGHTING ────────────────────────────────────────────── */}
+      <ambientLight intensity={0.95} />
+      <Suspense fallback={null}>
+        <group>
+          <Setting />
+        </group>
+      </Suspense>
 
       {/* ── LIGHTING ──────────────────────────────────────────── */}
       <ambientLight intensity={0.45} color="#ffddcc" />
@@ -108,7 +119,7 @@ export function LibraryRoom({
         <CategoryPlaque
           key={label}
           label={label}
-          position={[-W / 2 + 0.05, 3.5, z -2.5]}
+          position={[-W / 3 + 0.05, 2.5, z - 2.5]}
           rotation={[0, Math.PI / 2, 0]}
           onClick={() => onOpenCategory(label)}
         />
@@ -119,16 +130,11 @@ export function LibraryRoom({
         <CategoryPlaque
           key={label}
           label={label}
-          position={[W / 2 - 0.05, 3.5, z -2.5]}
+          position={[W / 3 - 0.05, 2.5, z - 2.5]}
           rotation={[0, -Math.PI / 2, 0]}
           onClick={() => onOpenCategory(label)}
         />
       ))}
-
-      {/* ── WISH ROOM DOOR (back wall, center) ────────────────── */}
-      <group position={[0, 0, -D / 2 + 0.06]}>
-        <Door label="Wish Room" isNear={nearDoor} onInteract={onDoorInteract} />
-      </group>
 
       {/* ── LOBBY DOOR (front wall, center — faces interior) ──── */}
       <group position={[0, 0, D / 2 + 0.06]} rotation={[0, Math.PI, 0]}>
@@ -146,6 +152,13 @@ export function LibraryRoom({
         <boxGeometry args={[1.4, 2.5, 0.08]} />
         <meshStandardMaterial transparent opacity={0} />
       </mesh>
+
+      {/* Door embedded in front face of pedestal */}
+      <Suspense fallback={null}>
+        <group position={[0, .34, -D / 2 + 1.76]}>
+          <FancyDoor isNear={nearDoor} onInteract={onDoorInteract} />
+        </group>
+      </Suspense>
 
     </group>
   )
