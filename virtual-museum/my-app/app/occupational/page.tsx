@@ -6,18 +6,19 @@ import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { CreditsPanel } from '../components/CreditsPanel'
 import { PauseZone } from '../components/RailCamera'
+import Link from 'next/link'
 
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
-  [0,  18],  
-  [0,   0],  // camera start
-  [0, -18],  
+  [0, 18],
+  [0, 0],  // camera start
+  [0, -18],
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = .05
-const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
+const AMBIENT_VOLUME = 0.2  // 0.0 – 1.0
 
 const PAUSE_ZONES: PauseZone[] = [
   { t: 0.90, audioSrc: '' },
@@ -63,11 +64,11 @@ export default function Page() {
     audioMutedRef.current = !unmuted
 
     if (unmuted) {
-      const ambient = new Audio('/exhibitobjects/lobby/lobby-sound.mp3')
+      const ambient = new Audio('/exhibitobjects/occupational/occupational-ambiance.mp3')
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
-      ambient.play().catch(() => {})
+      ambient.play().catch(() => { })
     }
 
     if (sessionStorage.getItem('momp_autowalk') === '1') {
@@ -94,13 +95,13 @@ export default function Page() {
 
       // Start looping ambient
       if (!ambientAudioRef.current) {
-        const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
+        const ambient = new Audio('/exhibitobjects/occupational/occupational-ambiance.mp3')
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
-        ambient.play().catch(() => {})
+        ambient.play().catch(() => { })
       } else {
-        ambientAudioRef.current.play().catch(() => {})
+        ambientAudioRef.current.play().catch(() => { })
       }
     } else {
       currentAudioRef.current?.pause()
@@ -137,7 +138,7 @@ export default function Page() {
   }, [router])
 
   // Default action for keyboard Enter / auto-walk / mobile = far-left door
-  const handleInteract = useCallback(() => handleNavigate('/religion-and-folklore'), [handleNavigate])
+  const handleInteract = useCallback(() => handleNavigate('/echoes-across-cultures'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
@@ -147,8 +148,8 @@ export default function Page() {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === 'BUTTON' || target.tagName === 'A') return
-      if (e.key === ' ')     { e.preventDefault(); handleToggleAutoWalk() }
-      if (e.key === '/')     { e.preventDefault(); handleToggleMute() }
+      if (e.key === ' ') { e.preventDefault(); handleToggleAutoWalk() }
+      if (e.key === '/') { e.preventDefault(); handleToggleMute() }
       if (e.key === 'Enter' && nearDoorRef.current) handleInteract()
     }
     window.addEventListener('keydown', onKey)
@@ -255,8 +256,14 @@ export default function Page() {
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
-              [No credits for this room yet.]
-              <br />Rotating Seasonal Artists and featured partnerships can appear in this room.
+              <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
+              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
+              <br></br>
+              <em>Credits:</em><br></br>
+              "Retro style stage" (https://skfb.ly/6WPVA) by Mayantique is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Curtain" (https://skfb.ly/oHQXO) by milaink is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>
         )}

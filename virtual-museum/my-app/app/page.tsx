@@ -55,11 +55,11 @@ export default function Home() {
               <li>• Protect important historical media</li>
               <li>• Inspire new ways of thinking about persistent mysteries in science</li>
               <li>• Build familiarity with how the technology we use today actually works</li>
-              <li>• Highlight coincidences across religions and local cultures</li>
+              <li>• Highlight common threads across cultures (regarding these phenomena)</li>
             </ul>
 <p>
             <br></br>
-            <em>What counts as magical phenomena?</em> Forces that are invisible to the naked eye. The list below is not exhaustive, but covers many of the phenomena we plan to explore in the museum. <br />
+            <em>What counts as magical phenomena?</em> Forces / mechanisms that are invisible to the naked eye. The list below is not exhaustive, but covers many of the phenomena we plan to explore in the museum. <br />
             <br></br>
             </p>
             <table className={styles.table}>
@@ -92,7 +92,7 @@ export default function Home() {
                   <td>Underwater breathing</td>
                   <td>Mind reading</td>
                   <td>Puppetry / golems</td>
-                  <td>Energy transer</td>
+                  <td>Energy transfer</td>
                 </tr>
                 <tr>
                   <td>Harden / Barrier / Strengthening </td>
@@ -109,6 +109,8 @@ export default function Home() {
               </tbody>
             </table>
             <br />
+            <p>Note: Several of these phenomena do NOT have a real-life equivalent; we use <Link href="https://docs.google.com/spreadsheets/d/1yox81e1Y4y29dJWvztrAD3K3_6Sw17m87RjuGD3CLT0/edit?usp=sharing" target="_blank">
+            this document</Link> to track our research and determine inclusion into the exhibits.</p>
           <br></br>
           <p>
             <em>Planned Exhibits:</em>
@@ -118,9 +120,9 @@ export default function Home() {
             <li>• Persistent Mysteries</li>
             <li>• Magical Phenomena in Nature</li>
             <li>• Magical Phenomena in Technology</li>
-            <li>• Magic Types and Systems in Fictional Media</li>
             <li>• Occupational History</li>
-            <li>• Intersections with Religion and Folklore</li>
+            <li>• Echoes Across Cultures</li>
+            <li>• Unique Magic Systems in Fictional Media</li>
             <li>• Rethink the Limit: Chamber of Inspiration</li>
             <li>• Wish Room: Dress-up area + paper star station</li>
           </ul>
@@ -204,6 +206,13 @@ export default function Home() {
         <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
           <Link href="/lobby" className={styles.enterButton}>
             ➜ Enter the POC virtual museum
+          </Link>
+        </div>
+
+        {/* Enter Museum */}
+        <div style={{ textAlign: 'center', marginTop: '32px', marginBottom: '20px' }}>
+          <Link href="https://docs.google.com/spreadsheets/d/1yox81e1Y4y29dJWvztrAD3K3_6Sw17m87RjuGD3CLT0/edit?usp=sharing" target="_blank" className={styles.enterButton}>
+            🔎 Transparency: Scientific Research
           </Link>
         </div>
 

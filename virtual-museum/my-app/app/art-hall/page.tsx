@@ -94,7 +94,7 @@ export default function LobbyPage() {
 
       // Start looping ambient
       if (!ambientAudioRef.current) {
-        const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
+        const ambient = new Audio('/generic-fantasy-ambiance.mp3')
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
@@ -256,6 +256,7 @@ export default function LobbyPage() {
           <CreditsPanel onClose={() => setShowCredits(false)}>
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
               [No credits for this room yet.]
+              <br />All music is copyright-free from Pixabay. 
               <br />Rotating Seasonal Artists and featured partnerships can appear in this room.
             </p>
           </CreditsPanel>
