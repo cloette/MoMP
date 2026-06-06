@@ -8,12 +8,13 @@ import { CreditsPanel } from '../components/CreditsPanel'
 import { CategoryModal } from './CategoryModal'
 import type { PauseZone } from '../components/RailCamera'
 import type { CategoryName, LibraryItem } from './CategoryModal'
+import Link from 'next/link'
 
 const LibraryRoomScene = dynamic(() => import('./LibraryScene'), { ssr: false })
 
 const PATH: readonly [number, number][] = [
-  [ 0,   4.9],  // center, entry wall
-  [ 0,  -4.9],  // center, door  wall → wish room
+  [0, 4.9],  // center, entry wall
+  [0, -4.9],  // center, door  wall → wish room
 ]
 
 const PAUSE_ZONES: PauseZone[] = [
@@ -23,11 +24,11 @@ const PAUSE_ZONES: PauseZone[] = [
 // ── Category data ─────────────────────────────────────────────────────────────
 // Items are sorted alphabetically in the modal. Add entries here.
 const CATEGORY_DATA: Record<CategoryName, LibraryItem[]> = {
-  Books:          [],
+  Books: [],
   'Comics/Manga': [],
-  Video:          [],
-  Games:          [],
-  Other:          [],
+  Video: [],
+  Games: [],
+  Other: [],
 }
 
 const hudBtnBase: React.CSSProperties = {
@@ -57,6 +58,7 @@ export default function LibraryPage() {
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
+  const ambientAudioRef = useRef<HTMLAudioElement | null>(null)
   const [showCredits, setShowCredits] = useState(false)
   const [openCategory, setOpenCategory] = useState<CategoryName | null>(null)
 
@@ -66,6 +68,13 @@ export default function LibraryPage() {
   useEffect(() => {
     const unmuted = sessionStorage.getItem('momp_audio_unmuted') === '1'
     setAudioMuted(!unmuted)
+    if (unmuted) {
+      const ambient = new Audio('/exhibitobjects/library/alexgrohl-relaxing-460676.mp3')
+      ambient.volume = .3
+      ambient.loop = true
+      ambientAudioRef.current = ambient
+      ambient.play().catch(() => { })
+    }
     audioMutedRef.current = !unmuted
     if (sessionStorage.getItem('momp_autowalk') === '1') {
       sessionStorage.removeItem('momp_autowalk')
@@ -95,15 +104,6 @@ export default function LibraryPage() {
       setAudioMuted(false)
       audioMutedRef.current = false
       sessionStorage.setItem('momp_audio_unmuted', '1')
-      if (!sessionStorage.getItem('momp_welcome_played')) {
-        sessionStorage.setItem('momp_welcome_played', '1')
-        const audio = new Audio('/MoMPwelcome.m4a')
-        currentAudioRef.current = audio
-        audio.play().catch(() => {})
-        audio.onended = () => {
-          if (currentAudioRef.current === audio) currentAudioRef.current = null
-        }
-      }
     } else {
       stopAudio()
       setAudioMuted(true)
@@ -123,7 +123,7 @@ export default function LibraryPage() {
     const audio = new Audio(PAUSE_ZONES[index].audioSrc)
     currentAudioRef.current = audio
     setAutoWalkPaused(true)
-    audio.play().catch(() => {})
+    audio.play().catch(() => { })
     audio.onended = () => {
       if (currentAudioRef.current === audio) currentAudioRef.current = null
       setAutoWalkPaused(false)
@@ -264,11 +264,11 @@ export default function LibraryPage() {
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
-              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
               <br></br>
               <em>Credits:</em><br></br>
               "Library" (https://skfb.ly/pAux6) by Pasha is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-              <br />All music is copyright-free from Pixabay (human-created tracks only).
+              <br />Music - "Relaxing" by AlexGrohl on Pixabay, licensed as copyright-free.
             </p>
           </CreditsPanel>
         )}

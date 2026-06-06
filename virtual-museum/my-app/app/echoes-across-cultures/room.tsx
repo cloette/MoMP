@@ -110,12 +110,12 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
               <div style={{ 
                   fontWeight: 'bold',
                   fontSize: '60px',
-                  marginTop: '15px',
+                  marginTop: '35px',
                   color: '#0c0c0c',
                   letterSpacing: '0em',
                   fontStyle: 'italic',
                   lineHeight: '0em' }}>
-                {'Echoes Across  '}
+                {'Echoes '}<span style={{fontSize: '20px'}}>Across</span>
               </div>
               <div
                 style={{

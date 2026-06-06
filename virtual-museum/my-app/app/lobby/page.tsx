@@ -7,14 +7,17 @@ import { MobileControls } from '../components/MobileControls'
 import { CreditsPanel } from '../components/CreditsPanel'
 import { PauseZone } from '../components/RailCamera'
 import { WelcomePopup } from '../components/WelcomePopup'
+import Link from 'next/link'
 
 const LobbyScene = dynamic(() => import('./LobbyScene'), { ssr: false })
 
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
   [0, 20],
-  [0, 0],  // camera start
+  [0, 0],
   [0, -18],
+  [-8, -18],
+  [-8, -19]
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = 20 / 38
@@ -91,11 +94,21 @@ export default function LobbyPage() {
     if (audioMutedRef.current) {
       setAudioMuted(false)
       audioMutedRef.current = false
+      
       sessionStorage.setItem('momp_audio_unmuted', '1')
+      if (!sessionStorage.getItem('momp_welcome_played')) {
+        sessionStorage.setItem('momp_welcome_played', '1')
+        const audio = new Audio('/MoMPwelcome.m4a')
+        currentAudioRef.current = audio
+        audio.play().catch(() => { })
+        audio.onended = () => {
+          if (currentAudioRef.current === audio) currentAudioRef.current = null
+        }
+      }
 
       // Start looping ambient
       if (!ambientAudioRef.current) {
-        const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
+        const ambient = new Audio('/exhibitobjects/lobby/lobby-sound.mp3')
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
@@ -258,12 +271,12 @@ export default function LobbyPage() {
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
-              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
               <br></br>
               <em>Credits:</em><br></br>
               Portal door - Fensterelement Stiftskirche (https://skfb.ly/oEFOM) by ADE_fatuk is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />Backdrop of space is an amalgamation of public domain images from NASA. Does not reflect actual geospatial configuration.
-              <br />All music is copyright-free from Pixabay (human-created tracks only). 
+              <br />Music - "Ambient Soundscapes" by AtlasAudio on Pixabay, a copyright-free track. 
               <br />Narration by <a href="https://charoitemusic.com" target="_blank" rel="noopener noreferrer" >Charoite</a>.
             </p>
           </CreditsPanel>

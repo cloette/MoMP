@@ -6,6 +6,7 @@ import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { CreditsPanel } from '../components/CreditsPanel'
 import { PauseZone } from '../components/RailCamera'
+import Link from 'next/link'
 
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
@@ -258,7 +259,7 @@ export default function Page() {
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it. 
               The cultures shown here are described as their own communities communicate them. We aim to honor each without ranking, judging, or claiming any as more true than another.
               <br></br>
-              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
               <br></br>
               <em>Credits:</em><br></br>
               [sources and 3d object credits to be added here]

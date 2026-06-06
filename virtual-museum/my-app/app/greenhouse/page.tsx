@@ -6,6 +6,7 @@ import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { CreditsPanel } from '../components/CreditsPanel'
 import { PauseZone } from '../components/RailCamera'
+import Link from 'next/link'
 
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
@@ -63,7 +64,7 @@ export default function Page() {
     audioMutedRef.current = !unmuted
 
     if (unmuted) {
-      const ambient = new Audio('/exhibitobjects/lobby/lobby-sound.mp3')
+      const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
@@ -257,7 +258,7 @@ export default function Page() {
             <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
-              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
               <br></br>
               <em>Credits:</em><br></br>
               "Greenhouse Park FBX Free" (https://skfb.ly/pqKur) by Nicholas-3D is licensed under Creative Commons Attribution-NonCommercial (http://creativecommons.org/licenses/by-nc/4.0/).

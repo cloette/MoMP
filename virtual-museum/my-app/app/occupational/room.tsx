@@ -132,9 +132,9 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                 <group
                     position={[0, 0, FAR_Z -.95]}>
                     <Door
-                        label={"Religion and Folklore"}
+                        label={"Echoes Across Cultures"}
                         isNear={nearDoor}
-                        onInteract={() => onNavigate('/religion-and-folklore')}
+                        onInteract={() => onNavigate('/echoes-across-cultures')}
                     />
                 </group>
                 <group
