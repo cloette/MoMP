@@ -47,7 +47,7 @@ export function WelcomePopup() {
       }}>
         <h2 style={{
           margin: '0 0 6px',
-          fontSize: '20px',
+          fontSize: '16px',
           color: '#2d0050',
           letterSpacing: '0.02em',
           lineHeight: '1.3',
@@ -56,7 +56,7 @@ export function WelcomePopup() {
         </h2>
         <p style={{
           margin: '0 0 24px',
-          fontSize: '13px',
+          fontSize: '11px',
           color: '#888',
           fontFamily: 'sans-serif',
           fontStyle: 'italic',
@@ -101,7 +101,7 @@ export function WelcomePopup() {
         >
           Begin Your Visit
         </button>
-        <p style={{ margin: '10px 0 0', textAlign: 'center', fontSize: '12px', color: '#aaa', fontFamily: 'sans-serif' }}>
+        <p style={{ margin: '10px 0 0', textAlign: 'center', fontSize: '11px', color: '#aaa', fontFamily: 'sans-serif' }}>
           Press Enter to continue
         </p>
       </div>
@@ -124,7 +124,7 @@ function FeatureRow({ icon, title, desc }: { icon: string; title: string; desc: 
         <div style={{ fontSize: '14px', fontWeight: 600, color: '#222', marginBottom: '3px', fontFamily: 'sans-serif' }}>
           {title}
         </div>
-        <div style={{ fontSize: '13px', color: '#666', fontFamily: 'sans-serif', lineHeight: '1.5' }}>
+        <div style={{ fontSize: '11px', color: '#666', fontFamily: 'sans-serif', lineHeight: '1.5' }}>
           {desc}
         </div>
       </div>

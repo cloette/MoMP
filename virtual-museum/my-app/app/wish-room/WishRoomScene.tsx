@@ -15,7 +15,6 @@ interface WishRoomSceneProps {
   autoWalk?: boolean
   onOpenDressUp: () => void
   onOpenStarStation: () => void
-  dressUpOpen?: boolean
   starStationOpen?: boolean
 }
 
@@ -28,7 +27,6 @@ export default function WishRoomScene({
   autoWalk,
   onOpenDressUp,
   onOpenStarStation,
-  dressUpOpen,
   starStationOpen,
 }: WishRoomSceneProps) {
   return (
@@ -43,7 +41,6 @@ export default function WishRoomScene({
         lobbyDoorInteract={onLobbyDoorInteract}
         onOpenDressUp={onOpenDressUp}
         onOpenStarStation={onOpenStarStation}
-        dressUpOpen={dressUpOpen}
         starStationOpen={starStationOpen}
       />
       <RailCamera
