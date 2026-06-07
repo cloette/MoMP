@@ -94,7 +94,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
             <boxGeometry args={[1.55, 0.75, 0.015]} />
             <meshStandardMaterial color="#bcbc00" roughness={0.8} />
           </mesh>
-          <Html center transform occlude distanceFactor={5}>
+          <Html center transform distanceFactor={5}>
             <div
               style={{
                 width: '510px',
@@ -115,7 +115,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                   letterSpacing: '0em',
                   fontStyle: 'italic',
                   lineHeight: '0em' }}>
-                {'Echoes '}<span style={{fontSize: '20px'}}>Across</span>
+                {'Echoes '}<span style={{fontSize: '20px', fontWeight:'normal'}}>Across</span>
               </div>
               <div
                 style={{
@@ -140,9 +140,9 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                 <group
                     position={[0, 0, FAR_Z -.95]}>
                     <Door
-                        label={"Library"}
+                        label={"Systems in Fiction"}
                         isNear={nearDoor}
-                        onInteract={() => onNavigate('/library')}
+                        onInteract={() => onNavigate('/systems')}
                     />
                 </group>
                 <group

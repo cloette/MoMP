@@ -93,7 +93,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
             <boxGeometry args={[1.55, 0.75, 0.015]} />
             <meshStandardMaterial color="#570300" roughness={0.8} />
           </mesh>
-          <Html center transform occlude distanceFactor={5}>
+          <Html center transform distanceFactor={5}>
             <div
               style={{
                 width: '510px',

@@ -3,19 +3,7 @@ import { useState, useRef, useCallback, Suspense, useMemo, useEffect } from 'rea
 import { Canvas, useThree } from '@react-three/fiber'
 import { Html, OrbitControls, useGLTF, useTexture } from '@react-three/drei'
 
-// ── Preload all models ────────────────────────────────────────────────────────
-const BASE = '/exhibitobjects/wishroom'
-useGLTF.preload(`${BASE}/torti_-_stylized_turtle.glb`)
-useGLTF.preload(`${BASE}/cute_little_bunny_pet.glb`)
-useGLTF.preload(`${BASE}/low_poly_animated_cartoon_whale.glb`)
-useGLTF.preload(`${BASE}/snake.glb`)
-useGLTF.preload(`${BASE}/magician_top_hat.glb`)
-useGLTF.preload(`${BASE}/luffys_straw_hat.glb`)
-useGLTF.preload(`${BASE}/witch_hat_halooween.glb`)
-useGLTF.preload(`${BASE}/red_bowtie.glb`)
-useGLTF.preload(`${BASE}/sapphire_pendant_with_inner_fracture.glb`)
-useGLTF.preload(`${BASE}/rune_pendant.glb`)
-useGLTF.preload(`${BASE}/staff.glb`)
+// No preloads — models are fetched on demand when selected/worn
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -29,6 +17,8 @@ interface Ani {
   glb: string
   scale?: number
 }
+
+const BASE = '/exhibitobjects/wishroom'
 
 const ANIMALS: Ani[] = [
   { id: 'turtle', name: 'Turtle', color: '#015e04',                       position: [0, .5, 0],      rotation: [0, .5, 0],  glb: `${BASE}/torti_-_stylized_turtle.glb`,          scale: 2.5  },
@@ -46,7 +36,6 @@ interface Acc {
   rotation?: [number, number, number]
   glb: string
   scale?: number
-  // Per-item overrides for display inside the closet shelf slots
   shelfOffset?: [number, number, number]
   shelfRotation?: [number, number, number]
   shelfScale?: number
@@ -57,9 +46,8 @@ const ACCESSORIES: Acc[] = [
   { id: 'bow',      name: 'Bow Tie',   emoji: '🎀', color: '#e91e63', shelfOffset: [0, 0, .2], offset: [.3,  .67,   1.28],    glb: `${BASE}/red_bowtie.glb`,                           scale: 0.0005},
   { id: 'tophat',   name: 'Top Hat',   emoji: '🎩', color: '#1a1a1a', shelfOffset: [0, 0, 0], offset: [.4, 1.16, .78],     glb: `${BASE}/magician_top_hat.glb`,                    scale: .15},
   { id: 'strawhat', name: 'Straw Hat', emoji: '🧢', color: '#e5e235', shelfOffset: [0, 0, 0], offset: [.4, 1.22, .78],    glb: `${BASE}/luffys_straw_hat.glb`,                   },
-  { id: 'staff',    name: '',     emoji: '🪄', color: '#795548', shelfOffset: [-5, -.6, .5], shelfRotation:[0,3,0], offset: [-.5,  1,   .5],  rotation:[7,65,0],    glb: `${BASE}/staff.glb`,                                scale: 1     },
-  { id: 'rune',     name: 'Rune',      emoji: '🪬', color: '#1f72a2', shelfOffset: [-.1, 0, .2], shelfScale: .002, offset: [.3,  .67,   .74], rotation:[12.2, 0, 0],  glb: `${BASE}/rune_pendant.glb`,                         scale: 0.005},
-  { id: 'pendant',  name: 'Pendant',   emoji: '💎', color: '#44374f', shelfOffset: [-.1, 0, .2], shelfRotation:[30, 0, 0], shelfScale: .12, offset: [.3,  .67,   1.28], rotation: [20, 0, 0],  glb: `${BASE}/sapphire_pendant_with_inner_fracture.glb`, scale: .1},
+  { id: 'rune',     name: 'Rune',      emoji: 'ᛗ', color: '#1f72a2', shelfOffset: [-.1, 0, .2], shelfScale: .002, offset: [.3,  .67,   .74], rotation:[12.2, 0, 0],  glb: `${BASE}/rune_pendant.glb`,                         scale: 0.005},
+  { id: 'staff',    name: 'Staff',     emoji: '🪄', color: '#795548', shelfOffset: [-5, -.6, .5], shelfRotation:[0,3,0], offset: [-.5,  1,   .5],  rotation:[7,65,0],    glb: `${BASE}/staff.glb`,                                scale: 1     },
 ]
 
 // ── Sub-components (must live inside Canvas) ──────────────────────────────────
@@ -72,7 +60,6 @@ function GlbModel({ path, scale, position, rotation, colorOverride }: {
   colorOverride?: string
 }) {
   const { scene } = useGLTF(path)
-  // Clone the scene AND its materials so color overrides don't bleed into other instances
   const clone = useMemo(() => {
     const c = scene.clone(true)
     c.traverse((obj: any) => {
@@ -129,6 +116,61 @@ function AnimalAndAccessories({
   )
 }
 
+// Shelf slot — shows emoji; no GLB loaded until the item is worn
+function ClosetSlot({ acc, active, selected, displayColor, onToggle, onSelect }: {
+  acc: Acc
+  active: boolean
+  selected: boolean
+  displayColor: string
+  onToggle: (id: string) => void
+  onSelect: (id: string) => void
+}) {
+  const row = ACCESSORIES.indexOf(acc)
+  return (
+    <group
+      onClick={() => { onToggle(acc.id); onSelect(acc.id) }}
+      onPointerOver={() => { document.body.style.cursor = 'pointer' }}
+      onPointerOut={() => { document.body.style.cursor = 'auto' }}
+    >
+      {selected && (
+        <mesh>
+          <boxGeometry args={[0.37, 0.37, 0.06]} />
+          <meshStandardMaterial color="#ffffff" wireframe />
+        </mesh>
+      )}
+      <mesh>
+        <boxGeometry args={[0.34, 0.34, 0.04]} />
+        <meshStandardMaterial
+          color={active ? displayColor : '#555'}
+          emissive={active ? displayColor : '#000000'}
+          emissiveIntensity={active ? 0.5 : 0}
+          roughness={0.7}
+        />
+      </mesh>
+      <Html position={[0, 0, 0.05]} center>
+        <div style={{
+          fontSize: '18px',
+          pointerEvents: 'none',
+          userSelect: 'none',
+          lineHeight: 1,
+        }}>
+          {acc.emoji}
+        </div>
+      </Html>
+      <Html position={[0, -0.24, 0.1]} center>
+        <div style={{
+          fontSize: '9px', color: active ? '#ffff88' : '#ddd',
+          fontFamily: 'sans-serif', whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+          textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+        }}>
+          {acc.name}
+        </div>
+      </Html>
+    </group>
+  )
+}
+
 function ClosetOrganizer({
   worn, onToggle, selectedAccId, onSelect, accColors,
 }: {
@@ -139,7 +181,7 @@ function ClosetOrganizer({
   accColors: Record<string, string>
 }) {
   return (
-    <group position={[2.6, 0, 0]}>
+    <group position={[3.8, 0, 0]}>
       {/* Backing */}
       <mesh position={[0, 1.25, -0.08]}>
         <boxGeometry args={[1.2, 2.7, 0.07]} />
@@ -152,7 +194,7 @@ function ClosetOrganizer({
           <meshStandardMaterial color="#a4a4a4" roughness={0.7} />
         </mesh>
       ))}
-      {/* Item slots: 3 rows × 2 cols */}
+      {/* Item slots: 3 rows × 2 cols — emoji only, no GLB */}
       {ACCESSORIES.map((acc, i) => {
         const row = Math.floor(i / 2)
         const col = i % 2
@@ -162,67 +204,18 @@ function ClosetOrganizer({
         const selected = selectedAccId === acc.id
         const displayColor = accColors[acc.id] ?? acc.color
         return (
-          <group
-            key={acc.id}
-            position={[x, y, 0.08]}
-            onClick={() => { onToggle(acc.id); onSelect(acc.id) }}
-            onPointerOver={() => { document.body.style.cursor = 'pointer' }}
-            onPointerOut={() => { document.body.style.cursor = 'auto' }}
-          >
-            {/* Selection ring */}
-            {selected && (
-              <mesh>
-                <boxGeometry args={[0.37, 0.37, 0.06]} />
-                <meshStandardMaterial color="#ffffff" wireframe />
-              </mesh>
-            )}
-            {/* Slot backing / worn highlight */}
-            <mesh>
-              <boxGeometry args={[0.34, 0.34, 0.04]} />
-              <meshStandardMaterial
-                color={active ? displayColor : '#555'}
-                emissive={active ? displayColor : '#000000'}
-                emissiveIntensity={active ? 0.5 : 0}
-                roughness={0.7}
-              />
-            </mesh>
-            <Suspense fallback={null}>
-              <GlbModel
-                path={acc.glb}
-                scale={acc.shelfScale ?? acc.scale ?? 0.05}
-                position={acc.shelfOffset ?? [0, 0, 0.05]}
-                rotation={acc.shelfRotation}
-                colorOverride={accColors[acc.id]}
-              />
-            </Suspense>
-            <Html position={[0, -0.24, 0.1]} center>
-              <div style={{
-                fontSize: '9px', color: active ? '#ffff88' : '#ddd',
-                fontFamily: 'sans-serif', whiteSpace: 'nowrap',
-                pointerEvents: 'none',
-                textShadow: '0 1px 3px rgba(0,0,0,0.9)',
-              }}>
-                {acc.name}
-              </div>
-            </Html>
+          <group key={acc.id} position={[x, y, 0.08]}>
+            <ClosetSlot
+              acc={acc}
+              active={active}
+              selected={selected}
+              displayColor={displayColor}
+              onToggle={onToggle}
+              onSelect={onSelect}
+            />
           </group>
         )
       })}
-    </group>
-  )
-}
-
-function Mirror() {
-  return (
-    <group position={[-2.7, 0, 0]}>
-      <mesh position={[0, 1.65, 0]}>
-        <boxGeometry args={[1.05, 2.1, 0.07]} />
-        <meshStandardMaterial color="#7a5520" metalness={0.5} roughness={0.4} />
-      </mesh>
-      <mesh position={[0, 1.65, 0.05]}>
-        <boxGeometry args={[0.85, 1.9, 0.02]} />
-        <meshStandardMaterial color="#ffffff" metalness={.2} roughness={0.04} />
-      </mesh>
     </group>
   )
 }
@@ -264,7 +257,16 @@ export default function DressUpModal({ onClose }: Props) {
   const [accColors, setAccColors]         = useState<Record<string, string>>({})
   const [accOffsets, setAccOffsets]       = useState<Record<string, [number, number, number]>>({})
   const [logoInverted, setLogoInverted]   = useState(false)
+  const [sidebarOpen, setSidebarOpen]     = useState(true)
+  const [isMobile, setIsMobile]           = useState(false)
+  const [accSheetOpen, setAccSheetOpen]   = useState(false)
   const captureRef = useRef<(() => string) | null>(null)
+
+  useEffect(() => {
+    const mobile = window.innerWidth < 768
+    setIsMobile(mobile)
+    if (mobile) setSidebarOpen(false)
+  }, [])
 
   const setOffsetAxis = useCallback((id: string, axis: 0 | 1 | 2, value: number) => {
     setAccOffsets(prev => {
@@ -314,22 +316,59 @@ export default function DressUpModal({ onClose }: Props) {
       <div style={{
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         padding: '12px 20px', borderBottom: '1px solid rgba(255,255,255,0.1)',
-        flexShrink: 0,
+        flexShrink: 0, gap: '10px',
       }}>
-        <h2 style={{ margin: 0, color: '#e0c8ff', fontSize: '17px', letterSpacing: '0.05em' }}>
-          🪞 Dress-Up Studio
-        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(v => !v)}
+            title={sidebarOpen ? 'Hide menu' : 'Show menu'}
+            style={{
+              background: sidebarOpen ? 'rgba(140,70,210,0.3)' : 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.15)',
+              borderRadius: '6px', color: '#ccc',
+              fontSize: '15px', cursor: 'pointer',
+              padding: '4px 8px', lineHeight: 1,
+            }}
+          >
+            ☰
+          </button>
+          <h2 style={{ margin: 0, color: '#e0c8ff', fontSize: '17px', letterSpacing: '0.05em' }}>
+            🪞 Dress-Up Studio
+          </h2>
+        </div>
         <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', color: '#888', fontSize: '18px', cursor: 'pointer', padding: '4px' }}>✕</button>
       </div>
 
       {/* Body */}
-      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0 }}>
+      <div style={{ flex: 1, display: 'flex', overflow: 'hidden', minHeight: 0, position: 'relative' }}>
+
+        {/* Mobile backdrop — tap outside to close sidebar */}
+        {isMobile && sidebarOpen && (
+          <div
+            onClick={() => setSidebarOpen(false)}
+            style={{ position: 'absolute', inset: 0, zIndex: 9, background: 'rgba(0,0,0,0.4)' }}
+          />
+        )}
 
         {/* Left sidebar: animal selector */}
         <div style={{
-          width: '150px', flexShrink: 0,
+          width: sidebarOpen ? '150px' : '0px',
+          flexShrink: 0,
+          overflow: 'hidden',
+          transition: 'width 0.22s ease',
+          // On mobile: float over the canvas instead of squishing it
+          ...(isMobile ? {
+            position: 'absolute', top: 0, bottom: 0, left: 0,
+            zIndex: 10, background: 'rgba(8,4,18,0.98)',
+          } : {}),
+        }}>
+        {/* Inner wrapper keeps content at fixed width so it doesn't reflow during animation */}
+        <div style={{
+          width: '150px', height: '100%',
           borderRight: '1px solid rgba(255,255,255,0.08)',
           overflowY: 'auto', padding: '12px 10px',
+          boxSizing: 'border-box',
         }}>
           <div style={{ color: '#888', fontSize: '10px', letterSpacing: '0.1em', marginBottom: '8px' }}>CHOOSE ANIMAL</div>
           {ANIMALS.map(a => (
@@ -402,7 +441,7 @@ export default function DressUpModal({ onClose }: Props) {
               >
                 Reset
               </button>
-              
+
               <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', margin: '12px 0 8px' }} />
               <div style={{ color: '#888', fontSize: '10px', letterSpacing: '0.1em', marginBottom: '8px' }}>POSITION</div>
               {([['X', 0], ['Y', 1], ['Z', 2]] as [string, 0|1|2][]).map(([label, axis]) => {
@@ -444,13 +483,14 @@ export default function DressUpModal({ onClose }: Props) {
               </button>
             </>
           )}
-        </div>
+        </div>{/* end inner wrapper */}
+        </div>{/* end sidebar outer */}
 
         {/* Center: 3D canvas */}
         <div style={{ flex: 1, position: 'relative', minWidth: 0 }}>
           <Canvas
             gl={{ preserveDrawingBuffer: true }}
-            dpr={[1, 2]}
+            dpr={[1, 1.5]}
             camera={{ position: [0, 2, 5.5], fov: 58, near: 0.1, far: 100 }}
             style={{ width: '100%', height: '100%' }}
           >
@@ -483,12 +523,13 @@ export default function DressUpModal({ onClose }: Props) {
             </mesh>
 
             <AnimalAndAccessories animal={animal} worn={worn} accColors={accColors} accOffsets={accOffsets} />
-            <ClosetOrganizer
-              worn={worn} onToggle={toggleAcc}
-              selectedAccId={selectedAccId} onSelect={setSelectedAccId}
-              accColors={accColors}
-            />
-            <Mirror />
+            {!isMobile && (
+              <ClosetOrganizer
+                worn={worn} onToggle={toggleAcc}
+                selectedAccId={selectedAccId} onSelect={setSelectedAccId}
+                accColors={accColors}
+              />
+            )}
 
             <OrbitControls target={[0, 1.2, 0]} maxPolarAngle={Math.PI / 2} />
             <SceneCapture captureRef={captureRef} />
@@ -509,6 +550,100 @@ export default function DressUpModal({ onClose }: Props) {
           >
             📷 Take Photo
           </button>
+
+          {/* Mobile: accessories toggle button */}
+          {isMobile && (
+            <button
+              type="button"
+              onClick={() => setAccSheetOpen(v => !v)}
+              style={{
+                position: 'absolute', bottom: '16px', left: '16px',
+                background: accSheetOpen ? 'rgba(140,70,210,0.92)' : 'rgba(40,20,70,0.92)',
+                border: '1px solid rgba(200,150,255,0.5)',
+                borderRadius: '8px', padding: '8px 14px',
+                color: '#fff', fontSize: '13px', cursor: 'pointer',
+                backdropFilter: 'blur(4px)',
+              }}
+            >
+              👒 Accessories
+            </button>
+          )}
+
+          {/* Mobile: accessories bottom sheet */}
+          {isMobile && (
+            <div
+              style={{
+                position: 'absolute', left: 0, right: 0, bottom: 0,
+                background: 'rgba(10,5,22,0.97)',
+                borderTop: '1px solid rgba(255,255,255,0.12)',
+                borderRadius: '16px 16px 0 0',
+                transform: accSheetOpen ? 'translateY(0)' : 'translateY(100%)',
+                transition: 'transform 0.25s ease',
+                zIndex: 5,
+                maxHeight: '55%',
+                display: 'flex', flexDirection: 'column',
+              }}
+            >
+              {/* Sheet handle + header */}
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '10px 16px 8px',
+                borderBottom: '1px solid rgba(255,255,255,0.08)',
+                flexShrink: 0,
+              }}>
+                <div style={{
+                  position: 'absolute', top: '7px', left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '36px', height: '4px',
+                  background: 'rgba(255,255,255,0.2)', borderRadius: '2px',
+                }} />
+                <span style={{ color: '#e0c8ff', fontSize: '13px', letterSpacing: '0.05em', marginTop: '4px' }}>
+                  Accessories
+                </span>< br/>
+                <span style={{ color: '#e0c8ff', fontSize: '10px', letterSpacing: '0.05em', marginTop: '4px' }}>
+                  Change the animal, edit accessory color and position using the top menu.<br />
+                  Not all accessories can change color.
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setAccSheetOpen(false)}
+                  style={{ background: 'none', border: 'none', color: '#888', fontSize: '16px', cursor: 'pointer', padding: '2px' }}
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Accessory grid */}
+              <div style={{
+                overflowY: 'auto', padding: '12px',
+                display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px',
+              }}>
+                {ACCESSORIES.map(acc => {
+                  const active = worn.has(acc.id)
+                  const displayColor = accColors[acc.id] ?? acc.color
+                  return (
+                    <button
+                      key={acc.id}
+                      type="button"
+                      onClick={() => { toggleAcc(acc.id); setSelectedAccId(acc.id) }}
+                      style={{
+                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+                        padding: '10px 4px',
+                        background: active ? 'rgba(140,70,210,0.4)' : 'rgba(255,255,255,0.06)',
+                        border: `1px solid ${active ? 'rgba(180,120,255,0.7)' : 'rgba(255,255,255,0.1)'}`,
+                        borderRadius: '10px', cursor: 'pointer',
+                        color: active ? '#ffff99' : '#bbb',
+                        fontSize: '11px', fontFamily: 'sans-serif',
+                      }}
+                    >
+                      <span style={{ fontSize: '26px', lineHeight: 1 }}>{acc.emoji}</span>
+                      <span style={{ textAlign: 'center', lineHeight: 1.2 }}>{acc.name || 'Staff'}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
