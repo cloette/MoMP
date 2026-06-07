@@ -138,7 +138,7 @@ export default function Page() {
   }, [router])
 
   // Default action for keyboard Enter / auto-walk / mobile = far-left door
-  const handleInteract = useCallback(() => handleNavigate('/occupational'), [handleNavigate])
+  const handleInteract = useCallback(() => handleNavigate('/library'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])

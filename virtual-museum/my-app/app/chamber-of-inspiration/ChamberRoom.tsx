@@ -16,11 +16,36 @@ const COL = {
 }
 
 export const PLAYLIST: { title: string; src: string }[] = [
-  { title: 'Introduction', src: '/videos/inspiration-01.mp4' },
-  { title: 'The Creative Process', src: '/videos/inspiration-02.mp4' },
-  { title: 'Finding Your Voice', src: '/videos/inspiration-03.mp4' },
-  { title: 'Beyond the Canvas', src: '/videos/inspiration-04.mp4' },
+  { title: 'Rethink the limit', src: '/videos/inspiration-01.mp4' },
+  { title: 'Dance Moves - 1', src: 'https://www.youtube.com/watch?v=XXfz_0JbRpg' },
+  { title: 'Dance Moves - 2', src: 'https://www.youtube.com/watch?v=qWJmvab0dcE' },
+  { title: 'Singing - 1', src: 'https://youtu.be/EXt9CgJhBhQ?si=qwelauZ3Q0TY9UKP&t=93' },
+  { title: 'Singing - 2', src: 'https://www.youtube.com/watch?v=9jfOJKvQK_o&list=RD9jfOJKvQK_o'},
+  { title: 'Singing - 3', src: 'https://www.youtube.com/watch?v=2rd8VktT8xY&list=RD2rd8VktT8xY'},
+  { title: 'Teamwork', src: 'https://youtu.be/GPeeZ6viNgY?si=0DyLkfrPRDy5GDzL&t=38'},
+  { title: '...more to come...', src:'/videos/inspiration-01.mp4'}
 ]
+
+function isYouTubeUrl(url: string) {
+  return url.includes('youtube.com') || url.includes('youtu.be')
+}
+
+function toYouTubeEmbedUrl(url: string) {
+  try {
+    const parsed = new URL(url)
+    let videoId = ''
+    const startTime = parsed.searchParams.get('t')
+    if (parsed.hostname === 'youtu.be') {
+      videoId = parsed.pathname.slice(1)
+    } else if (parsed.hostname.includes('youtube.com')) {
+      videoId = parsed.searchParams.get('v') || ''
+    }
+    if (!videoId) return url
+    return `https://www.youtube.com/embed/${videoId}${startTime ? `?start=${startTime}` : ''}`
+  } catch {
+    return url
+  }
+}
 
 interface ChamberRoomProps {
   onLobby: () => void
@@ -122,18 +147,24 @@ export function ChamberRoom({ onLobby, onBack }: ChamberRoomProps) {
           userSelect: 'none',
         }}>
           {/* Video player */}
-          <video
-            key={selected}
-            src={PLAYLIST[selected].src}
-            controls
-            style={{
-              width: '480px',
-              height: '270px',
-              display: 'block',
-              background: '#000',
-              flexShrink: 0,
-            }}
-          />
+          {isYouTubeUrl(PLAYLIST[selected].src) ? (
+            <iframe
+              key={selected}
+              src={toYouTubeEmbedUrl(PLAYLIST[selected].src)}
+              width="480"
+              height="270"
+              style={{ display: 'block', background: '#000', flexShrink: 0, border: 'none' }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              key={selected}
+              src={PLAYLIST[selected].src}
+              controls
+              style={{ width: '480px', height: '270px', display: 'block', background: '#000', flexShrink: 0 }}
+            />
+          )}
 
           {/* Playlist sidebar */}
           <div style={{
