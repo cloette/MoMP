@@ -227,7 +227,7 @@ function SceneCapture({ captureRef }: { captureRef: React.MutableRefObject<(() =
 }
 
 function BannerTexture({ inverted }: { inverted: boolean }) {
-  const [texNormal, texWhite] = useTexture(['/MoMP.png', '/MOMPblack.png'])
+  const [texNormal, texWhite] = useTexture(['/MoMP.png', '/MoMPblack.png'])
   return (
     <mesh position={[0, 2.6, -0.95]}>
       <planeGeometry args={[3.6, 1.1]} />
