@@ -135,18 +135,19 @@ export default function WishRoomPage() {
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        <WishRoomScene
-          nearDoor={nearDoor}
-          onNearDoor={setNearDoor}
-          onDoorInteract={handleInteract}
-          onLobbyDoorInteract={handleLobbyInteract}
-          path={PATH}
-          autoWalk={autoWalk}
-          onOpenDressUp={() => setShowDressUp(true)}
-          onOpenStarStation={() => setShowStarStation(true)}
-          dressUpOpen={showDressUp}
-          starStationOpen={showStarStation}
-        />
+        {!showDressUp && (
+          <WishRoomScene
+            nearDoor={nearDoor}
+            onNearDoor={setNearDoor}
+            onDoorInteract={handleInteract}
+            onLobbyDoorInteract={handleLobbyInteract}
+            path={PATH}
+            autoWalk={autoWalk}
+            onOpenDressUp={() => setShowDressUp(true)}
+            onOpenStarStation={() => setShowStarStation(true)}
+            starStationOpen={showStarStation}
+          />
+        )}
 
         {/* HUD overlay */}
         <div style={{
