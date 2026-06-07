@@ -62,6 +62,7 @@ export default function Home() {
             <em>What counts as magical phenomena?</em> Forces / mechanisms that are invisible to the naked eye. The list below is not exhaustive, but covers many of the phenomena we plan to explore in the museum. <br />
             <br></br>
             </p>
+            <div style={{maxWidth: '100%', overflowX: 'auto'}}>
             <table className={styles.table}>
               <tbody>
                 <tr>
@@ -108,6 +109,7 @@ export default function Home() {
                 </tr>
               </tbody>
             </table>
+            </div>
             <br />
             <p>Note: Several of these phenomena do NOT have a real-life equivalent; we use <Link href="https://docs.google.com/spreadsheets/d/1yox81e1Y4y29dJWvztrAD3K3_6Sw17m87RjuGD3CLT0/edit?usp=sharing" target="_blank">
             this document</Link> to track our research and determine inclusion into the exhibits.</p>

@@ -22,11 +22,10 @@ interface Props {
   lobbyDoorInteract: () => void
   onOpenDressUp: () => void
   onOpenStarStation: () => void
-  dressUpOpen?: boolean
   starStationOpen?: boolean
 }
 
-export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, onOpenDressUp, onOpenStarStation, dressUpOpen, starStationOpen }: Props) {
+export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, onOpenDressUp, onOpenStarStation, starStationOpen }: Props) {
   return (
     <group>
       {/* ── LIGHTING ── */}
@@ -122,7 +121,7 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, 
       </Suspense>
 
       {/* ── ZONE LABELS (floating HTML buttons) — hidden while their modal is open ── */}
-      {!dressUpOpen && !starStationOpen && (
+      {!starStationOpen && (
         <Html position={[-3.5, 3.4, -1.5]} center>
           <button
             type="button"
@@ -147,7 +146,7 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, 
         </Html>
       )}
 
-      {!starStationOpen && !dressUpOpen && (
+      {!starStationOpen && (
         <Html position={[3.5, 3.4, -1.5]} center>
           <button
             type="button"

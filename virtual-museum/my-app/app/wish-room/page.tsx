@@ -6,8 +6,7 @@ import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { CreditsPanel } from '../components/CreditsPanel'
 
-const WishRoomScene   = dynamic(() => import('./WishRoomScene'),   { ssr: false })
-const DressUpModal    = dynamic(() => import('./DressUpModal'),    { ssr: false })
+const WishRoomScene    = dynamic(() => import('./WishRoomScene'),    { ssr: false })
 const StarStationModal = dynamic(() => import('./StarStationModal'), { ssr: false })
 
 // Straight path: camera enters from lobby side (z=+6) and walks toward exterior (z=-6)
@@ -40,7 +39,6 @@ export default function WishRoomPage() {
   const [autoWalk, setAutoWalk] = useState(false)
   const autoWalkRef = useRef(false)
   const [showCredits, setShowCredits] = useState(false)
-  const [showDressUp, setShowDressUp] = useState(false)
   const [showStarStation, setShowStarStation] = useState(false)
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
@@ -135,19 +133,17 @@ export default function WishRoomPage() {
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        {!showDressUp && (
-          <WishRoomScene
-            nearDoor={nearDoor}
-            onNearDoor={setNearDoor}
-            onDoorInteract={handleInteract}
-            onLobbyDoorInteract={handleLobbyInteract}
-            path={PATH}
-            autoWalk={autoWalk}
-            onOpenDressUp={() => setShowDressUp(true)}
-            onOpenStarStation={() => setShowStarStation(true)}
-            starStationOpen={showStarStation}
-          />
-        )}
+        <WishRoomScene
+          nearDoor={nearDoor}
+          onNearDoor={setNearDoor}
+          onDoorInteract={handleInteract}
+          onLobbyDoorInteract={handleLobbyInteract}
+          path={PATH}
+          autoWalk={autoWalk}
+          onOpenDressUp={() => router.push('/wish-room/dress-up')}
+          onOpenStarStation={() => setShowStarStation(true)}
+          starStationOpen={showStarStation}
+        />
 
         {/* HUD overlay */}
         <div style={{
@@ -257,7 +253,6 @@ export default function WishRoomPage() {
           ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
         </div>
 
-        {showDressUp     && <DressUpModal     onClose={() => setShowDressUp(false)} />}
         {showStarStation && <StarStationModal onClose={() => setShowStarStation(false)} />}
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
