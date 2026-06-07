@@ -94,7 +94,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
             <boxGeometry args={[1.55, 0.75, 0.015]} />
             <meshStandardMaterial color="#360057" roughness={0.8} />
           </mesh>
-          <Html center transform occlude distanceFactor={5}>
+          <Html center transform distanceFactor={5}>
             <div
               style={{
                 width: '510px',
@@ -133,9 +133,9 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                 <group
                     position={[0, 0, FAR_Z -.95]}>
                     <Door
-                        label={"Occupational"}
+                        label={"Library"}
                         isNear={nearDoor}
-                        onInteract={() => onNavigate('/occupational')}
+                        onInteract={() => onNavigate('/library')}
                     />
                 </group>
                 <group

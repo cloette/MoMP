@@ -22,9 +22,11 @@ interface Props {
   lobbyDoorInteract: () => void
   onOpenDressUp: () => void
   onOpenStarStation: () => void
+  dressUpOpen?: boolean
+  starStationOpen?: boolean
 }
 
-export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, onOpenDressUp, onOpenStarStation }: Props) {
+export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, onOpenDressUp, onOpenStarStation, dressUpOpen, starStationOpen }: Props) {
   return (
     <group>
       {/* ── LIGHTING ── */}
@@ -119,52 +121,56 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, 
         </group>
       </Suspense>
 
-      {/* ── ZONE LABELS (floating HTML buttons) ── */}
-      <Html position={[-3.5, 3.4, -1.5]} center>
-        <button
-          type="button"
-          onClick={onOpenDressUp}
-          style={{
-            background: 'rgba(160,80,220,0.92)',
-            border: '1px solid rgba(220,170,255,0.5)',
-            borderRadius: '8px',
-            padding: '8px 18px',
-            color: '#fff',
-            fontFamily: 'Georgia, serif',
-            fontSize: '13px',
-            cursor: 'pointer',
-            whiteSpace: 'nowrap',
-            pointerEvents: 'all',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.6)',
-            letterSpacing: '0.03em',
-          }}
-        >
-          🪞 Dress-Up Studio
-        </button>
-      </Html>
+      {/* ── ZONE LABELS (floating HTML buttons) — hidden while their modal is open ── */}
+      {!dressUpOpen && !starStationOpen && (
+        <Html position={[-3.5, 3.4, -1.5]} center>
+          <button
+            type="button"
+            onClick={onOpenDressUp}
+            style={{
+              background: 'rgba(160,80,220,0.92)',
+              border: '1px solid rgba(220,170,255,0.5)',
+              borderRadius: '8px',
+              padding: '8px 18px',
+              color: '#fff',
+              fontFamily: 'Georgia, serif',
+              fontSize: '13px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              pointerEvents: 'all',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.6)',
+              letterSpacing: '0.03em',
+            }}
+          >
+            🪞 Dress-Up Studio
+          </button>
+        </Html>
+      )}
 
-      <Html position={[3.5, 3.4, -1.5]} center>
-        <button
-          type="button"
-          onClick={onOpenStarStation}
-          style={{
-            background: 'rgba(60,130,210,0.92)',
-            border: '1px solid rgba(150,200,255,0.5)',
-            borderRadius: '8px',
-            padding: '8px 18px',
-            color: '#fff',
-            fontFamily: 'Georgia, serif',
-            fontSize: '13px',
-            cursor: 'pointer',
-            whiteSpace: 'nowrap',
-            pointerEvents: 'all',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.6)',
-            letterSpacing: '0.03em',
-          }}
-        >
-          ⭐ Paper Star Station
-        </button>
-      </Html>
+      {!starStationOpen && !dressUpOpen && (
+        <Html position={[3.5, 3.4, -1.5]} center>
+          <button
+            type="button"
+            onClick={onOpenStarStation}
+            style={{
+              background: 'rgba(60,130,210,0.92)',
+              border: '1px solid rgba(150,200,255,0.5)',
+              borderRadius: '8px',
+              padding: '8px 18px',
+              color: '#fff',
+              fontFamily: 'Georgia, serif',
+              fontSize: '13px',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              pointerEvents: 'all',
+              boxShadow: '0 2px 12px rgba(0,0,0,0.6)',
+              letterSpacing: '0.03em',
+            }}
+          >
+            ⭐ Paper Star Station
+          </button>
+        </Html>
+      )}
     </group>
   )
 }

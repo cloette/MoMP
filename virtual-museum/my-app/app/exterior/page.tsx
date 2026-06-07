@@ -14,7 +14,7 @@ const ExteriorScene = dynamic(() => import('./ExteriorScene'), { ssr: false })
 const PATH_EXT: readonly [number, number][] = [
   [0, 20],  // garden end  (t = 0)
   [0, 0],  // camera start
-  [0, -18],  // forward limit (t = 1)
+  [0, -10],  // forward limit (t = 1)
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = 20 / 38
