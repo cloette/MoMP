@@ -144,6 +144,8 @@ export default function WishRoomPage() {
           autoWalk={autoWalk}
           onOpenDressUp={() => setShowDressUp(true)}
           onOpenStarStation={() => setShowStarStation(true)}
+          dressUpOpen={showDressUp}
+          starStationOpen={showStarStation}
         />
 
         {/* HUD overlay */}
