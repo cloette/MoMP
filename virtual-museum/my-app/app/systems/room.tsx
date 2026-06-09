@@ -4,6 +4,7 @@ import { Html, useGLTF, useTexture } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Door } from '../components/Door'
+import { ExhibitFrame } from '../components/ExhibitFrame'
 
 const FAR_Z = -18         // far end: one front doors
 const BACK_Z = 18         // back end: one rear door
@@ -16,21 +17,21 @@ const D = 38
 const H = 5.6
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-    { x: 0, label: 'Occupational', route: '/occupational' },
+  { x: 0, label: 'Occupational', route: '/occupational' },
 ]
 
 interface RoomProps {
-    nearDoor: boolean
-    onNavigate: (route: string) => void
+  nearDoor: boolean
+  onNavigate: (route: string) => void
 }
 
 export function Room({ nearDoor, onNavigate }: RoomProps) {
-    const cubeRef2 = useRef<THREE.Mesh>(null)
-    const cubeRef = useRef<THREE.Mesh>(null)
-    
-    return (
-        <group>
-            
+  const cubeRef2 = useRef<THREE.Mesh>(null)
+  const cubeRef = useRef<THREE.Mesh>(null)
+
+  return (
+    <group>
+
       {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[W, D]} />
@@ -68,9 +69,9 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       <ambientLight intensity={0.65} />
       <directionalLight position={[0, H - 0.2, 0]} intensity={0.55} color="#fffef8" />
       <spotLight position={[-2.5, H - 0.15, -2.5]} target-position={[-6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-      <spotLight position={[-2.5, H - 0.15,  2.5]} target-position={[-6, 1.8,  2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-      <spotLight position={[ 2.5, H - 0.15, -2.5]} target-position={[ 6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-      <spotLight position={[ 2.5, H - 0.15,  2.5]} target-position={[ 6, 1.8,  2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
+      <spotLight position={[-2.5, H - 0.15, 2.5]} target-position={[-6, 1.8, 2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
+      <spotLight position={[2.5, H - 0.15, -2.5]} target-position={[6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
+      <spotLight position={[2.5, H - 0.15, 2.5]} target-position={[6, 1.8, 2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
 
 
       <mesh ref={cubeRef2} position={[-6, 2.7, 8]}>
@@ -128,24 +129,60 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         </group>
       </mesh>
 
-            {/* ── DOORS ───────────────────────────────────────────────── */}
-            <Suspense fallback={null}>
-                <group
-                    position={[0, 0, FAR_Z -.95]}>
-                    <Door
-                        label={"Library"}
-                        isNear={nearDoor}
-                        onInteract={() => onNavigate('/library')}
-                    />
-                </group>
-                <group
-                    position={[0, 0, BACK_Z + .95]} >
-                    <Door
-                        isNear={nearDoor}
-                        onInteract={() => onNavigate('/lobby')}
-                    />
-                </group>
-            </Suspense>
+      <ExhibitFrame
+        position={[-7.97, 2.5, 13]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[-7.97, 2.5, -15]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[-7.97, 2.5, 2]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[7.97, 2.5, -15]}
+        rotation={[0, -Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[7.97, 2.5, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[7.97, 2.5, 13]}
+        rotation={[0, -Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      {/* ── DOORS ───────────────────────────────────────────────── */}
+      <Suspense fallback={null}>
+        <group
+          position={[0, 0, FAR_Z - .95]}>
+          <Door
+            label={"Library"}
+            isNear={nearDoor}
+            onInteract={() => onNavigate('/library')}
+          />
         </group>
-    )
+        <group
+          position={[0, 0, BACK_Z + .95]} >
+          <Door
+            isNear={nearDoor}
+            onInteract={() => onNavigate('/lobby')}
+          />
+        </group>
+      </Suspense>
+    </group>
+  )
 }

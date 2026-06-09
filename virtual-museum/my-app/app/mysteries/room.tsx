@@ -3,6 +3,7 @@ import { useMemo, Suspense, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { Door } from '../components/Door'
 import { QuestionCloud } from './questioncloud'
+import { ExhibitFrame } from '../components/ExhibitFrame'
 
 const FAR_Z = -18         // far end: one front doors
 const BACK_Z = 18         // back end: one rear door
@@ -114,6 +115,42 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       </mesh>
 
       <QuestionCloud />
+
+      <ExhibitFrame
+        position={[-7.97, 2.5, 13]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[-7.97, 2.5, -15]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[-7.97, 2.5, 2]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[7.97, 2.5, -15]}
+        rotation={[0, -Math.PI /2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[7.97, 2.5, 0]}
+        rotation={[0, -Math.PI /2, 0]}
+        content={{ type: 'placeholder' }}
+      />
+
+      <ExhibitFrame
+        position={[7.97, 2.5, 13]}
+        rotation={[0, -Math.PI /2, 0]}
+        content={{ type: 'placeholder' }}
+      />
 
 
             {/* ── DOORS ───────────────────────────────────────────────── */}

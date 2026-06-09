@@ -30,7 +30,7 @@ export function QuestionCloud() {
     }, [])
 
     return (
-        <group position={[-7.97, 2.5, 5]} rotation={[0, Math.PI / 2, 0]}>
+        <group position={[-7.97, 2.5, -5]} rotation={[0, Math.PI / 2, 0]}>
             <mesh>
                 <planeGeometry args={[3.2, 2.4]} />
                 <meshBasicMaterial map={texture} transparent />
