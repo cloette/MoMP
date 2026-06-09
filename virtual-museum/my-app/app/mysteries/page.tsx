@@ -258,8 +258,22 @@ export default function Page() {
               <br></br>
               Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
               <br></br>
-              <em>Credits:</em>
-              <br />Music - "Inspiring Adventure epic cinematic orchestral trailer" by zec53 on Pixabay. Copyright-free.
+              <em>Credits:</em><br />
+              Moon Photo by <a href="https://unsplash.com/@nevenkrcmarek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Neven Krcmarek</a> on <a href="https://unsplash.com/photos/full-moon-9dTg44Qhx1Q?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Brain Photo by <a href="https://unsplash.com/@averey?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Robina Weermeijer</a> on <a href="https://unsplash.com/photos/brown-brain-decor-in-selective-focus-photography-3KGF9R_0oHs?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Map Photo by <a href="https://unsplash.com/@hartonocreativestudio?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Hartono Creative Studio</a> on <a href="https://unsplash.com/photos/a-blue-and-white-map-of-the-world-1gW-pzeXX2E?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Oregon Vortex Photo by <a href="https://unsplash.com/@sierrahouk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sierra Houk</a> on <a href="https://unsplash.com/photos/a-sign-on-a-road-4vLTihdrifg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Wave Photo by <a href="https://unsplash.com/@a_chosensoul?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">A Chosen Soul</a> on <a href="https://unsplash.com/photos/a-purple-wave-of-light-on-a-black-background-FnGZcsmeD2U?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Sleeping Koala Photo by <a href="https://unsplash.com/@davidclode?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David Clode</a> on <a href="https://unsplash.com/photos/koala-bear-sleeping-on-tree-Yg_sNKOiXvY?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Thundercloud Photo by <a href="https://unsplash.com/@noaa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">NOAA</a> on <a href="https://unsplash.com/photos/white-clouds-under-blue-sky-during-daytime-UJsUJr3cgEM?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Molecule structure Photo by <a href="https://unsplash.com/@spexypants?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ayush Kumar</a> on <a href="https://unsplash.com/photos/an-image-of-a-structure-that-looks-like-a-structure-VIb8pHrBUC4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Physics experiement Photo by <a href="https://unsplash.com/@avivace?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Antonio Vivace</a> on <a href="https://unsplash.com/photos/a-large-metal-object-with-a-clock-on-its-side-sorv8yNYE6g?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Blue vortex Photo by <a href="https://unsplash.com/@pixelprovibes?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">PixelPro Vibes</a> on <a href="https://unsplash.com/photos/a-black-hole-with-a-bright-blue-accretion-disk-isqg1cuGcuU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Dinosaur bones Photo by <a href="https://unsplash.com/@el_chicho?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Narciso Arellano</a> on <a href="https://unsplash.com/photos/brown-animal-skeleton-on-glass-roof-XGs1Dwk9V9M?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+              <br />Tardigrade by Philippe Garcelon is licensed under CC BY 2.0 on <a href="https://www.flickr.com/photos/78178083@N05/51952626085" target="_blank">Flickr</a>.
+              <br />Mpemba effect <a href="https://www.youtube.com/watch?v=UjIdzcxSe3g&pp=ygUNbXBlbWJhIGVmZmVjdA%3D%3D" target="_blank">video</a> by Veritasium.
+              <br />
+              <br />Music - &quot;Inspiring Adventure epic cinematic orchestral trailer&quot; by zec53 on Pixabay. Copyright-free.
             </p>
           </CreditsPanel>
         )}
