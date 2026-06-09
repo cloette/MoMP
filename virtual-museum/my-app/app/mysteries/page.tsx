@@ -11,8 +11,14 @@ const Scene = dynamic(() => import('./scene'), { ssr: false })
 
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
-  [0,  18],  
-  [0,   0],  // camera start
+  [0,  18], 
+  [-3,  14],
+  [-3,  13],
+  [3,  13],
+  [3,  -13],  
+  [-3,  -13],  
+  [-3,  0],  
+  [0, 0],
   [0, -18],  
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
@@ -20,7 +26,8 @@ const START_T = .05
 const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
 
 const PAUSE_ZONES: PauseZone[] = [
-  { t: 0.90, audioSrc: '' },
+  { t: 0.10, audioSrc: '/Firstexhibit.m4a' },
+  { t: 0.30, audioSrc: '/Anotherexhibit.m4a' },
 ]
 
 const hudBtnBase: React.CSSProperties = {

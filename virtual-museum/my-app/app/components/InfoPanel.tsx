@@ -19,7 +19,7 @@ export function InfoPanel({ position, rotation = [0, 0, 0], title, body, color =
           ctx.clearRect(0, 0, 640, 980)
           ctx.textBaseline = 'top'
   
-          ctx.font = 'bold 40px "Times New Roman", serif'
+          ctx.font = 'bold 40px Arial, sans-serif'
           ctx.fillStyle = '#000000'
           const addLineBreaks = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number, x: number, y: number) => {
             const words = text.split(' ')
