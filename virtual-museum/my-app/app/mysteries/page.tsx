@@ -17,17 +17,25 @@ const PATH_EXT: readonly [number, number][] = [
   [3,  13],
   [3,  -13],  
   [-3,  -13],  
-  [-3,  0],  
+  [-3,  3],  
   [0, 0],
   [0, -18],  
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = .05
-const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
+const AMBIENT_VOLUME = 0.03
 
 const PAUSE_ZONES: PauseZone[] = [
-  { t: 0.10, audioSrc: '/Firstexhibit.m4a' },
-  { t: 0.30, audioSrc: '/Anotherexhibit.m4a' },
+  { t: 0.01, audioSrc: '/exhibitobjects/mysteries/Pmextended.m4a' },
+  { t: 0.10, audioSrc: '/exhibitobjects/mysteries/Moon.m4a' },
+  { t: 0.12, audioSrc: '/exhibitobjects/mysteries/Mbemba.m4a' },
+  { t: 0.22, audioSrc: '/exhibitobjects/mysteries/Consciousness.m4a' },
+  { t: 0.36, audioSrc: '/exhibitobjects/mysteries/Dinosaurs.m4a' },
+  { t: 0.49, audioSrc: '/exhibitobjects/mysteries/Protons.m4a' },
+  { t: 0.50, audioSrc: '/exhibitobjects/mysteries/Darkmatter.m4a' },
+  { t: 0.54, audioSrc: '/exhibitobjects/mysteries/Continental.m4a' },
+  { t: 0.55, audioSrc: '/exhibitobjects/mysteries/Tardigrades.m4a' },
+  { t: 0.75, audioSrc: '/exhibitobjects/mysteries/Sleep.m4a' },
 ]
 
 const hudBtnBase: React.CSSProperties = {
