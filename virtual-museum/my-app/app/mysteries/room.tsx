@@ -1,9 +1,8 @@
 'use client'
 import { useMemo, Suspense, useEffect, useRef } from 'react'
-import { Html, useGLTF, useTexture } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Door } from '../components/Door'
+import { QuestionCloud } from './questioncloud'
 
 const FAR_Z = -18         // far end: one front doors
 const BACK_Z = 18         // back end: one rear door
@@ -27,6 +26,25 @@ interface RoomProps {
 export function Room({ nearDoor, onNavigate }: RoomProps) {
     const cubeRef2 = useRef<THREE.Mesh>(null)
     const cubeRef = useRef<THREE.Mesh>(null)
+
+    const titleTexture = useMemo(() => {
+        const canvas = document.createElement('canvas')
+        canvas.width = 512
+        canvas.height = 256
+        const ctx = canvas.getContext('2d')!
+        ctx.clearRect(0, 0, 512, 256)
+        ctx.textBaseline = 'top'
+        ctx.font = '30px "Times New Roman", serif'
+        ctx.fillStyle = '#ffffff'
+        ctx.fillText('Persistent', 20, 12)
+        ctx.font = 'italic 96px "Times New Roman", serif'
+        ctx.fillStyle = '#ffffff'
+        ctx.fillText('Mysteries', 35, 48)
+        ctx.font = '26px Arial, sans-serif'
+        ctx.fillStyle = '#9f9f9f'
+        ctx.fillText("What we don't know may surprise you.", 20, 188)
+        return new THREE.CanvasTexture(canvas)
+    }, [])
 
     return (
         <group>
@@ -88,44 +106,14 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
           roughness={0}
           metalness={0.25}
         />
-        <group position={[1.9, 1.5, 0]} rotation={[0, 0, 0]}>
-          <mesh>
-            <boxGeometry args={[1.55, 0.75, 0.015]} />
-            <meshStandardMaterial color="#ffffff" roughness={0.8} />
-          </mesh>
-          <Html center transform distanceFactor={5}>
-            <div
-              style={{
-                width: '510px',
-                padding: '10px 14px',
-                fontFamily: 'Times New Roman, serif',
-                textAlign: 'left',
-                pointerEvents: 'none',
-                userSelect: 'none',
-                maxWidth: '520px',
-                zIndex: 1,
-              }}
-            >
-              <div style={{ fontSize: '20px', color: '#ffffff', lineHeight: .5 }}>
-                {'Persistent '}
-              </div>
-              <div
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '60px',
-                  marginBottom: '5px',
-                  color: '#ffffff',
-                  letterSpacing: '0em',
-                  fontStyle: 'italic',
-                  marginLeft: '20px',
-                }}
-              >
-                {'Mysteries'}
-              </div>
-            </div>
-          </Html>
-        </group>
+        {/* Title text as canvas texture — sits 0.02 units in front of the panel face */}
+        <mesh position={[1.7, 1.5, 0.27]}>
+          <planeGeometry args={[2.4, 1.2]} />
+          <meshBasicMaterial map={titleTexture} transparent />
+        </mesh>
       </mesh>
+
+      <QuestionCloud />
 
 
             {/* ── DOORS ───────────────────────────────────────────────── */}
