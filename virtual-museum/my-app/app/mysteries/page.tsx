@@ -279,7 +279,9 @@ export default function Page() {
               <br />Dinosaur bones Photo by <a href="https://unsplash.com/@el_chicho?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Narciso Arellano</a> on <a href="https://unsplash.com/photos/brown-animal-skeleton-on-glass-roof-XGs1Dwk9V9M?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
               <br />Tardigrade by Philippe Garcelon is licensed under CC BY 2.0 on <a href="https://www.flickr.com/photos/78178083@N05/51952626085" target="_blank">Flickr</a>.
               <br />Mpemba effect <a href="https://www.youtube.com/watch?v=UjIdzcxSe3g&pp=ygUNbXBlbWJhIGVmZmVjdA%3D%3D" target="_blank">video</a> by Veritasium.
-              <br />
+              <br />Lyamin O, Pryaslova J, Lance V, Siegel J. Animal behaviour: continuous activity in cetaceans after birth. Nature. 2005 Jun 30;435(7046):1177. doi: 10.1038/4351177a. PMID: 15988513; PMCID: PMC8790654. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8790654/" target="_blank">Link.</a>
+              <br />Bullfrog Brumation - Virginia Herpetological Society - <a href="https://www.virginiaherpetologicalsociety.com/amphibians/frogsandtoads/american-bullfrog/index.php/" target="_blank">https://www.virginiaherpetologicalsociety.com/amphibians/frogsandtoads/american-bullfrog/index.php</a>
+              <br />Live Science, &quot;38,000-Year-Old Rock Art Discovered in France&quot; - <a href="https://www.livescience.com/57678-ancient-rock-art-discovered-in-france.html">Link.</a>
               <br />Music - &quot;Inspiring Adventure epic cinematic orchestral trailer&quot; by zec53 on Pixabay. Copyright-free.
             </p>
           </CreditsPanel>
