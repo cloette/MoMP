@@ -11,6 +11,7 @@ interface SceneProps {
   nearDoor: boolean
   onNearDoor: (near: boolean) => void
   onNavigate: (route: string) => void
+  onSecretDoorInteract: (route: string) => void
   startT?: number
   path: readonly [number, number][]
   autoWalk?: boolean
@@ -23,6 +24,7 @@ export default function Scene({
   nearDoor,
   onNearDoor,
   onNavigate,
+  onSecretDoorInteract,
   path,
   startT = 0,
   autoWalk,
@@ -39,6 +41,7 @@ export default function Scene({
       <Room
         nearDoor={nearDoor}
         onNavigate={onNavigate}
+        onSecretDoorInteract={onSecretDoorInteract}
       />
       <RailCamera
         path={path}

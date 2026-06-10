@@ -254,7 +254,7 @@ export default function Page() {
 
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
-            <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
               Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>

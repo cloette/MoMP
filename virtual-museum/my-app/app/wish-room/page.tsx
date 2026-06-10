@@ -218,7 +218,7 @@ export default function WishRoomPage() {
 
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
-            <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               <em>Credits:</em><br></br>
               Origami Lucky Star Tutorial by <a href="https://www.youtube.com/@EasyPaperOrigami" target="_blank">Easy Paper Origami</a>
               <br />"Computer Desk" (https://skfb.ly/6BRuF) by felixawani is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).

@@ -37,7 +37,7 @@ export function ExhibitFrame({
         <Html
           center
           transform
-          occlude
+          occlude={true}
           distanceFactor={6}
           position={[0, 0, 0.01]}
         >
