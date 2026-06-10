@@ -254,7 +254,7 @@ export default function LobbyPage() {
 
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
-            <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               [No credits for this room yet.]
               <br />All music is copyright-free from Pixabay. 
               <br />Rotating Seasonal Artists and featured partnerships can appear in this room.

@@ -11,6 +11,7 @@ const Scene = dynamic(() => import('./scene'), { ssr: false })
 
 const PATH_EXT: readonly [number, number, number][] = [
   [0, 1.6, 18], 
+  [0, 1.6, 14], 
   [0, 1.6, -2], 
   [2, 1.6, -20], //1 
   [4, 1.6, -30],  //2
@@ -23,16 +24,9 @@ const START_T = .05
 const AMBIENT_VOLUME = 0.03
 
 const PAUSE_ZONES: PauseZone[] = [
-  { t: 0.01, audioSrc: '/exhibitobjects/mysteries/Pmextended.m4a' },
-  { t: 0.10, audioSrc: '/exhibitobjects/mysteries/Moon.m4a' },
-  { t: 0.12, audioSrc: '/exhibitobjects/mysteries/Mbemba.m4a' },
-  { t: 0.22, audioSrc: '/exhibitobjects/mysteries/Consciousness.m4a' },
-  { t: 0.36, audioSrc: '/exhibitobjects/mysteries/Dinosaurs.m4a' },
-  { t: 0.49, audioSrc: '/exhibitobjects/mysteries/Protons.m4a' },
-  { t: 0.50, audioSrc: '/exhibitobjects/mysteries/Darkmatter.m4a' },
-  { t: 0.54, audioSrc: '/exhibitobjects/mysteries/Continental.m4a' },
-  { t: 0.55, audioSrc: '/exhibitobjects/mysteries/Tardigrades.m4a' },
-  { t: 0.75, audioSrc: '/exhibitobjects/mysteries/Sleep.m4a' },
+  { t: 0.01, audioSrc: '/exhibitobjects/other/SecretRoom1.m4a' },
+  { t: 0.10, audioSrc: '/exhibitobjects/other/SecretRoom1.2.m4a'},
+  { t: 0.11, audioSrc: '/exhibitobjects/other/SecretRoom1.3.m4a'},
 ]
 
 const hudBtnBase: React.CSSProperties = {
