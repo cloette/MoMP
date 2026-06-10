@@ -9,17 +9,14 @@ import { PauseZone } from '../components/RailCamera'
 
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
-// Segment lengths: 20 + 18 = 38 total
-const PATH_EXT: readonly [number, number][] = [
-  [0,  18], 
-  [-3,  14],
-  [-3,  13],
-  [3,  13],
-  [3,  -13],  
-  [-3,  -13],  
-  [-3,  3],  
-  [0, 0],
-  [0, -18],  
+const PATH_EXT: readonly [number, number, number][] = [
+  [0, 1.6, 18], 
+  [0, 1.6, -2], 
+  [2, 1.6, -20], //1 
+  [4, 1.6, -30],  //2
+  [18, 1.6, -50], //3
+  [38, 5.6, -60], //4 first hexagon
+  [0, 1.6, -180],  
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = .05
@@ -153,8 +150,6 @@ export default function Page() {
   // Default action for keyboard Enter / auto-walk / mobile = far-left door
   const handleInteract = useCallback(() => handleNavigate('nature'), [handleNavigate])
 
-  const handleSecretNavigate = useCallback(() => handleNavigate('secret0DT'), [handleNavigate])
-
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
 
@@ -192,7 +187,6 @@ export default function Page() {
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
           onNavigate={handleNavigate}
-          onSecretDoorInteract={handleSecretNavigate}
           path={PATH_EXT}
           startT={START_T}
           autoWalk={autoWalk}
@@ -271,43 +265,16 @@ export default function Page() {
 
         {showCredits && (
           <CreditsPanel onClose={() => setShowCredits(false)}>
-            <p style={{ margin: 0, fontSize: '13px', color: '#888', fontStyle: 'italic' }}>
+            <p style={{ margin: 0, fontSize: '13px', color: '#888', }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
               Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
               <br></br>
               <em>Credits:</em><br />
-              Moon Photo by <a href="https://unsplash.com/@nevenkrcmarek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Neven Krcmarek</a> on <a href="https://unsplash.com/photos/full-moon-9dTg44Qhx1Q?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Brain Photo by <a href="https://unsplash.com/@averey?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Robina Weermeijer</a> on <a href="https://unsplash.com/photos/brown-brain-decor-in-selective-focus-photography-3KGF9R_0oHs?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Map Photo by <a href="https://unsplash.com/@hartonocreativestudio?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Hartono Creative Studio</a> on <a href="https://unsplash.com/photos/a-blue-and-white-map-of-the-world-1gW-pzeXX2E?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Oregon Vortex Photo by <a href="https://unsplash.com/@sierrahouk?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Sierra Houk</a> on <a href="https://unsplash.com/photos/a-sign-on-a-road-4vLTihdrifg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Wave Photo by <a href="https://unsplash.com/@a_chosensoul?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">A Chosen Soul</a> on <a href="https://unsplash.com/photos/a-purple-wave-of-light-on-a-black-background-FnGZcsmeD2U?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Sleeping Koala Photo by <a href="https://unsplash.com/@davidclode?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">David Clode</a> on <a href="https://unsplash.com/photos/koala-bear-sleeping-on-tree-Yg_sNKOiXvY?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Thundercloud Photo by <a href="https://unsplash.com/@noaa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">NOAA</a> on <a href="https://unsplash.com/photos/white-clouds-under-blue-sky-during-daytime-UJsUJr3cgEM?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Molecule structure Photo by <a href="https://unsplash.com/@spexypants?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ayush Kumar</a> on <a href="https://unsplash.com/photos/an-image-of-a-structure-that-looks-like-a-structure-VIb8pHrBUC4?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Physics experiement Photo by <a href="https://unsplash.com/@avivace?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Antonio Vivace</a> on <a href="https://unsplash.com/photos/a-large-metal-object-with-a-clock-on-its-side-sorv8yNYE6g?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Blue vortex Photo by <a href="https://unsplash.com/@pixelprovibes?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">PixelPro Vibes</a> on <a href="https://unsplash.com/photos/a-black-hole-with-a-bright-blue-accretion-disk-isqg1cuGcuU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Dinosaur bones Photo by <a href="https://unsplash.com/@el_chicho?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Narciso Arellano</a> on <a href="https://unsplash.com/photos/brown-animal-skeleton-on-glass-roof-XGs1Dwk9V9M?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-              <br />Tardigrade by Philippe Garcelon is licensed under CC BY 2.0 on <a href="https://www.flickr.com/photos/78178083@N05/51952626085" target="_blank">Flickr</a>.
-              <br />Mpemba effect <a href="https://www.youtube.com/watch?v=UjIdzcxSe3g&pp=ygUNbXBlbWJhIGVmZmVjdA%3D%3D" target="_blank">video</a> by Veritasium.
-              <br />Lyamin O, Pryaslova J, Lance V, Siegel J. Animal behaviour: continuous activity in cetaceans after birth. Nature. 2005 Jun 30;435(7046):1177. doi: 10.1038/4351177a. PMID: 15988513; PMCID: PMC8790654. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8790654/" target="_blank">Link.</a>
-              <br />Bullfrog Brumation - Virginia Herpetological Society - <a href="https://www.virginiaherpetologicalsociety.com/amphibians/frogsandtoads/american-bullfrog/index.php/" target="_blank">https://www.virginiaherpetologicalsociety.com/amphibians/frogsandtoads/american-bullfrog/index.php</a>
-              <br />Live Science, &quot;38,000-Year-Old Rock Art Discovered in France&quot; - <a href="https://www.livescience.com/57678-ancient-rock-art-discovered-in-france.html">Link.</a>
               <br />Music - &quot;Inspiring Adventure epic cinematic orchestral trailer&quot; by zec53 on Pixabay. Copyright-free.
             </p>
           </CreditsPanel>
         )}
-
-        {/* Controls hint */}
-        <div className="controls-hint" style={{
-          position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
-          background: 'rgba(0,0,0,0.42)',
-          color: '#eee', fontSize: '11px', padding: '5px 14px',
-          borderRadius: '20px', fontFamily: 'sans-serif',
-          pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
-        }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
-        </div>
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
       </div>

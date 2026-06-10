@@ -1,19 +1,17 @@
 'use client'
 import { Canvas } from '@react-three/fiber'
 import { Room } from './room'
-import { RailCamera } from '../components/RailCamera'
+import { RailCameraWithHeightControl } from '../components/RailCameraWithHeightControl'
 import type { PauseZone } from '../components/RailCamera'
 
-// 3 units before the front doors at z=-18: dist=35 of 38 total
 const DOOR_T_PARAM = 35 / 38
 
 interface SceneProps {
   nearDoor: boolean
   onNearDoor: (near: boolean) => void
   onNavigate: (route: string) => void
-  onSecretDoorInteract: (route: string) => void
   startT?: number
-  path: readonly [number, number][]
+  path: readonly [number, number, number][]
   autoWalk?: boolean
   autoWalkPaused?: boolean
   zones?: PauseZone[]
@@ -24,7 +22,6 @@ export default function Scene({
   nearDoor,
   onNearDoor,
   onNavigate,
-  onSecretDoorInteract,
   path,
   startT = 0,
   autoWalk,
@@ -41,9 +38,8 @@ export default function Scene({
       <Room
         nearDoor={nearDoor}
         onNavigate={onNavigate}
-        onSecretDoorInteract={onSecretDoorInteract}
       />
-      <RailCamera
+      <RailCameraWithHeightControl
         path={path}
         startT={startT}
         doorTParam={DOOR_T_PARAM}

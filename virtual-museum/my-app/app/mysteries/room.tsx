@@ -97,12 +97,15 @@ const EXHIBITS = {
   },
 }
 
+
+
 interface RoomProps {
   nearDoor: boolean
   onNavigate: (route: string) => void
+  onSecretDoorInteract: (route: string) => void
 }
 
-export function Room({ nearDoor, onNavigate }: RoomProps) {
+export function Room({ nearDoor, onNavigate, onSecretDoorInteract }: RoomProps) {
   const cubeRef2 = useRef<THREE.Mesh>(null)
   const cubeRef = useRef<THREE.Mesh>(null)
 
@@ -122,6 +125,19 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
     ctx.font = '26px Arial, sans-serif'
     ctx.fillStyle = '#9f9f9f'
     ctx.fillText("What we don't know may surprise you.", 20, 188)
+    return new THREE.CanvasTexture(canvas)
+  }, [])
+
+  const questionMarkTexture = useMemo(() => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 140
+    canvas.height = 200
+    const ctx = canvas.getContext('2d')!
+    ctx.clearRect(0, 0, 140, 200)
+    ctx.textBaseline = 'top'
+    ctx.font = '60px Arial, sans-serif'
+    ctx.fillStyle = '#ffffff'
+    ctx.fillText('?', 20, 12)
     return new THREE.CanvasTexture(canvas)
   }, [])
 
@@ -182,8 +198,8 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
           metalness={0.25}
         />
         {/* Title text as canvas texture — sits 0.02 units in front of the panel face */}
-        <mesh position={[1.7, 1.5, 0.27]}>
-          <planeGeometry args={[2.4, 1.2]} />
+        <mesh position={[1.4, 1.5, 0.27]}>
+          <planeGeometry args={[3, 1.4]} />
           <meshBasicMaterial map={titleTexture} transparent />
         </mesh>
       </mesh>
@@ -308,6 +324,22 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
           />
         </group>
       </Suspense>
+
+      {/* ── SECRET DOOR ─ */}
+      <group position={[0, 5.2, 12.27]} rotation={[Math.PI/2,0,0]}>
+      <mesh>
+          <planeGeometry args={[2, 3]} />
+          <meshBasicMaterial map={questionMarkTexture} transparent />
+        </mesh>
+      <mesh
+        onClick={onSecretDoorInteract}
+        onPointerOver={() => { document.body.style.cursor = 'pointer' }}
+        onPointerOut={() => { document.body.style.cursor = 'auto' }}
+      >
+        <boxGeometry args={[1.4, 2.5, 0.08]} />
+        <meshStandardMaterial transparent opacity={0} />
+      </mesh>
+      </group>
     </group>
   )
 }
