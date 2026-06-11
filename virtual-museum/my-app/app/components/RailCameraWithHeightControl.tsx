@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useControlKeys } from './ControlsContext'
 
-const MOVE_SPEED = 3.5       // units/sec, manual
-const AUTO_WALK_SPEED = 1.2  // units/sec, auto-walk
+const MOVE_SPEED = 15.5       // units/sec, manual
+const AUTO_WALK_SPEED = 3.2  // units/sec, auto-walk
 const PAN_SPEED = 1.8
 const MAX_PAN = Math.PI  // max left/right pan angle in radians, originally Math.PI / 3
 const LOOK_AHEAD = 2.0       // units ahead on path for camera look direction
