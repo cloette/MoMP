@@ -5,6 +5,7 @@ import type { CategoryName } from './CategoryModal'
 import { Suspense } from 'react'
 import { Setting } from './settingobject'
 import { FancyDoor } from './Door'
+import { Bookcase } from './bookcase'
 
 const W = 14
 const D = 18
@@ -63,7 +64,7 @@ function CategoryPlaque({
         <meshStandardMaterial transparent opacity={0} />
       </mesh>
       {/* Text label */}
-      <Html position={[0, 0, 0.07]} transform center>
+      <Html position={[0, 0, 0.09]} transform center>
         <div style={{
           fontSize: '9px',
           fontFamily: 'Georgia, serif',
@@ -144,7 +145,8 @@ export function LibraryRoom({
       {/* ── CHAMBER OF INSPIRATION DOOR (back wall, right side) ─ */}
       {/* Hidden click target — no visible geometry */}
       <mesh
-        position={[3.8, 1.2, -D / 2 + 0.12]}
+        position={[5.8, 1, 2.3]}
+        rotation={[0, -Math.PI / 2, 0]}
         onClick={onChamberDoorInteract}
         onPointerOver={() => { document.body.style.cursor = 'pointer' }}
         onPointerOut={() => { document.body.style.cursor = 'auto' }}
@@ -152,6 +154,12 @@ export function LibraryRoom({
         <boxGeometry args={[1.4, 2.5, 0.08]} />
         <meshStandardMaterial transparent opacity={0} />
       </mesh>
+
+      <Suspense fallback={null}>
+        <group position={[5.8, 0, 2.3]} rotation={[0, -Math.PI / 2, 0]}>
+          <Bookcase />
+        </group>
+      </Suspense>
 
       {/* Door embedded in front face of pedestal */}
       <Suspense fallback={null}>
