@@ -64,7 +64,7 @@ export default function Page() {
     audioMutedRef.current = !unmuted
 
     if (unmuted) {
-      const ambient = new Audio('/exhibitobjects/lobby/lobby-sound.mp3')
+      const ambient = new Audio('/exhibitobjects/echoesac/folklore-ambiance.mp3')
       ambient.volume = AMBIENT_VOLUME
       ambient.loop = true
       ambientAudioRef.current = ambient
@@ -95,7 +95,7 @@ export default function Page() {
 
       // Start looping ambient
       if (!ambientAudioRef.current) {
-        const ambient = new Audio('/exhibitobjects/exterior/exteriorambient.mp3')
+        const ambient = new Audio('/exhibitobjects/echoesac/folklore-ambiance.mp3')
         ambient.volume = AMBIENT_VOLUME
         ambient.loop = true
         ambientAudioRef.current = ambient
@@ -263,6 +263,10 @@ export default function Page() {
               <br></br>
               <em>Credits:</em><br></br>
               [sources and 3d object credits to be added here]
+              <br />"Bonsai" (https://skfb.ly/6XnsZ) by Vermos is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Animated fire" (https://skfb.ly/6AXQL) by Yannick Deharo is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Pharaoh Of The Afterlife" (https://skfb.ly/pz8UP) by mohamedhussien is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Sky Giants - The First Holy Key" (https://skfb.ly/oLxIV) by Marcus Rain Skoog is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />All music is copyright-free from Pixabay (human-created tracks only). 
             </p>
           </CreditsPanel>

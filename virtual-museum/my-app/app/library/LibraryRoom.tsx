@@ -104,7 +104,7 @@ export function LibraryRoom({
       />
 
       {/* ── LIGHTING ────────────────────────────────────────────── */}
-      <ambientLight intensity={0.95} />
+      <ambientLight intensity={0.75} />
       <Suspense fallback={null}>
         <group>
           <Setting />
