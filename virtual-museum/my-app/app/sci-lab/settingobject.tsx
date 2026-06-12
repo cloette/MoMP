@@ -2,15 +2,15 @@
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-useGLTF.preload('exhibitobjects/nature/greenhouse_park_fbx_free.glb')
+useGLTF.preload('/exhibitobjects/technology/sci-fi_lab.glb')
 
 export function Setting() {
-  const { scene } = useGLTF('/exhibitobjects/nature/greenhouse_park_fbx_free.glb')
+  const { scene } = useGLTF('/exhibitobjects/technology/sci-fi_lab.glb')
   const greenhouse = useMemo(() => scene.clone(true), [scene])
 
   return (
     <group>
-      <group position={[0, -.2, 18]}>
+      <group position={[0, -.2, 0]}>
         <primitive object={greenhouse} scale={1.2} />
       </group>
     </group>
