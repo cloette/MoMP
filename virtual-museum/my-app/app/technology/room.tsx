@@ -5,19 +5,19 @@ import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Door } from '../components/Door'
 import { ExhibitFrame } from '../components/ExhibitFrame'
+import { FancyDoor } from './Door'
 
 const FAR_Z = -18         // far end: one front doors
 const BACK_Z = 18         // back end: one rear door
 const PATH_CENTER_Z = 1   // midpoint of 20 + (−18)
 const PATH_LENGTH = 30
 
-
 const W = 16
 const D = 38
 const H = 5.6
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-  { x: 0, label: 'Systems', route: '/systems' },
+  { x: 0, label: 'Science Lab', route: '/sci-lab' },
 ]
 
 interface RoomProps {
@@ -32,52 +32,80 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
   return (
     <group>
 
+            {/* Baseboards */}
+      <mesh position={[0, 0.08, -D / 2 + 0.04]}>
+        <boxGeometry args={[W, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh position={[0, 0.08, D / 2 - 0.04]}>
+        <boxGeometry args={[W, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[-W / 2 + 0.04, 0.08, 0]}>
+        <boxGeometry args={[D, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[W / 2 - 0.04, 0.08, 0]}>
+        <boxGeometry args={[D, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh position={[0, H, -D / 2 + 0.04]}>
+        <boxGeometry args={[W, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh position={[0, H, D / 2 - 0.04]}>
+        <boxGeometry args={[W, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[-W / 2 + 0.04, H, 0]}>
+        <boxGeometry args={[D, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]} position={[W / 2 - 0.04, H, 0]}>
+        <boxGeometry args={[D, 0.16, 0.04]} />
+        <meshStandardMaterial color="#c8c0b8" />
+      </mesh>
+
       {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#a7a7a7" roughness={0.9} />
+        <meshStandardMaterial color="#c4f5ff" roughness={0.9} />
       </mesh>
 
       {/* Ceiling */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H, 0]}>
         <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#fff" />
+        <meshStandardMaterial color="#c4f5ff" />
       </mesh>
       {/* Back wall */}
       <mesh position={[0, H / 2, -D / 2]}>
         <planeGeometry args={[W, H]} />
-        <meshStandardMaterial color="#86e1f5" />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
       {/* Front wall */}
       <mesh rotation={[0, Math.PI, 0]} position={[0, H / 2, D / 2]}>
         <planeGeometry args={[W, H]} />
-        <meshStandardMaterial color="#86e1f5" />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
       {/* Left wall */}
       <mesh rotation={[0, Math.PI / 2, 0]} position={[-W / 2, H / 2, 0]}>
         <planeGeometry args={[D, H]} />
-        <meshStandardMaterial color="#86e1f5" />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
       {/* Right wall */}
       <mesh rotation={[0, -Math.PI / 2, 0]} position={[W / 2, H / 2, 0]}>
         <planeGeometry args={[D, H]} />
-        <meshStandardMaterial color="#86e1f5" />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
 
       {/* ── LIGHTING ────────────────────────────────────────────── */}
 
-      <ambientLight intensity={0.65} />
-      <directionalLight position={[0, H - 0.2, 0]} intensity={0.55} color="#fffef8" />
-      <spotLight position={[-2.5, H - 0.15, -2.5]} target-position={[-6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-      <spotLight position={[-2.5, H - 0.15, 2.5]} target-position={[-6, 1.8, 2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-      <spotLight position={[2.5, H - 0.15, -2.5]} target-position={[6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-      <spotLight position={[2.5, H - 0.15, 2.5]} target-position={[6, 1.8, 2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
-
+      <ambientLight intensity={0.99} />
 
       <mesh ref={cubeRef2} position={[-6, 2.7, 8]}>
         <boxGeometry args={[6, .5, .5]} />
         <meshStandardMaterial
-          color={"#3cdcce"}
+          color={"#d2f6ff"}
           roughness={0}
           metalness={0.25}
         />
@@ -86,14 +114,14 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       <mesh ref={cubeRef} position={[-6, 0, 8]}>
         <boxGeometry args={[6, 5, .5]} />
         <meshStandardMaterial
-          color={"#fff"}
+          color={"#ffffff"}
           roughness={0}
-          metalness={0.25}
+          metalness={0}
         />
         <group position={[1.9, 1.5, 0]} rotation={[0, 0, 0]}>
           <mesh>
             <boxGeometry args={[1.55, 0.75, 0.015]} />
-            <meshStandardMaterial color="#00bcac" roughness={0.8} />
+            <meshStandardMaterial color="#3c7fa5" roughness={0.8} />
           </mesh>
           <Html center transform distanceFactor={5}>
             <div
@@ -108,7 +136,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
                 zIndex: 1,
               }}
             >
-              <div style={{ fontSize: '20px', color: '#004741', lineHeight: .5 }}>
+              <div style={{ fontSize: '20px', color: '#3c7fa5', lineHeight: .5 }}>
                 {'Magical Phenomena in '}
               </div>
               <div
@@ -168,16 +196,15 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       {/* ── DOORS ───────────────────────────────────────────────── */}
       <Suspense fallback={null}>
         <group
-          position={[0, 0, FAR_Z - .95]}>
-          <Door
-            label={"Occupational"}
+          position={[5, 0, FAR_Z - 0.95]} rotation={[0, 0, 0]}>
+          <FancyDoor
             isNear={nearDoor}
-            onInteract={() => onNavigate('/occupational')}
+            onInteract={() => onNavigate('/sci-lab')}
           />
         </group>
         <group
-          position={[0, 0, BACK_Z + .95]} >
-          <Door
+          position={[-5, 0, BACK_Z +.95]} rotation={[0, Math.PI, 0]}>
+          <FancyDoor
             isNear={nearDoor}
             onInteract={() => onNavigate('/lobby')}
           />

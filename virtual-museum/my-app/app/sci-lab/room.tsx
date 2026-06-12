@@ -20,7 +20,7 @@ const D = 24
 const H = 4.7
 
 const FRONT_DOORS: { x: number; label: string; route: string }[] = [
-  { x: 0, label: 'Nature', route: '/nature' },
+  { x: 0, label: 'Occupational', route: '/occupational' },
 ]
 
 interface RoomProps {
@@ -138,7 +138,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
           position={[5, 0, FAR_Z + 10]} rotation={[0, 0, 0]}>
           <FancyDoor
             isNear={nearDoor}
-            onInteract={() => onNavigate('/nature')}
+            onInteract={() => onNavigate('/occupational')}
           />
         </group>
         <group
