@@ -269,25 +269,13 @@ export default function Page() {
               <br></br>
               <em>Credits:</em><br></br>
               <br />"Spaceship Door" (https://skfb.ly/6pJRu) by eggtoast is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-<br />"Sci-fi lab" (https://skfb.ly/oYNHF) by Agata Wilczek is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-<br />Music by <a href="https://pixabay.com/users/miromaxmusic-51705244/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=479266">MiroMaxMusic</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=479266">Pixabay</a>
-<br />SciFi Desk by Sousinho on Sketchfab - <a href="https://sketchfab.com/3d-models/scifi-desk-d4a09022a8874ae6bdc44b3e42a6ea6c" target="_blank">link</a>
-<br />"Monitoring Station" (https://skfb.ly/pGuRz) by PolyPhantom is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-<br />"Virtual Studio" (https://skfb.ly/o8oL6) by R-LAB is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).      
+              <br />"Sci-fi lab" (https://skfb.ly/oYNHF) by Agata Wilczek is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />Music by <a href="https://pixabay.com/users/miromaxmusic-51705244/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=479266">MiroMaxMusic</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=479266">Pixabay</a>
+              <br />SciFi Desk by Sousinho on Sketchfab - <a href="https://sketchfab.com/3d-models/scifi-desk-d4a09022a8874ae6bdc44b3e42a6ea6c" target="_blank">link</a>
+              <br />"Monitoring Station" (https://skfb.ly/pGuRz) by PolyPhantom is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
             </p>
           </CreditsPanel>
         )}
-
-        {/* Controls hint */}
-        <div className="controls-hint" style={{
-          position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
-          background: 'rgba(0,0,0,0.42)',
-          color: '#eee', fontSize: '11px', padding: '5px 14px',
-          borderRadius: '20px', fontFamily: 'sans-serif',
-          pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
-        }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
-        </div>
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
       </div>

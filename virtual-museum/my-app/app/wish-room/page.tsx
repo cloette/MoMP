@@ -243,16 +243,6 @@ export default function WishRoomPage() {
           </CreditsPanel>
         )}
 
-        <div className="controls-hint" style={{
-          position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
-          background: 'rgba(0,0,0,0.42)',
-          color: '#eee', fontSize: '11px', padding: '5px 14px',
-          borderRadius: '20px', fontFamily: 'sans-serif',
-          pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
-        }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Enter: door &nbsp;·&nbsp; Space: walk &nbsp;·&nbsp; /: audio
-        </div>
-
         {showStarStation && <StarStationModal onClose={() => setShowStarStation(false)} />}
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
