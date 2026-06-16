@@ -10,20 +10,21 @@ import Link from 'next/link'
 
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
-// Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
   [0,  18], 
   [-3,  14],
   [-3,  13],
-  [3,  13],
-  [3,  -13],  
-  [-3,  -13],  
-  [-3,  3],  
+  [0,  13],
+  [8,  -13],  
+  [8,  13],
+  [0, 0],
+  [-8,  -13],  
+  [-8,  2],  
   [0, 0],
   [0, -18],  
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
-const START_T = .05
+const START_T = 0
 const AMBIENT_VOLUME = 0.2  // 0.0 – 1.0
 
 const PAUSE_ZONES: PauseZone[] = [

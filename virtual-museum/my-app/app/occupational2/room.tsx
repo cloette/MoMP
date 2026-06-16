@@ -103,13 +103,13 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       {/* Floor */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#780400" roughness={0.9} />
+        <meshStandardMaterial color="#6d0400" roughness={0.9} />
       </mesh>
 
       {/* Ceiling */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, H, 0]}>
         <planeGeometry args={[W, D]} />
-        <meshStandardMaterial color="#b30600" />
+        <meshStandardMaterial color="#970500" />
       </mesh>
       {/* Back wall */}
       <mesh position={[0, H / 2, -D / 2]}>
