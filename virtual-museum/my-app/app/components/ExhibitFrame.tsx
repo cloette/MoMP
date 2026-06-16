@@ -4,7 +4,7 @@ import { Html } from '@react-three/drei'
 import { Frame } from './Frame'
 
 export type ExhibitContent =
-  | { type: 'image'; src: string; alt?: string }
+  | { type: 'image'; src: string; width?: number; height?: number; alt?: string }
   | { type: 'video'; src: string }
   | { type: 'youtube'; youtubeId: string; title?: string }
   | { type: 'placeholder' }
@@ -51,15 +51,15 @@ export function ExhibitFrame({
 // ─── per-type renderers ───────────────────────────────────────────────────────
 
 function FrameMedia({ content }: { content: Exclude<ExhibitContent, { type: 'placeholder' }> }) {
-  if (content.type === 'image')   return <ImageMedia src={content.src} alt={content.alt} />
+  if (content.type === 'image')   return <ImageMedia src={content.src} width={content.width} height={content.height} alt={content.alt} />
   if (content.type === 'video')   return <VideoMedia src={content.src} />
   if (content.type === 'youtube') return <YouTubeMedia youtubeId={content.youtubeId} title={content.title} />
   return null
 }
 
-function ImageMedia({ src, alt = '' }: { src: string; alt?: string }) {
+function ImageMedia({ src, width, height, alt = '' }: { src: string; width?: number; height?: number; alt?: string }) {
   return (
-    <div style={{ width: PX_W, height: PX_H, overflow: 'hidden', background: '#111' }}>
+    <div style={{ width: width || PX_W, height: height || PX_H, overflow: 'hidden', background: '#111' }}>
       <img
         src={src}
         alt={alt}

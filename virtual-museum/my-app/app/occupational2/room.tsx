@@ -1,6 +1,6 @@
 'use client'
 import { useMemo, Suspense, useEffect, useRef } from 'react'
-import { Html, useGLTF, useTexture } from '@react-three/drei'
+import { Html, Stage, useGLTF, useTexture } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Door } from '../components/Door'
@@ -10,6 +10,7 @@ import { InfoPanel } from '../components/InfoPanel'
 
 const FAR_Z = -18         // far end: one front doors
 const BACK_Z = 18         // back end: one rear door
+
 const W = 16
 const D = 38
 const H = 5.6
@@ -18,23 +19,22 @@ const EXHIBITS = {
   B1: {
    content: {
       type: 'image' as const,
-      src: '/exhibitobjects/occupational/playbills.png',
-      width:400,
-      height:200,
+      src: '/exhibitobjects/mysteries/moon.jpg',
       alt: 'Playbills',
     },
   },
   B2: {
     title: 'Gender & Social Status',
-    body: '',
-  },
-   B9: {
-    title: 'Colonialism & Cultural Appropriation',
-    body: '',
+    body: 'Women were often more likely to be accused of witchcraft, and many of the most famous and respected cunning folk were women. In many cultures, women were seen as having a closer connection to the natural world and to the spiritual realm.',
+    content: {
+      type: 'image' as const,
+      src: '/exhibitobjects/mysteries/tardigrade.jpg',
+      alt: 'Tardigrade',
+    },
   },
   B3: {
     title: 'Street & Community Practitioners',
-    body: '',
+    body: 'Sleep is a fundamental biological process that is essential for maintaining physical and mental health. While the exact mechanisms and purposes of sleep are still being researched, it is known that sleep plays a crucial role in memory consolidation, emotional regulation, immune function, and overall cognitive performance. During sleep, the brain undergoes various processes that help in processing information from the day, clearing out metabolic waste, and restoring neural connections. The need for sleep appears to be universal across species, indicating its importance for survival and well-being. Despite this, newborn orcas and dolphins do not sleep in the first month and it has no ill-effect on their development, and bullfrogs have a lowered metabolic state called brumation, while jellyfish and sea urchins experience cycles of activity and rest without ever truly "slumbering". The specific reasons why sleep evolved and how it functions at a molecular level remain areas of active scientific investigation. Understanding why we sleep is one of the great mysteries in neuroscience and biology.',
     content: {
       type: 'image' as const,
       src: '/exhibitobjects/mysteries/sleeping-koala.jpg',
@@ -43,7 +43,7 @@ const EXHIBITS = {
   },
   B4: {
     title: 'Mind-Readers, Hypnotists & Mentalists',
-    body: '',
+    body: 'Continental drift is the movement of Earth\'s continents relative to each other, which has been occurring for millions of years. The theory of plate tectonics explains that the Earth\'s lithosphere is divided into several large and small plates that float on the semi-fluid asthenosphere beneath them. The movement of these plates is driven by forces such as mantle convection, slab pull, and ridge push. However, the exact mechanisms and forces that initiated continental drift and continue to drive it are still subjects of research and debate among geologists. Understanding the causes of continental drift is crucial for comprehending Earth\'s geological history and the formation of its current landscape.',
     content: {
       type: 'image' as const,
       src: '/exhibitobjects/mysteries/continents.jpg',
@@ -52,7 +52,7 @@ const EXHIBITS = {
   },
   B5: {
     title: 'Spiritual Intermediaries & Ritual Specialists',
-    body: '',
+    body: 'communicate with spirit worlds, perform protective rituals, or intercede with divine forces.',
     content: {
       type: 'image' as const,
       src: '/exhibitobjects/mysteries/dinobones.jpg',
@@ -71,7 +71,7 @@ const EXHIBITS = {
   },
   B7: {
     title: 'Stage Performers & Entertainment Magicians',
-    body: '',
+    body: 'Dark matter is a mysterious form of matter that does not emit, absorb, or reflect light, making it invisible to current detection methods. It is believed to make up about 27% of the universe\'s mass-energy content, yet its exact nature remains unknown. Scientists have inferred the existence of dark matter through its gravitational effects on visible matter, such as the rotation of galaxies and the bending of light from distant objects. Despite extensive research and various theoretical models, the composition and properties of dark matter continue to elude scientists, making it one of the most profound mysteries in cosmology and particle physics.',
     content: {
       type: 'image' as const,
       src: '/exhibitobjects/mysteries/darkmatter.jpg',
@@ -80,7 +80,7 @@ const EXHIBITS = {
   },
   B8: {
     title: 'Diviners & Fortune-Tellers',
-    body: '',
+    body: 'Consciousness is the state of being aware of and able to think about one\'s own existence, thoughts, and surroundings. It is a complex and multifaceted phenomenon that has puzzled philosophers, scientists, and thinkers for centuries. Despite advances in neuroscience and psychology, the nature of consciousness remains elusive, and there is no consensus on how to define or explain it. Some theories propose that consciousness arises from specific neural processes in the brain, while others suggest it may be a fundamental aspect of the universe. The question of what consciousness is and how it emerges continues to be one of the most profound mysteries in science and philosophy.',
     content: {
       type: 'image' as const,
       src: '/exhibitobjects/mysteries/brain.jpg',
@@ -89,15 +89,14 @@ const EXHIBITS = {
   },
 }
 
+
+
 interface RoomProps {
   nearDoor: boolean
   onNavigate: (route: string) => void
 }
 
 export function Room({ nearDoor, onNavigate }: RoomProps) {
-  const cubeRef2 = useRef<THREE.Mesh>(null)
-  const cubeRef = useRef<THREE.Mesh>(null)
-
   return (
     <group>
 
@@ -122,6 +121,12 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         <planeGeometry args={[W, H]} />
         <meshStandardMaterial color="#230200" />
       </mesh>
+
+      {/* Middle wall */}
+      <mesh position={[5, H / 2, 0]}>
+        <planeGeometry args={[W, H]} />
+        <meshStandardMaterial color="#230200" />
+      </mesh>
       {/* Left wall */}
       <mesh rotation={[0, Math.PI / 2, 0]} position={[-W / 2, H / 2, 0]}>
         <planeGeometry args={[D, H]} />
@@ -142,81 +147,22 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
       <spotLight position={[2.5, H - 0.15, -2.5]} target-position={[6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
       <spotLight position={[2.5, H - 0.15, 2.5]} target-position={[6, 1.8, 2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
 
-      <mesh ref={cubeRef2} position={[-6, 2.7, 8]}>
-        <boxGeometry args={[6, .5, .5]} />
-        <meshStandardMaterial
-          color={"#9e0500"}
-          roughness={0}
-          metalness={0.25}
-        />
-      </mesh>
-
-      <mesh ref={cubeRef} position={[-6, 0, 8]}>
-        <boxGeometry args={[6, 5, .5]} />
-        <meshStandardMaterial
-          color={"#fff"}
-          roughness={0}
-          metalness={0.25}
-        />
-        <group position={[1.9, 1.5, 0]} rotation={[0, 0, 0]}>
-          <mesh>
-            <boxGeometry args={[1.55, 0.75, 0.015]} />
-            <meshStandardMaterial color="#570300" roughness={0.8} />
-          </mesh>
-          <Html center transform distanceFactor={5}>
-            <div
-              style={{
-                width: '510px',
-                padding: '10px 14px',
-                fontFamily: 'Times New Roman, serif',
-                textAlign: 'left',
-                pointerEvents: 'none',
-                userSelect: 'none',
-                maxWidth: '520px',
-                zIndex: 1,
-              }}
-            >
-              <div style={{ fontSize: '20px', color: '#570300', lineHeight: .5 }}>
-                {'Magic as an '}
-              </div>
-              <div
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: '60px',
-                  marginBottom: '5px',
-                  color: '#0c0c0c',
-                  letterSpacing: '0em',
-                  fontStyle: 'italic',
-                  marginLeft: '20px',
-                }}
-              >
-                {'Occupation'}
-              </div>
-            </div>
-          </Html>
-        </group>
-      </mesh>
 
       <ExhibitFrame
-        position={[-7.10, 2.5, 14.5]}
+        position={[-7.50, 2.5, 15]}
         rotation={[0, Math.PI / 2, 0]}
-        width={6}
-        height={3}
         content={EXHIBITS.B1.content}/>
-
+      <ExhibitFrame
+        position={[-7.97, 2.5, -15.5]}
+        rotation={[0, Math.PI / 2, 0]}
+        content={EXHIBITS.B2.content}
+      />
       <InfoPanel
-        position={[-7.97, 2, -10]}
+        position={[-7.97, 2, -12]}
         rotation={[0, Math.PI / 2, 0]}
         title={EXHIBITS.B2.title}
         body={EXHIBITS.B2.body}
-        color={'#ffe2dd'} />
-      <InfoPanel
-        position={[-7.97, 2, -14]}
-        rotation={[0, Math.PI / 2, 0]}
-        title={EXHIBITS.B9.title}
-        body={EXHIBITS.B9.body}
-        color={'#ffe2dd'} />
-
+        color={'#f5ddff'} />
       <ExhibitFrame
         position={[-7.97, 2.5, .5]}
         rotation={[0, Math.PI / 2, 0]}
@@ -226,8 +172,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         position={[-7.97, 2, 4]}
         rotation={[0, Math.PI / 2, 0]}
         title={EXHIBITS.B3.title}
-        body={EXHIBITS.B3.body}
-        color={'#fffddd'} />
+        body={EXHIBITS.B3.body} />
 
       <ExhibitFrame
         position={[7.97, 2.5, -15.5]}
@@ -238,8 +183,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         position={[7.97, 2, -12]}
         rotation={[0, -Math.PI / 2, 0]}
         title={EXHIBITS.B4.title}
-        body={EXHIBITS.B4.body} 
-        color={'#fffddd'} />
+        body={EXHIBITS.B4.body} />
       <ExhibitFrame
         position={[7.97, 2.5, -6]}
         rotation={[0, -Math.PI / 2, 0]}
@@ -249,7 +193,8 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         rotation={[0, -Math.PI / 2, 0]}
         title={EXHIBITS.B5.title}
         body={EXHIBITS.B5.body}
-        color={'#fffddd'} />
+        color={'#fff3dd'}
+      />
       <ExhibitFrame
         position={[7.97, 2.5, 13]}
         rotation={[0, -Math.PI / 2, 0]}
@@ -259,19 +204,20 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         rotation={[0, -Math.PI / 2, 0]}
         title={EXHIBITS.B6.title}
         body={EXHIBITS.B6.body}
-        color={'#fffddd'} />
+      />
 
       <ExhibitFrame
-        position={[-7.97, 2.5, -7.5]}
+        position={[-7.97, 2.5, -8.5]}
         rotation={[0, Math.PI / 2, 0]}
         content={EXHIBITS.B7.content}
       />
       <InfoPanel 
-        position={[-7.97, 2, -4]}
+        position={[-7.97, 2, -6]}
         rotation={[0, Math.PI / 2, 0]}
         title={EXHIBITS.B7.title}
         body={EXHIBITS.B7.body}
-        color={'#fffddd'} />
+        color={'#ddfaff'}
+      />
 
       <ExhibitFrame
         position={[7.97, 2.5, 4]}
@@ -282,23 +228,24 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         rotation={[0, -Math.PI / 2, 0]}
         title={EXHIBITS.B8.title}
         body={EXHIBITS.B8.body}
-        color={'#fffddd'} />
+        color={'#ffdde9'}
+      />
 
-      <group position={[ 8, 5, 4]} rotation={[0, -Math.PI / 2, 0]}>
+      <group position={[ 8, 5, 8]} rotation={[0, -Math.PI / 2, 0]}>
         <Html center transform distanceFactor={5}>
             <div
               style={{
-                width: '510px',
+                width: '610px',
                 padding: '10px 14px',
                 fontFamily: 'Times New Roman, serif',
                 textAlign: 'left',
                 pointerEvents: 'none',
                 userSelect: 'none',
-                maxWidth: '520px',
+                maxWidth: '620px',
                 fontSize: '50px', color: '#939128', lineHeight: .5
               }}
             >
-                {'Origins & Professions'}
+                {'Persecution & Witch Hunts'}
               </div>
           </Html>
       </group>
@@ -307,17 +254,17 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         <Html center transform distanceFactor={5}>
             <div
               style={{
-                width: '510px',
+                width: '610px',
                 padding: '10px 14px',
                 fontFamily: 'Times New Roman, serif',
                 textAlign: 'left',
                 pointerEvents: 'none',
                 userSelect: 'none',
-                maxWidth: '520px',
+                maxWidth: '620px',
                 fontSize: '50px', color: '#939128', lineHeight: .5
               }}
             >
-                {'The Practice'}
+                {'Legacy & Modern Practice'}
               </div>
           </Html>
       </group>
@@ -329,9 +276,6 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         <group position={[ -5, 0, -17.5]} rotation={[0, 0, 0]}>
           <Curtain />
         </group>
-        <group position={[ -7.5, 0, 12]} rotation={[0, Math.PI/2, 0]}>
-          <Curtain />
-        </group>
       </Suspense>
 
       {/* ── DOORS ───────────────────────────────────────────────── */}
@@ -339,16 +283,16 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         <group
           position={[0, 0, FAR_Z - .95]}>
           <Door
-            label={"Occupation (2)"}
+            label={"Echoes Across Cultures"}
             isNear={nearDoor}
-            onInteract={() => onNavigate('/occupational2')}
+            onInteract={() => onNavigate('/echoes-across-cultures')}
           />
         </group>
         <group
           position={[0, 0, BACK_Z + .95]} rotation={[0, Math.PI, 0]}>
           <Door
             isNear={nearDoor}
-            onInteract={() => onNavigate('/lobby')}
+            onInteract={() => onNavigate('/occupational')}
           />
         </group>
       </Suspense>

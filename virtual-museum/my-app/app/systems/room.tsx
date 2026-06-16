@@ -176,7 +176,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
           />
         </group>
         <group
-          position={[0, 0, BACK_Z + .95]} >
+          position={[0, 0, BACK_Z + .95]} rotation={[0, Math.PI, 0]}>
           <Door
             isNear={nearDoor}
             onInteract={() => onNavigate('/lobby')}

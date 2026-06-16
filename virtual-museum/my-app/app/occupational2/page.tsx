@@ -13,13 +13,15 @@ const Scene = dynamic(() => import('./scene'), { ssr: false })
 // Segment lengths: 20 + 18 = 38 total
 const PATH_EXT: readonly [number, number][] = [
   [0,  18], 
-  [-3,  14],
-  [-3,  13],
   [3,  13],
+  [3,  5],
+  [-3,  5],
+  [-3,  13],
+  [-5,  0],
+  [-3,  -13],
   [3,  -13],  
-  [-3,  -13],  
-  [-3,  3],  
-  [0, 0],
+  [3,  -5],  
+  [0, -5],
   [0, -18],  
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
@@ -144,7 +146,7 @@ export default function Page() {
   }, [router])
 
   // Default action for keyboard Enter / auto-walk / mobile = far-left door
-  const handleInteract = useCallback(() => handleNavigate('/occupational2'), [handleNavigate])
+  const handleInteract = useCallback(() => handleNavigate('/echoes-across-cultures'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
@@ -267,10 +269,8 @@ export default function Page() {
               Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
               <br></br>
               <em>Credits:</em><br></br>
-              &quot;File:Rhumsiki crab sorceror.jpg.&quot; Wikimedia Commons. 31 Dec 2025, 13:34 UTC. https://commons.wikimedia.org/w/index.php?title=File:Rhumsiki_crab_sorceror.jpg&oldid=1139589112. 15 Jun 2026, 18:29.
-              <br />
-              &quot;Retro style stage&quot; (https://skfb.ly/6WPVA) by Mayantique is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-              <br />&quot;Curtain&quot; (https://skfb.ly/oHQXO) by milaink is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              "Retro style stage" (https://skfb.ly/6WPVA) by Mayantique is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Curtain" (https://skfb.ly/oHQXO) by milaink is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>
