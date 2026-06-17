@@ -11,17 +11,17 @@ import Link from 'next/link'
 const Scene = dynamic(() => import('./scene'), { ssr: false })
 
 const PATH_EXT: readonly [number, number][] = [
-  [0,  18], 
-  [-3,  14],
-  [-3,  13],
-  [0,  13],
-  [8,  -13],  
-  [8,  13],
+  [0, 18],
+  [-3, 14],
+  [-3, 13],
+  [0, 13],
+  [8, -13],
+  [8, 13],
   [0, 0],
-  [-8,  -13],  
-  [-8,  2],  
+  [-8, -13],
+  [-8, 2],
   [0, 0],
-  [0, -18],  
+  [0, -18],
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
 const START_T = 0
@@ -265,13 +265,26 @@ export default function Page() {
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
-              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
-              <br></br>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank"><b>Let us know!</b></Link>
+              <br></br><br></br>
               <em>Credits:</em><br></br>
               &quot;File:Rhumsiki crab sorceror.jpg.&quot; Wikimedia Commons. 31 Dec 2025, 13:34 UTC. https://commons.wikimedia.org/w/index.php?title=File:Rhumsiki_crab_sorceror.jpg&oldid=1139589112. 15 Jun 2026, 18:29.
               <br />
               &quot;Retro style stage&quot; (https://skfb.ly/6WPVA) by Mayantique is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />&quot;Curtain&quot; (https://skfb.ly/oHQXO) by milaink is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />Book Cover of "Black Bull, Ancestors and Me: My Life as a Lesbian Sangoma" by Nkunzi Zandile Nkabinde from https://www.amazon.com/stores/author/B001NSU5C6.
+              <br /> China map by Sbb1413 on wikimedia, original is here: https://commons.wikimedia.org/wiki/File:Country-level_map_of_the_China_region.svg. Changes were made to flatten colors. This file is licensed under the Creative Commons Attribution 4.0 International license. (https://creativecommons.org/licenses/by/4.0/deed.en)
+              <br /><a href="https://www.vecteezy.com/free-png/india">India PNGs by Vecteezy</a>
+              <br /><a href="https://www.vecteezy.com/free-png/egypt">Egypt PNGs by Vecteezy</a>
+              <br />Hesy-Ra image of relief; public domain, Hesy-Ra_CG1426.jpg: User:GDK: James Edward Quibell († 5. Juni 1935)
+              <br />Papyrus Ebers image by Einsamer Schütze, File:PEbers_c41.jpg licensed with Cc-by-sa-3.0,2.5,2.0,1.0, GFDL Einsamer Schütze https://en.wikipedia.org/wiki/File:PEbers_c41-bc.jpg
+              <br />Depiction of the Devil giving wax dolls to witches, from The History of Witches and Wizards. Public Domain. Date: 1720. Source: https://commons.wikimedia.org/wiki/File:Agnes_Sampson_and_witches_with_devil.jpg  Author:	Unknown author
+              <br />Portrait of Marie Anne Lenormand from The Court of Napoleon by Frank Boott Goodrich, Date	12 September 2012, 11:13:52, Source	The Court of Napoleon (Derby and Jackson, New York 1858), Author	Frank Boott Goodrich (1826-1894) and Jules Champagne. https://commons.wikimedia.org/wiki/File:Portrait_of_Mlle_Lenormand_from_The_Court_of_Napoleon.jpg
+              <br />Native American healing practices, https://pmc.ncbi.nlm.nih.gov/articles/PMC2913884/.
+              <br />Lector Priest, universal public domain image, https://commons.wikimedia.org/wiki/File:Stela_of_the_lector_priest_of_Amun_Siamun_and_his_mother_the_singer_Amenhotep_MET_DT2928.jpg
+              <br />Stambali by Hn Khaoula, licensed under the  Creative Commons Attribution-Share Alike 4.0 International license, https://commons.wikimedia.org/wiki/File:Stambali_au_mouled.jpg, https://creativecommons.org/licenses/by-sa/4.0/deed.en
+              <br />Daoist Priest's Robe, China, back (MET, 36.105), universal public domain, https://www.metmuseum.org/art/collection/search/65366. https://commons.wikimedia.org/wiki/File:MET_TP479.jpg
+              <br />Itneg shaman, licensed as public domain, by Fay-Cooper Cole on wikimedia: https://commons.wikimedia.org/wiki/File:An_Itneg_shaman_renewing_an_offering_to_the_spirit_shield_(1922,_Philippines).jpg
               <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
           </CreditsPanel>
