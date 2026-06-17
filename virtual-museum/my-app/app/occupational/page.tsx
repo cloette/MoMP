@@ -272,7 +272,7 @@ export default function Page() {
               <br />
               &quot;Retro style stage&quot; (https://skfb.ly/6WPVA) by Mayantique is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />&quot;Curtain&quot; (https://skfb.ly/oHQXO) by milaink is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-              <br />Book Cover of "Black Bull, Ancestors and Me: My Life as a Lesbian Sangoma" by Nkunzi Zandile Nkabinde from https://www.amazon.com/stores/author/B001NSU5C6.
+              <br />Book Cover of &quot;Black Bull, Ancestors and Me: My Life as a Lesbian Sangoma&quot; by Nkunzi Zandile Nkabinde from https://www.amazon.com/stores/author/B001NSU5C6.
               <br /> China map by Sbb1413 on wikimedia, original is here: https://commons.wikimedia.org/wiki/File:Country-level_map_of_the_China_region.svg. Changes were made to flatten colors. This file is licensed under the Creative Commons Attribution 4.0 International license. (https://creativecommons.org/licenses/by/4.0/deed.en)
               <br /><a href="https://www.vecteezy.com/free-png/india">India PNGs by Vecteezy</a>
               <br /><a href="https://www.vecteezy.com/free-png/egypt">Egypt PNGs by Vecteezy</a>
@@ -283,7 +283,7 @@ export default function Page() {
               <br />Native American healing practices, https://pmc.ncbi.nlm.nih.gov/articles/PMC2913884/.
               <br />Lector Priest, universal public domain image, https://commons.wikimedia.org/wiki/File:Stela_of_the_lector_priest_of_Amun_Siamun_and_his_mother_the_singer_Amenhotep_MET_DT2928.jpg
               <br />Stambali by Hn Khaoula, licensed under the  Creative Commons Attribution-Share Alike 4.0 International license, https://commons.wikimedia.org/wiki/File:Stambali_au_mouled.jpg, https://creativecommons.org/licenses/by-sa/4.0/deed.en
-              <br />Daoist Priest's Robe, China, back (MET, 36.105), universal public domain, https://www.metmuseum.org/art/collection/search/65366. https://commons.wikimedia.org/wiki/File:MET_TP479.jpg
+              <br />Daoist Priest&apos;s Robe, China, back (MET, 36.105), universal public domain, https://www.metmuseum.org/art/collection/search/65366. https://commons.wikimedia.org/wiki/File:MET_TP479.jpg
               <br />Itneg shaman, licensed as public domain, by Fay-Cooper Cole on wikimedia: https://commons.wikimedia.org/wiki/File:An_Itneg_shaman_renewing_an_offering_to_the_spirit_shield_(1922,_Philippines).jpg
               <br />All music is copyright-free from Pixabay (human-created tracks only).
             </p>
