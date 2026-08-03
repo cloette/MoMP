@@ -272,7 +272,6 @@ export default function Page() {
               <br />
               &quot;Retro style stage&quot; (https://skfb.ly/6WPVA) by Mayantique is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />&quot;Curtain&quot; (https://skfb.ly/oHQXO) by milaink is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-              <br />Book Cover of &quot;Black Bull, Ancestors and Me: My Life as a Lesbian Sangoma&quot; by Nkunzi Zandile Nkabinde from https://www.amazon.com/stores/author/B001NSU5C6.
               <br /> China map by Sbb1413 on wikimedia, original is here: https://commons.wikimedia.org/wiki/File:Country-level_map_of_the_China_region.svg. Changes were made to flatten colors. This file is licensed under the Creative Commons Attribution 4.0 International license. (https://creativecommons.org/licenses/by/4.0/deed.en)
               <br /><a href="https://www.vecteezy.com/free-png/india">India PNGs by Vecteezy</a>
               <br /><a href="https://www.vecteezy.com/free-png/egypt">Egypt PNGs by Vecteezy</a>

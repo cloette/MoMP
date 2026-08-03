@@ -29,7 +29,7 @@ const EXHIBITS = {
     title: 'Sangoma & Inyanga',
     body: 'The sangoma (diviner) and inyanga (herbalist) are the two main types of traditional healers in Southern Africa. These healers are highly revered and respected in a society where illness is thought to be caused by witchcraft, pollution (contact with impure objects or occurrences) or through neglect of the ancestors. Unlike European cunning folk who were often prosecuted, sangoma and inyanga have maintained unbroken social legitimacy throughout the colonial and post-colonial periods. Although sangoma is a Zulu term that is colloquially used to describe all types of Southern African traditional healers, there are differences between practices: an inyanga is concerned mainly with medicines made from plants and animals, while a sangoma communicates with ancestors from the spirit world to receive instruction and advice to heal illness, social disharmony and spiritual difficulties. Traditional healers are consulted by approximately 60% of the South African population, usually in conjunction with modern bio-medical services.',
     title2: 'Notable Persons: Nkunzi Zandile Nkabinde',
-    body2: 'A South African sangoma, author, and LGBT activist best known for their memoir Black Bull, Ancestors and Me. After their mother died, Nkabinde was summoned to become a sangoma. Initially, they resisted until they were bombarded with voices, dreams, and other supernatural forces that urged them to give into becoming a sangoma. A woman came to them in their dream and told them to stop being stubborn because they were destined to perform this work. Nkabinde\'s abilities as a sangoma include connecting with and controlling their ancestors to manipulate herbs and cure illnesses.',
+    body2: 'Book Cover of &quot;Black Bull, Ancestors and Me: My Life as a Lesbian Sangoma&quot; by Nkunzi Zandile Nkabinde from https://www.amazon.com/stores/author/B001NSU5C6. A South African sangoma, author, and LGBT activist best known for their memoir Black Bull, Ancestors and Me. After their mother died, Nkabinde was summoned to become a sangoma. Initially, they resisted until they were bombarded with voices, dreams, and other supernatural forces that urged them to give into becoming a sangoma. A woman came to them in their dream and told them to stop being stubborn because they were destined to perform this work. Nkabinde\'s abilities as a sangoma include connecting with and controlling their ancestors to manipulate herbs and cure illnesses.',
     africa: {
       type: 'image' as const,
       src: '/continents/Africa.png',
@@ -251,7 +251,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
 
       {/* ── LIGHTING ────────────────────────────────────────────── */}
 
-      <ambientLight intensity={0.65} />
+      <ambientLight intensity={0.85} />
       <directionalLight position={[0, H - 0.2, 0]} intensity={0.95} color="#fffef8" />
 
       <mesh ref={cubeRef2} position={[-6, 2.7, 8]}>
@@ -350,6 +350,8 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         title={EXHIBITS.B4.title}
         body={EXHIBITS.B4.body}
         color={'#fffddd'} />
+      
+      {  /* 
       <ExhibitFrame
         position={[9.6, 2.5, -17.3]}
         rotation={[0, 0, 0]}
@@ -362,7 +364,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
         rotation={[0, 0, 0]}
         title={EXHIBITS.B4.title2}
         body={EXHIBITS.B4.body2}
-        color={'#ffdedd'} />
+        color={'#ffdedd'} />*/}
 
       <InfoPanel position={[17.97, 2.3, -16.9]}
         rotation={[0, -Math.PI / 2, 0]}
