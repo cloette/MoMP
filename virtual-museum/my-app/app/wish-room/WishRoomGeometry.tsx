@@ -29,10 +29,10 @@ export function WishRoomGeometry({ nearDoor, onDoorInteract, lobbyDoorInteract, 
   return (
     <group>
       {/* ── LIGHTING ── */}
-      <ambientLight intensity={0.65} />
+      <ambientLight intensity={0.85} />
       <pointLight position={[0, H - 0.3, 0]} intensity={0.7} color="#ffffff" />
-      <pointLight position={[-4, 2.5, -1]} intensity={2} color="#ff00ff" />
-      <pointLight position={[4, 2.5, -1]} intensity={3} color="#4a93ff" />
+      <pointLight position={[-4, 2.5, -1]} intensity={6} color="#ff00ff" />
+      <pointLight position={[4, 2.5, -1]} intensity={9} color="#4a93ff" />
 
       {/* ── FLOOR ── */}
       <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>

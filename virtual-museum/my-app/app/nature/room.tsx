@@ -68,7 +68,7 @@ export function Room({ nearDoor, onNavigate }: RoomProps) {
 
       {/* ── LIGHTING ────────────────────────────────────────────── */}
 
-      <ambientLight intensity={0.65} />
+      <ambientLight intensity={0.85} />
       <directionalLight position={[0, H - 0.2, 0]} intensity={0.55} color="#fffef8" />
       <spotLight position={[-2.5, H - 0.15, -2.5]} target-position={[-6, 1.8, -2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
       <spotLight position={[-2.5, H - 0.15, 2.5]} target-position={[-6, 1.8, 2.5]} angle={0.45} penumbra={0.6} intensity={1.0} color="#fff9ee" />
