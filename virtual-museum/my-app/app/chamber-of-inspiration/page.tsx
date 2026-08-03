@@ -124,17 +124,6 @@ export default function ChamberPage() {
           </CreditsPanel>
         )}
 
-        {/* Controls hint */}
-        <div style={{
-          position: 'fixed', bottom: '16px', left: '50%', transform: 'translateX(-50%)',
-          background: 'rgba(6, 14, 40, 0.72)',
-          color: '#4466aa', fontSize: '11px', padding: '5px 14px',
-          borderRadius: '20px', fontFamily: 'sans-serif',
-          pointerEvents: 'none', zIndex: 10, whiteSpace: 'nowrap',
-        }}>
-          ↑↓ Move &nbsp;·&nbsp; ,. Pan &nbsp;·&nbsp; Space: auto-walk
-        </div>
-
         <MobileControls nearDoor={nearDoor} onInteract={handleLobby} />
       </div>
     </ControlsProvider>

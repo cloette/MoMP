@@ -1,19 +1,17 @@
 'use client'
 import { Canvas } from '@react-three/fiber'
-import { LibraryRoom } from './LibraryRoom'
+import { Room } from './room'
 import { RailCamera } from '../components/RailCamera'
 import type { PauseZone } from '../components/RailCamera'
-import type { CategoryName } from './CategoryModal'
 
-const DOOR_T_PARAM = 0.93
+// 3 units before the front doors at z=-18: dist=35 of 38 total
+const DOOR_T_PARAM = 35 / 38
 
-interface LibrarySceneProps {
+interface SceneProps {
   nearDoor: boolean
   onNearDoor: (near: boolean) => void
-  onDoorInteract: () => void
-  onLobbyDoorInteract: () => void
-  onChamberDoorInteract: () => void
-  onOpenCategory: (cat: CategoryName) => void
+  onNavigate: (route: string) => void
+  startT?: number
   path: readonly [number, number][]
   autoWalk?: boolean
   autoWalkPaused?: boolean
@@ -21,34 +19,30 @@ interface LibrarySceneProps {
   onEnterZone?: (index: number) => void
 }
 
-export default function LibraryScene({
+export default function Scene({
   nearDoor,
   onNearDoor,
-  onDoorInteract,
-  onLobbyDoorInteract,
-  onChamberDoorInteract,
-  onOpenCategory,
+  onNavigate,
   path,
+  startT = 0,
   autoWalk,
   autoWalkPaused,
   zones,
   onEnterZone,
-}: LibrarySceneProps) {
+}: SceneProps) {
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: [path[0][0], 1.4, path[0][1]], fov: 68, near: 0.1, far: 50 }}
-      style={{ width: '100%', height: '100%', background: '#1a0000' }}
+      camera={{ position: [0, 1.6, 0], fov: 68, near: 0.1, far: 200 }}
+      style={{ width: '100%', height: '100%', background: '#000000' }}
     >
-      <LibraryRoom
+      <Room
         nearDoor={nearDoor}
-        onDoorInteract={onDoorInteract}
-        onLobbyDoorInteract={onLobbyDoorInteract}
-        onChamberDoorInteract={onChamberDoorInteract}
-        onOpenCategory={onOpenCategory}
+        onNavigate={onNavigate}
       />
       <RailCamera
         path={path}
+        startT={startT}
         doorTParam={DOOR_T_PARAM}
         onNearDoor={onNearDoor}
         autoWalk={autoWalk}

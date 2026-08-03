@@ -2,7 +2,7 @@
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-useGLTF.preload('exhibitobjects/nature/greenhouse_park_fbx_free.gl')
+useGLTF.preload('exhibitobjects/nature/greenhouse_park_fbx_free.glb')
 
 export function Setting() {
   const { scene } = useGLTF('/exhibitobjects/nature/greenhouse_park_fbx_free.glb')

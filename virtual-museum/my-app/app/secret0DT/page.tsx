@@ -17,10 +17,36 @@ const PATH_EXT: readonly [number, number, number][] = [
   [4, 1.6, -30],  //2
   [18, 1.6, -50], //3
   [38, 5.6, -60], //4 first hexagon
-  [0, 1.6, -180],  
+  [35, 7, -66],
+  [40, 12, -85], // climb the tree
+  [60, 25, -60], // wider orbit
+  [140, 40, -80],
+  [160, 55, -60], //??
+  [140, 70, 10],
+  [60, 85, -20], //top area way out
+  [30, 80, -30],
+  [24, 5.6, -80], //nice corner of the path
+  [44, 5.6, -117], //nice 2corner of the path
+  [92, 5.6, -118], //nice 3corner of the path
+  [115, 5.6, -75], //nice 4corner of the path
+  [90, 5.6, -35], //nice 5corner of the path
+  [53, 5.6, -36], //nice 6corner of the path
+  [24, 5.6, -80], //nice corner of the path
+  [32, 5.6, -100], //second hexagon left
+  [18, 1.6, -110], //long pagoda path
+  [3, 2.6, -140], //gong area
+  [50, 12.6, -150],
+  [70, 16.6, -160], // second island
+  [100, 24.6, -145],
+  [150, 40, -150],
+  [110, 54, -70], //tree platforms
+  [120, 58, -60], //tree platforms
+  [40, 68, -50], //tree platforms
+  [30, 60, -60], //tree platforms
+  [55, 60, -45], //tree platforms
 ]
 // Place camera at the midpoint of segment 1 (z ≈ 0)
-const START_T = .05
+const START_T = .005
 const AMBIENT_VOLUME = 0.03
 
 const PAUSE_ZONES: PauseZone[] = [

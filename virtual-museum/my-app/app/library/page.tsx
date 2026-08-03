@@ -268,6 +268,7 @@ export default function LibraryPage() {
               <br></br>
               <em>Credits:</em><br></br>
               "Library" (https://skfb.ly/pAux6) by Pasha is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Game Ready - Antique Bookcase" (https://skfb.ly/pqovT) by Allan-Jay Branscombe is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
               <br />Music - "Relaxing" by AlexGrohl on Pixabay, licensed as copyright-free.
             </p>
           </CreditsPanel>

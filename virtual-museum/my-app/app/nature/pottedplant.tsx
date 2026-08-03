@@ -2,7 +2,7 @@
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-useGLTF.preload('exhibitobjects/nature/potted_plant___poly_foliage_game_ready.glb')
+useGLTF.preload('/exhibitobjects/nature/potted_plant___poly_foliage_game_ready.glb')
 
 export function PottedPlant() {
   const { scene } = useGLTF('/exhibitobjects/nature/potted_plant___poly_foliage_game_ready.glb')

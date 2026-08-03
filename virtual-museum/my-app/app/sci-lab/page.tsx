@@ -5,30 +5,31 @@ import { useRouter } from 'next/navigation'
 import { ControlsProvider } from '../components/ControlsContext'
 import { MobileControls } from '../components/MobileControls'
 import { CreditsPanel } from '../components/CreditsPanel'
-import { CategoryModal } from './CategoryModal'
-import type { PauseZone } from '../components/RailCamera'
-import type { CategoryName, LibraryItem } from './CategoryModal'
+import { PauseZone } from '../components/RailCamera'
+import Link from 'next/link'
 
-const LibraryRoomScene = dynamic(() => import('./LibraryScene'), { ssr: false })
+const Scene = dynamic(() => import('./scene'), { ssr: false })
 
-const PATH: readonly [number, number][] = [
-  [ 0,   4.9],  // center, entry wall
-  [ 0,  -4.9],  // center, door  wall → wish room
+// Segment lengths: 20 + 18 = 38 total
+const PATH_EXT: readonly [number, number][] = [
+  [-5, 17],
+  [-5, 14],
+  [0, 14],
+  [5, 14],
+  [0, 14],
+  [0, 0],
+  [0, -4],
+  [-5, -4],
+  [5, -4],
+  [5, -7],
 ]
+// Place camera at the midpoint of segment 1 (z ≈ 0)
+const START_T = 0
+const AMBIENT_VOLUME = 0.3  // 0.0 – 1.0
 
 const PAUSE_ZONES: PauseZone[] = [
-  { t: 0.10, audioSrc: '' },
+  { t: 0.90, audioSrc: '' },
 ]
-
-// ── Category data ─────────────────────────────────────────────────────────────
-// Items are sorted alphabetically in the modal. Add entries here.
-const CATEGORY_DATA: Record<CategoryName, LibraryItem[]> = {
-  Books:          [],
-  'Comics/Manga': [],
-  Video:          [],
-  Games:          [],
-  Other:          [],
-}
 
 const hudBtnBase: React.CSSProperties = {
   background: 'rgba(255,255,255,0.82)',
@@ -48,45 +49,48 @@ const hudBtnBase: React.CSSProperties = {
   flexShrink: 0,
 }
 
-export default function LibraryPage() {
+export default function Page() {
   const router = useRouter()
   const [nearDoor, setNearDoor] = useState(false)
   const [autoWalk, setAutoWalk] = useState(false)
-  const autoWalkRef = useRef(false)
   const [autoWalkPaused, setAutoWalkPaused] = useState(false)
+  const autoWalkRef = useRef(false)
   const [audioMuted, setAudioMuted] = useState(true)
   const audioMutedRef = useRef(true)
   const currentAudioRef = useRef<HTMLAudioElement | null>(null)
+  const ambientAudioRef = useRef<HTMLAudioElement | null>(null)
   const [showCredits, setShowCredits] = useState(false)
-  const [openCategory, setOpenCategory] = useState<CategoryName | null>(null)
 
   useEffect(() => { autoWalkRef.current = autoWalk }, [autoWalk])
   useEffect(() => { audioMutedRef.current = audioMuted }, [audioMuted])
 
+  // On mount: restore audio + auto-walk state from session
   useEffect(() => {
     const unmuted = sessionStorage.getItem('momp_audio_unmuted') === '1'
     setAudioMuted(!unmuted)
     audioMutedRef.current = !unmuted
+
+    if (unmuted) {
+      const ambient = new Audio('/exhibitobjects/technology/miromaxmusic-technology-479266.mp3')
+      ambient.volume = AMBIENT_VOLUME
+      ambient.loop = true
+      ambientAudioRef.current = ambient
+      ambient.play().catch(() => { })
+    }
+
     if (sessionStorage.getItem('momp_autowalk') === '1') {
       sessionStorage.removeItem('momp_autowalk')
       setAutoWalk(true)
     }
   }, [])
 
+  // Cleanup all audio on unmount
   useEffect(() => {
     return () => {
-      if (currentAudioRef.current) {
-        currentAudioRef.current.pause()
-        currentAudioRef.current = null
-      }
-    }
-  }, [])
-
-  const stopAudio = useCallback(() => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause()
-      currentAudioRef.current.onended = null
+      currentAudioRef.current?.pause()
       currentAudioRef.current = null
+      ambientAudioRef.current?.pause()
+      ambientAudioRef.current = null
     }
   }, [])
 
@@ -95,100 +99,100 @@ export default function LibraryPage() {
       setAudioMuted(false)
       audioMutedRef.current = false
       sessionStorage.setItem('momp_audio_unmuted', '1')
-      if (!sessionStorage.getItem('momp_welcome_played')) {
-        sessionStorage.setItem('momp_welcome_played', '1')
-        const audio = new Audio('/MoMPwelcome.m4a')
-        currentAudioRef.current = audio
-        audio.play().catch(() => {})
-        audio.onended = () => {
-          if (currentAudioRef.current === audio) currentAudioRef.current = null
-        }
+
+      // Start looping ambient
+      if (!ambientAudioRef.current) {
+        const ambient = new Audio('/exhibitobjects/technology/miromaxmusic-technology-479266.mp3')
+        ambient.volume = AMBIENT_VOLUME
+        ambient.loop = true
+        ambientAudioRef.current = ambient
+        ambient.play().catch(() => { })
+      } else {
+        ambientAudioRef.current.play().catch(() => { })
       }
     } else {
-      stopAudio()
+      currentAudioRef.current?.pause()
+      currentAudioRef.current = null
+      ambientAudioRef.current?.pause()
       setAudioMuted(true)
       audioMutedRef.current = true
       sessionStorage.setItem('momp_audio_unmuted', '0')
-      setAutoWalkPaused(false)
     }
-  }, [stopAudio])
+  }, [])
 
   const handleToggleAutoWalk = useCallback(() => {
     setAutoWalk(v => !v)
   }, [])
 
   const handleEnterZone = useCallback((index: number) => {
-    stopAudio()
-    if (audioMutedRef.current) return
-    const audio = new Audio(PAUSE_ZONES[index].audioSrc)
-    currentAudioRef.current = audio
+    const zone = PAUSE_ZONES[index]
+    if (!zone || audioMutedRef.current) return
+
     setAutoWalkPaused(true)
-    audio.play().catch(() => {})
-    audio.onended = () => {
-      if (currentAudioRef.current === audio) currentAudioRef.current = null
-      setAutoWalkPaused(false)
-    }
-  }, [stopAudio])
+    currentAudioRef.current?.pause()
+    const audio = new Audio(zone.audioSrc)
+    currentAudioRef.current = audio
+    audio.play().catch(() => { setAutoWalkPaused(false) })
+    audio.addEventListener('ended', () => { setAutoWalkPaused(false) }, { once: true })
+  }, [])
 
-  const handleInteract = useCallback(() => {
-    stopAudio()
+  // Generic navigate: cleans up audio, persists auto-walk flag, then pushes route
+  const handleNavigate = useCallback((route: string) => {
+    currentAudioRef.current?.pause()
+    currentAudioRef.current = null
     if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
-    router.push('/wish-room')
-  }, [router, stopAudio])
+    router.push(route)
+  }, [router])
 
-  const handleLobbyInteract = useCallback(() => {
-    stopAudio()
-    if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
-    router.push('/lobby')
-  }, [router, stopAudio])
-
-  const handleChamberInteract = useCallback(() => {
-    stopAudio()
-    if (autoWalkRef.current) sessionStorage.setItem('momp_autowalk', '1')
-    router.push('/chamber-of-inspiration')
-  }, [router, stopAudio])
+  // Default action for keyboard Enter / auto-walk / mobile = far-left door
+  const handleInteract = useCallback(() => handleNavigate('nature'), [handleNavigate])
 
   const nearDoorRef = useRef(false)
   useEffect(() => { nearDoorRef.current = nearDoor }, [nearDoor])
 
+  // Keyboard shortcuts: Space = auto-walk · / = audio · Enter = door
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement
       if (target.tagName === 'BUTTON' || target.tagName === 'A') return
-      if (e.key === 'Escape') { setOpenCategory(null); return }
-      if (openCategory) return
       if (e.key === ' ') { e.preventDefault(); handleToggleAutoWalk() }
       if (e.key === '/') { e.preventDefault(); handleToggleMute() }
       if (e.key === 'Enter' && nearDoorRef.current) handleInteract()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [handleToggleAutoWalk, handleToggleMute, handleInteract, openCategory])
+  }, [handleToggleAutoWalk, handleToggleMute, handleInteract])
 
+  // Pause camera when auto-walk reaches the door, then navigate after brief delay
   useEffect(() => {
-    if (!autoWalk || !nearDoor || autoWalkPaused) return
-    const t = setTimeout(handleInteract, 800)
-    return () => clearTimeout(t)
-  }, [autoWalk, nearDoor, autoWalkPaused, handleInteract])
+    if (!autoWalk || !nearDoor) {
+      setAutoWalkPaused(false)
+      return
+    }
+    setAutoWalkPaused(true)
+    const t = setTimeout(handleInteract, 1500)
+    return () => {
+      clearTimeout(t)
+      setAutoWalkPaused(false)
+    }
+  }, [autoWalk, nearDoor, handleInteract])
 
   return (
     <ControlsProvider>
       <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
-        <LibraryRoomScene
+        <Scene
           nearDoor={nearDoor}
           onNearDoor={setNearDoor}
-          onDoorInteract={handleInteract}
-          onLobbyDoorInteract={handleLobbyInteract}
-          onChamberDoorInteract={handleChamberInteract}
-          onOpenCategory={setOpenCategory}
-          path={PATH}
+          onNavigate={handleNavigate}
+          path={PATH_EXT}
+          startT={START_T}
           autoWalk={autoWalk}
           autoWalkPaused={autoWalkPaused}
           zones={PAUSE_ZONES}
           onEnterZone={handleEnterZone}
         />
 
-        {/* HUD */}
+        {/* HUD overlay */}
         <div style={{
           position: 'fixed', top: 0, left: 0, right: 0,
           display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
@@ -196,18 +200,15 @@ export default function LibraryPage() {
           pointerEvents: 'none', zIndex: 10,
         }}>
           <div style={{
-            background: 'rgba(30,0,0,0.85)',
+            background: 'rgba(255, 255, 255, 0)',
             backdropFilter: 'blur(6px)',
-            padding: '6px 16px',
-            borderRadius: '6px',
-            fontFamily: 'Georgia, serif',
             fontSize: '15px',
-            color: '#f5e6c0',
-            letterSpacing: '0.04em',
+            color: '#33333300',
+            letterSpacing: '0.04em'
           }}>
-            Library
           </div>
 
+          {/* Right-side controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', pointerEvents: 'all' }}>
             <button
               type="button"
@@ -254,7 +255,7 @@ export default function LibraryPage() {
                 textDecoration: 'none',
               }}
             >
-              ← Exit Museum
+              ← Exit
             </a>
           </div>
         </div>
@@ -264,23 +265,19 @@ export default function LibraryPage() {
             <p style={{ margin: 0, fontSize: '13px', color: '#888' }}>
               <em>Disclaimer:</em> Nothing in this room is presented as complete or definitive. This is our best effort within the space and knowledge available to us, and we will keep improving it.
               <br></br>
-              Spotted an error, an omission, or something that deserves more care? <a href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</a>
+              Spotted an error, an omission, or something that deserves more care? <Link href="https://forms.gle/mogSB53GkJcgRUL18" target="_blank">Let us know!</Link>
               <br></br>
               <em>Credits:</em><br></br>
-              <br />All music is copyright-free from Pixabay (human-created tracks only).
+              <br />"Spaceship Door" (https://skfb.ly/6pJRu) by eggtoast is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />"Sci-fi lab" (https://skfb.ly/oYNHF) by Agata Wilczek is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+              <br />Music by <a href="https://pixabay.com/users/miromaxmusic-51705244/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=479266">MiroMaxMusic</a> from <a href="https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=479266">Pixabay</a>
+              <br />SciFi Desk by Sousinho on Sketchfab - <a href="https://sketchfab.com/3d-models/scifi-desk-d4a09022a8874ae6bdc44b3e42a6ea6c" target="_blank">link</a>
+              <br />"Monitoring Station" (https://skfb.ly/pGuRz) by PolyPhantom is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
             </p>
           </CreditsPanel>
         )}
 
         <MobileControls nearDoor={nearDoor} onInteract={handleInteract} />
-
-        {openCategory !== null && (
-          <CategoryModal
-            category={openCategory}
-            items={CATEGORY_DATA[openCategory]}
-            onClose={() => setOpenCategory(null)}
-          />
-        )}
       </div>
     </ControlsProvider>
   )

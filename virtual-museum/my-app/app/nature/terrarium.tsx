@@ -2,7 +2,7 @@
 import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-useGLTF.preload('exhibitobjects/nature/terrarium_basil_rosemary_and_coriander.glb')
+useGLTF.preload('/exhibitobjects/nature/terrarium_basil_rosemary_and_coriander.glb')
 
 export function Terrarium() {
   const { scene } = useGLTF('/exhibitobjects/nature/terrarium_basil_rosemary_and_coriander.glb')
